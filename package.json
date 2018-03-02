@@ -1,0 +1,30 @@
+{
+  "name": "mistyTalks-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon start app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrederickEngelhardt/mistyTalks-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrederickEngelhardt/mistyTalks-server/issues"
+  },
+  "homepage": "https://github.com/FrederickEngelhardt/mistyTalks-server#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "socket.io": "^2.0.4",
+    "watson-developer-cloud": "^3.0.7"
+  }
+}
