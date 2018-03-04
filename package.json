@@ -28,5 +28,8 @@
     "fs": "0.0.1-security",
     "socket.io": "^2.0.4",
     "watson-developer-cloud": "^3.0.7"
+  },
+  "devDependencies": {
+    "uint8array-loader": "^1.0.2"
   }
 }
