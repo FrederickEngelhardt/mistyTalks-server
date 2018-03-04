@@ -69,7 +69,7 @@ async function writeFile(text) {
   let params = {
     text: 'No text was sent.',
     voice: 'en-US_AllisonVoice',
-    accept: 'audio/basic'
+    accept: 'audio/wav'
   }
   if (text.length > 0) params["text"] = text;
 
@@ -77,9 +77,6 @@ async function writeFile(text) {
     let file = text_to_speech.synthesize(params).on('error', function(error) {
       console.log('Error:', error);
     }).pipe(fs.createWriteStream('textResponse.wav'))
-    console.log(file);
-    let reader = new FileReader()
-    reader.readAsArrayBuffer(file);
     resolve('File has been written.')
   })
 }
