@@ -28,6 +28,7 @@
     "fs": "0.0.1-security",
     "fs-readfile-promise": "^3.0.1",
     "fs-then-native": "^2.0.0",
+    "request": "^2.83.0",
     "socket.io": "^2.0.4",
     "watson-developer-cloud": "^3.0.7"
   },

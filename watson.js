@@ -106,7 +106,8 @@ router.post('/speak', async function(req, res, next) {
     "ImmediatelyApply": false,
     "OverwriteExisting": true
   }
-  console.log("this is result 1", result1, "this is result2", result2);
+  // console.log("this is result 1", result1, "this is result2", result2);
+  console.log("This is the payload sent", payload);
   return res.status(200).json(payload)
   // .then((byte)=>{
   //   console.log(byte, "this is the byte");
