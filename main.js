@@ -9,7 +9,7 @@ var settings = {
     "Cache-Control": "no-cache"
   },
   "data": {
-    "text": "I am finally working"
+    "text": "I am finally working. OOOOOH YEah yeeh haw!"
   }
 }
 $.ajax(settings).done(function(data) {
@@ -24,8 +24,7 @@ $.ajax(settings).done(function(data) {
     "headers": {
       "content-type": "text/plain"
     },
-    "data":
-    JSON.stringify({
+    "data": JSON.stringify({
       "FilenameWithoutPath": "textResponse.wav",
       "DataAsByteArrayString": `${data.DataAsByteArrayString}`,
       "ImmediatelyApply": "false",
@@ -33,8 +32,23 @@ $.ajax(settings).done(function(data) {
     })
   }
   console.log(data);
-  $.ajax(settings2).done(function (response2) {
-    
+  $.ajax(settings2).done(function(response2) {
     console.log(response2);
+    var settings3 = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://192.168.1.129/Api/PlayAudioClip",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
+      },
+      "processData": false,
+      "data": "{\n  \"AssetId\":\"textResponse.wav\"\n}"
+    }
+
+    $.ajax(settings3).done(function(response3) {
+      console.log(response3);
+    });
   });
 })
