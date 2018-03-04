@@ -9,7 +9,7 @@ var settings = {
     "Cache-Control": "no-cache"
   },
   "data": {
-    "text": "I am finally working. OOOOOH YEah yeeh haw!"
+    "text": "Alexa! Stop playing music!"
   }
 }
 $.ajax(settings).done(function(data) {
