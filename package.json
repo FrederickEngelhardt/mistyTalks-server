@@ -21,8 +21,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
+    "convert-string": "^0.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
+    "filereader": "^0.10.3",
     "fs": "0.0.1-security",
     "socket.io": "^2.0.4",
     "watson-developer-cloud": "^3.0.7"
