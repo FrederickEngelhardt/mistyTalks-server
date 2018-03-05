@@ -13,7 +13,6 @@ const text_to_speech = new TextToSpeechV1({
   username: process.env.USERNAME,
   password: process.env.PASSWORD
 });
-
 function read() {
   return new Promise((resolve, reject) => {
     const path = './textResponse.wav'
@@ -34,28 +33,32 @@ function writeFile(text) {
     accept: 'audio/wav'
   }
   if (text.length > 0) params["text"] = text;
-
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     let file = text_to_speech.synthesize(params).on('error', function(error) {
       console.log('Error:', error);
-    }).pipe(fs.writeFile('textResponse.wav'))
-    return resolve('success')
+    }).pipe(fs.createWriteStream('textResponse.wav'));
+    // check for promise to resolve with file
+    return resolve(file)
   })
 }
 
 router.post('/speak', async function(req, res, next) {
   console.log('speak api called');
+  console.log(req.body.text);
   // const [result1, result2] = await Promise.all([read(),writeFile(req.body.text)])
+  const result1 = await writeFile(req.body.text)
+  const result2 = await read()
   // #NOTE should be read() then writeFile but async issues...
-  const [result1, result2] = await Promise.all([writeFile(req.body.text), read()])
+  // const [result1, result2] = await Promise.all([writeFile(req.body.text), read()])
+  console.log("made it");
   let payload = {
     "FilenameWithoutPath": "textResponse.wav",
-    "DataAsByteArrayString": result1,
+    "DataAsByteArrayString": result2,
     "ImmediatelyApply": false,
     "OverwriteExisting": true
   }
   // console.log("this is result 1", result1, "this is result2", result2);
-  console.log("This is the payload sent", payload);
+  // console.log("This is the payload sent", payload);
   return res.status(200).json(payload)
   // .then((byte)=>{
   //   console.log(byte, "this is the byte");
