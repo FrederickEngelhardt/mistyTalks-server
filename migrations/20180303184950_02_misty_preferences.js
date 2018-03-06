@@ -9,8 +9,6 @@ exports.up = function(knex, Promise) {
     table.string('robot_name').notNullable()
     table.string('ip_address').notNullable()
     table.int('port_number').notNullable()
-    table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'))
-    table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'))
   })
 };
 

@@ -4,8 +4,6 @@ exports.up = function(knex, Promise) {
     table.increments('id')
     table.string('email').unique().comment('This is the email field');
     table.string('password').notNullable()
-    table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'))
-    table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'))
   })
 };
 
