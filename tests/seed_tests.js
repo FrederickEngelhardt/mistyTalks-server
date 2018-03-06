@@ -1,6 +1,8 @@
 
 const fs = require('fs')
 const path = require('path')
+const mocha = require('mocha')
+const chai = require('chai')
 
 // *** DROP SEEDS TEST ***
 describe('Drop Seeds', () => {
@@ -25,28 +27,24 @@ describe('Drop Seeds', () => {
   it('Drops all the data before re-creating it', () => {
     return Promise.all([
       knex('users'),
-      knex('accounts'),
       knex('misty_preferences')
     ])
       .then(
         (
-          [users, accounts, misty_preferences]
+          [users, misty_preferences]
         ) => {
           return knex.seed.run(this.config.seeds).then(() => {
             return Promise.all([
               knex('users'),
-              knex('accounts'),
               knex('misty_preferences')
             ]).then(
               (
                 [
                   usersNew,
-                  accountsNew,
                   misty_preferencesNew
                 ]
               ) => {
                 expect(users.length).to.equal(usersNew.length)
-                expect(accounts.length).to.equal(accountsNew.length)
                 expect(misty_preferences.length).to.equal(misty_preferences.length)
               }
             )
@@ -85,55 +83,10 @@ describe('Users Seeds', () => {
         expect(user.user_id).to.be.ok
         expect(user.email).to.be.ok
         expect(user.password).to.be.ok
-      })
-      .catch(err => Promise.reject(err))
-  })
-})
-
-// *** ACCOUNTS SEEDS TEST ***
-describe('Accounts Seeds', () => {
-  beforeEach(() => {
-    this.config = {
-      migrations: {
-        directory: path.join(__dirname, '..', 'migrations')
-      },
-      seeds: {
-        directory: path.join(__dirname, '..', 'seeds')
-      }
-    }
-
-    return knex.migrate
-      .latest(this.config.migrations)
-      .then(() => knex.seed.run(this.config.seeds))
-      .catch(err => {
-        expect.fail(null, null, err)
-      })
-  })
-
-  it('creates at least one new account', () => {
-    return knex('accounts')
-      .then(actual => {
-        expect(actual.length).to.be.at.least(1)
-
-        const [account] = actual
-        expect(account.account_id).to.be.ok
-        expect(account.misty_voice).to.be.ok
-        expect(account.set_emotions).to.be.ok
-        expect(account.time_restriction_start).to.be.ok
-        expect(account.time_restriction_end).to.be.ok
-      })
-      .catch(err => Promise.reject(err))
-  })
-
-  it('resets the sequence max id each time', () => {
-    return knex('accounts')
-      .insert({ misty_voice: "8", set_emotions: "test", created_at: new Date('2016-06-26 14:26:16 UTC'),
-      updated_at: new Date('2016-06-26 14:26:16 UTC')}, '*')
-      .then(([{ account_id }]) => {
-        return knex('accounts').then(accounts => {
-          const err = `Check that you've reset the auto-incrementing ID`
-          expect(account_id, err).to.equal(accounts.length)
-        })
+        expect(user.misty_voice).to.be.ok
+        expect(user.set_emotions).to.be.ok
+        expect(user.time_restriction_start).to.be.ok
+        expect(user.time_restriction_end).to.be.ok
       })
       .catch(err => Promise.reject(err))
   })
@@ -200,7 +153,6 @@ describe('Users-Misty_Preferences Seeds', () => {
   })
 })
 
-
 // *** MISTY_PREFERENCES SEEDS TEST ***
 describe('Misty_Preference Seeds', () => {
   beforeEach(() => {
@@ -225,7 +177,6 @@ describe('Misty_Preference Seeds', () => {
     return knex('misty_preferences')
       .then(actual => {
         expect(actual.length).to.be.at.least(1)
-
         const [misty_preference] = actual
         expect(misty_preference.misty_preference_id).to.be.ok
         expect(misty_preference.preference_name).to.be.ok
