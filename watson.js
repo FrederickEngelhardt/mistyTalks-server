@@ -38,7 +38,7 @@ function writeFile(text) {
       console.log('Error:', error);
     }).pipe(fs.createWriteStream('textResponse.wav'));
     // check for promise to resolve with file
-    return resolve(file)
+    resolve(file)
   })
 }
 
