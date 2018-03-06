@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const mocha = require('mocha')
 const chai = require('chai')
-
+const knex = require('../knex')
 // *** Users Table Testing ***
 describe('Users Table', () => {
   beforeEach(() => {

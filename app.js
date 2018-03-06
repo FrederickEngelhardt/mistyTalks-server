@@ -6,6 +6,7 @@ const port = process.env.PORT || 4001;
 const routes = require("./watson");
 const bodyParser = require('body-parser');
 const app = express();
+const knex = require('knex')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))

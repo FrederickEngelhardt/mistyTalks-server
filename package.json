@@ -30,6 +30,7 @@
     "fs": "0.0.1-security",
     "knex": "^0.14.4",
     "knex-migrate": "^1.5.1",
+    "pg": "^7.4.1",
     "socket.io": "^2.0.4",
     "watson-developer-cloud": "^3.0.7"
   },

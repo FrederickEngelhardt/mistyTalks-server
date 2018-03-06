@@ -14,16 +14,17 @@ GET
 /misty_preferences/ - all user preferences
 
 POST
-/user/- (email, password)
-/user/login/ - login current users
-/misty_preferences/misty_preference_id/ (preference name, robot name, ip address, port number)
+/users/- (email, password)
+/users/login/ - login current users
+/misty_preferences/:misty_preference_id/ (preference name, robot name, ip address, port number)
 
 PATCH
-/user/user_id - updating email, password
-/misty_preferences/misty_preference_id/ - (preference name, robot name, ip address, port number)
+/users/:user_id - updating email, password
+/misty_preferences/:misty_preference_id - (preference name, robot name, ip address, port number)
 
 DELETE
-/user/preference_name/ - deleting user account
+app.delete
+/users/:id/preferences/:id/ - deleting user account
 
 Style guide - very basic user portal with similar styling as their home website... https://www.mistyrobotics.com/
 
