@@ -1,11 +1,11 @@
 *{
   margin: 0;
   padding: 0;
-  font-family: 'yukyokasho', 'arial', 'helvetica';
+  font-family: 'helvetica', 'arial', 'helvetica';
   font-weight: 100;
 }
 a {
-    font-family: 'yukyokasho';
+    font-family: 'helvetica;';
 }
 html {
   height: 100%;
@@ -16,7 +16,9 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: x-small;
   color: #666666;
-  background: url("../images/background.png")
+  /* background: url("../images/Misty_side.jpeg") */
+  background: #FFFEFD; /*Off White */
+  background: #f6eaff /*very light  purple */
   no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -49,13 +51,18 @@ main {
 }
 
 
-h1.index {
+.appName {
   display: flex;
   justify-content: center;
-  top: -8px;
-  padding-top: 56px;
+  /* top: -8px;
+  padding-top: 56px; */
   font-size: 80px;
 }
+#appNameMisty {
+
+}
+
+
 h1.navigation {
   position: relative;
   top: -8px;
@@ -90,7 +97,7 @@ main .container {
   padding: 20px;
 }
 .btn {
-  background-color: #FAAD00;
+  background-color: #6700ED;
   height: 60px;
   width: 200px;
   border-radius: 35px;
@@ -121,8 +128,9 @@ nav {
 .nav-align {
   padding-top: 0px;
 }
-.modal-text {
+.text {
   font-size: 200%;
+  color: #6700ED;
 }
 label {
   color: white;
@@ -145,22 +153,42 @@ label {
   background-color: #FAAD00;
 }
 /*****index*****/
-#login_btn{
-  background-color: #FAAD00;
+.modal {
+  background: #f0e0ff; /*slightly darker white purple*/
+  width: 95%;
+}
+.modal-font {
+  color: #6700ED;
+}
+@media only screen and (min-width: 500px) {
+  td.modal-font {
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  td.modal-font {
+    font-size: 18px;
+  }
+}
+input.login-input-text {
+  color: #6700ED;
+}
+
+#open_login{
+  background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 
 }
-#editButton {
+#login-btn {
   line-height: 25px;
   margin-top: 25px;
   font-size: 20px;
-  background-color:#FAAD00;
+  background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-#signup_btn{
-  background-color: #FAAD00;
+#open_signup{
+  background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-
 }
 
 /*****end index*****/

@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 
 // ROUTES
 const watsonRoutes = require('./routes/watson')
