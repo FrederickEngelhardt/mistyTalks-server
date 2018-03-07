@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Send stuff to robot</title>
-  </head>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-  <script src="main.js"></script>
-  <body>
-    test
-    <main class = 'main'>
-    <div id= "mainContainer"></div>
-    <input id="mod-id" type= "hidden">
 
-    <label for="name">Post</label>
-    <input type= "text" name= "name" id= "name">
+<head>
+  <meta charset="utf-8">
+  <title>Send stuff to robot</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
-    <label for= "name">Message</label>
-    <input type= "text" name = "message" id= "message">
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="main.js"></script>
+<link rel="stylesheet" href="./css/styles.css">
+<body>
+  <main class="center">
+    <div class="row">
+      <div class="white-text">
+        <h1 class="index">JAZZED</h1></div>
+      <div class="row">
+        <h5 id="slogan" class="white-text">MUSIC LESSONS MADE EASY</h5>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="container">
+      <div class="row">
+        <a href="./login.html" id="login_btn" class="waves-effect waves-light btn">
+          <h5 class="login-button">log in</h5>
+        </a>
+      </div>
+      <div class="row">
+        <a href="./sign_up.html" id="signup_btn" class="waves-effect waves-light btn">
+          <h5 class="login-button">sign up</h5>
+        </a>
+      </div>
+    </div>
 
-    <button type= "button" name= "button" id="addButton">ADD</button> <!--  former postButton -->
-    <button type= "button" name= "button" id="modifyButton">MODIFY</button>  <!--  former editButton -->
   </main>
-  </body>
+</body>
+
 </html>

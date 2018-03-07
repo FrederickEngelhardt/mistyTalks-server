@@ -1,7 +1,7 @@
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:4001/speak",
+  "url": "http://localhost:3000/speak",
   "method": "POST",
   "headers": {
     "Content-Type": "application/x-www-form-urlencoded",
