@@ -1,12 +1,22 @@
 install npm
-createdb users, misty_preferences
+createdb mistyTalks_dev
+createdb mistyTalks_test
+knex migrate:latest
+knex seed:run
 
+
+Using Technologies:
 Watson API
+Knex
+
 
 Run NPM tests:
   npm test test/migration_tests
   npm test test/route_tests
   npm test test/seed_tests
+
+
+Twilio API (TextToSpeech)
 
 Plan for Server Routes:
 GET
