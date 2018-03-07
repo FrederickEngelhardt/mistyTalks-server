@@ -32,13 +32,13 @@ function writeFile(text) {
     voice: 'en-US_AllisonVoice',
     accept: 'audio/wav'
   }
-  if (text.length > 0) params["text"] = text;
+  if (text) params["text"] = text;
   return new Promise((resolve, reject) => {
-    let file = text_to_speech.synthesize(params).on('error', function(error) {
+    text_to_speech.synthesize(params).on('error', function(error) {
       console.log('Error:', error);
     }).pipe(fs.createWriteStream('textResponse.wav'));
+    resolve('resolved')
     // check for promise to resolve with file
-    resolve(file)
   })
 }
 
