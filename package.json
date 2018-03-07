@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon start app.js"
+    "start": "node app.js",
+    "start-dev": "nodemon app.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,19 +22,30 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
     "convert-string": "^0.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "filereader": "^0.10.3",
     "fs": "0.0.1-security",
+<<<<<<< HEAD
     "fs-readfile-promise": "^3.0.1",
     "fs-then-native": "^2.0.0",
     "request": "^2.83.0",
+=======
+    "knex": "^0.14.4",
+    "knex-migrate": "^1.5.1",
+    "pg": "^7.4.1",
+>>>>>>> 5d360ed6eea193bcb5a8537d3a44d4461ef3bb2f
     "socket.io": "^2.0.4",
     "twilio": "^3.13.0",
     "watson-developer-cloud": "^3.0.7"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "uint8array-loader": "^1.0.2"
+=======
+    "mocha": "^5.0.2"
+>>>>>>> 5d360ed6eea193bcb5a8537d3a44d4461ef3bb2f
   }
 }
