@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static('public'))
 
 // ROUTES
 const watsonRoutes = require('./routes/watson')
@@ -24,6 +24,15 @@ app.use(twilioRoutes)
 app.use(watsonRoutes)
 app.use(userRoutes)
 
-const server = http.createServer(app);
+app.use((req, res, next) => {
+  res.sendStatus(404)
+})
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+app.use((err, req, res, next) => {
+  const status = err.status || 500
+  res.status(status).send(err.message)
+})
+
+app.listen(port, () => console.log(`Listening on port ${port}`))
+
+module.exports = app
