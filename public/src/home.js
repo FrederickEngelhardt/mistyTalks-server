@@ -2,7 +2,7 @@ console.log("Congradulations you have made it to the home.js file!");
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/speak",
+  "url": "http://localhost:3000/watson/receive",
   "method": "POST",
   "headers": {
     "Content-Type": "application/json",
@@ -11,7 +11,7 @@ var settings = {
     "Cache-Control": "no-cache"
   },
   "processData": false,
-  "data": "{\n\t\"text\": \"hello\"\n}"
+  "data": "{\n\t\"text\": \"Whats going on Brother!\"\n}"
 }
 
 $.ajax(settings).done(function (data) {
@@ -42,9 +42,6 @@ $.ajax(settings).done(function (data) {
       "url": "http://192.168.1.129/Api/PlayAudioClip",
       "method": "POST",
       "headers": {
-        "Access-Control-Allow-Origin": '*',
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache"
       },
       "processData": false,
       "data": "{\n  \"AssetId\":\"textResponse.wav\"\n}"
@@ -55,22 +52,3 @@ $.ajax(settings).done(function (data) {
     });
   });
 })
-
-
-
-var data = "{\n  \"AssetId\":\"textResponse.wav\"\n}";
-
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-  if (this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("POST", "http://192.168.1.129/Api/PlayAudioClip");
-xhr.setRequestHeader("Access-Control-Request-Headers", "*");
-xhr.setRequestHeader("Cache-Control", "no-cache");
-
-xhr.send(data);
