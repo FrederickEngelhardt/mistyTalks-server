@@ -45,15 +45,15 @@ function writeFile(text) {
 router.post('/speak', async function(req, res, next) {
   console.log('speak api called');
   console.log(req.body.text);
-  // const [result1, result2] = await Promise.all([read(),writeFile(req.body.text)])
-  const result1 = await writeFile(req.body.text)
-  const result2 = await read()
+  const [result1, result2] = await Promise.all([read(),writeFile(req.body.text)])
+  // const result1 = await writeFile(req.body.text)
+  // const result2 = await read()
   // #NOTE should be read() then writeFile but async issues...
   // const [result1, result2] = await Promise.all([writeFile(req.body.text), read()])
   console.log("made it");
   let payload = {
     "FilenameWithoutPath": "textResponse.wav",
-    "DataAsByteArrayString": result2,
+    "DataAsByteArrayString": result1,
     "ImmediatelyApply": false,
     "OverwriteExisting": true
   }
