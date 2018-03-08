@@ -15,7 +15,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (data) {
-  // console.log(data.DataAsByteArrayString);
+  console.log(data.DataAsByteArrayString);
   let byteString = JSON.stringify(data.DataAsByteArrayString)
   console.log(byteString);
   var settings2 = {
@@ -42,6 +42,7 @@ $.ajax(settings).done(function (data) {
       "url": "http://192.168.1.129/Api/PlayAudioClip",
       "method": "POST",
       "headers": {
+        "Access-Control-Allow-Origin": '*',
         "Content-Type": "application/json",
         "Cache-Control": "no-cache"
       },
@@ -49,8 +50,27 @@ $.ajax(settings).done(function (data) {
       "data": "{\n  \"AssetId\":\"textResponse.wav\"\n}"
     }
 
-    $.ajax(settings3).done(function(response3) {
-      console.log(response3);
+    $.ajax(settings3).done(function (response) {
+      console.log(response);
     });
   });
 })
+
+
+
+var data = "{\n  \"AssetId\":\"textResponse.wav\"\n}";
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://192.168.1.129/Api/PlayAudioClip");
+xhr.setRequestHeader("Access-Control-Request-Headers", "*");
+xhr.setRequestHeader("Cache-Control", "no-cache");
+
+xhr.send(data);

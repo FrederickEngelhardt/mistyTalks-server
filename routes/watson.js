@@ -42,7 +42,25 @@ function writeFile(text) {
   })
 }
 
-router.post('/speak', async function(req, res, next) {
+router.get('/mistytalks/play', function(req,res,next){
+  // NOTE This route is used to avoid user side crossorigin errors
+  const unirest = require("unirest");
+  const request = unirest("POST", "http://192.168.1.129/Api/PlayAudioClip");
+
+  request.headers({
+    "Cache-Control": "no-cache"
+  });
+
+  request.send("{\n  \"AssetId\":\"textResponse.wav\",\n}");
+
+  request.end(function (res) {
+    if (res.error) throw new Error(res.error);
+
+    console.log(res.body);
+  });
+})
+
+router.post('/mistytalks/receive', async function(req, res, next) {
   console.log('speak api called');
   console.log(req.body.text);
   const [result1, result2] = await Promise.all([read(),writeFile(req.body.text)])
