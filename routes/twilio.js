@@ -1,12 +1,16 @@
 const express = require('express')
 const knex = require('../knex')
 const router = express.Router()
-// const watson = require('./watson')
 
 router.post('/twilio/receive', (req, res) => {
   console.log(req.body);
-
-  // Message is a string
+  /*
+    TODO: Remove Authorization basic base64 string and figure out why it is even in there...
+    TODO: Check to see if user has authorization to send information to local misty
+                1. If sent number is not authorized in the user account then...
+                2. Log request on server.
+  */
+  // Message is a string -> Body is a key from req.body
   let message = req.body.Body
   message.includes('#voice')
 
@@ -30,29 +34,8 @@ router.post('/twilio/receive', (req, res) => {
   };
   request(options, function(error, response, body) {
     if (error) throw new Error(error);
-
-    // console.log(body);
   });
   res.status(200).send("success")
 })
-// { ToCountry: 'US',
-//   ToState: 'OR',
-//   SmsMessageSid: 'SMed3515cf69cb24fc7902601e7a254044',
-//   NumMedia: '0',
-//   ToCity: '',
-//   FromZip: '97230',
-//   SmsSid: 'SMed3515cf69cb24fc7902601e7a254044',
-//   FromState: 'OR',
-//   SmsStatus: 'received',
-//   FromCity: 'PORTLAND',
-//   Body: 'Yeah ',
-//   FromCountry: 'US',
-//   To: '+19718035516',
-//   ToZip: '',
-//   NumSegments: '1',
-//   MessageSid: 'SMed3515cf69cb24fc7902601e7a254044',
-//   AccountSid: 'ACa61dd227286ddc76fbe8e939398b2aab',
-//   From: '+15038063822',
-//   ApiVersion: '2010-04-01' }
 
 module.exports = router;
