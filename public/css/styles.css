@@ -1,0 +1,398 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'helvetica', 'arial', 'helvetica';
+  font-weight: 100;
+}
+a {
+    font-family: 'helvetica;';
+}
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #EEEEEE;
+  -webkit-font-smoothing: antialiased;
+  font-size: x-small;
+  color: #666666;
+  /* background: url("../images/Misty_side.jpeg") */
+  background: #FFFEFD; /*Off White */
+  background: #f6eaff /*very light  purple */
+  no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat:;
+}
+.title {
+  padding: 50px;
+}
+#slogan {
+  position: relative;
+  top: -20px;
+  font-size: 22px;
+  font-weight: bold;
+  -webkit-text-stroke: 1px white;
+}
+
+.homebutton {
+  width: 50%;
+  margin: 20px;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  resize: vertical;
+  overflow: auto;
+}
+
+
+.appName {
+  display: flex;
+  justify-content: center;
+  /* top: -8px;
+  padding-top: 56px; */
+  font-size: 80px;
+}
+#appNameMisty {
+
+}
+
+
+h1.navigation {
+  position: relative;
+  top: -8px;
+  /*padding-top: 40px;*/
+  font-size: 80px;
+}
+.container {
+  position: relative;
+  top: -50px;
+}
+
+main .container {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 100px;
+  margin-top: -70px;
+  /*background: black;*/
+  color: white;
+  padding: 20px;
+}
+
+.btn-name {
+  position: relative;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 50;
+  margin-top: -70px;
+  color: white;
+  padding: 20px;
+}
+.btn {
+  background-color: #6700ED;
+  height: 60px;
+  width: 200px;
+  border-radius: 35px;
+}
+
+.login-button {
+  position: relative;
+  top: 10%;
+}
+
+.input-field {
+  color: white;
+  background-color: rgba(105,100,100,0.8);
+  opacity: 30%;
+  height: 50%;
+}
+#pageDescription {
+  border-radius: 25px;
+  background-color: #FAAD00;
+}
+
+/* Beginning of home.html*/
+nav {
+  background-color: #FAAD00;
+  padding-left: 0%;
+  padding-right: 5%;
+}
+.nav-align {
+  padding-top: 0px;
+}
+.text {
+  font-size: 200%;
+  color: #6700ED;
+}
+label {
+  color: white;
+}
+.profBody {
+  font-size: 20px;
+}
+#profile_card {
+  color: white;
+}
+#edit_card_body {
+  color: white;
+  font-size: 20px;
+}
+#submitButton {
+  margin-top: 50px;
+  line-height: 25px;
+  padding-top: 5px;
+  font-size: 20px;
+  background-color: #FAAD00;
+}
+/*****index*****/
+.modal {
+  background: #f0e0ff; /*slightly darker white purple*/
+  width: 95%;
+}
+.modal-font {
+  color: #6700ED;
+}
+@media only screen and (min-width: 500px) {
+  td.modal-font {
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  td.modal-font {
+    font-size: 18px;
+  }
+}
+input.login-input-text {
+  color: #6700ED;
+}
+
+#open_login{
+  background-color: #6700ED;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+#login-btn {
+  line-height: 25px;
+  margin-top: 25px;
+  font-size: 20px;
+  background-color: #6700ED;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#open_signup{
+  background-color: #6700ED;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/*****end index*****/
+
+
+/*****start home*****/
+
+#loginScreenButton {
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#browse_instructors {
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#create_lesson {
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#browse_lessons {
+  padding: 11px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#account_preferences {
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#home_mySchedule_btn{
+  padding: 15px;
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.row.home-menu{
+  position: relative;
+  top: 10px;
+  line-height: 60px;
+}
+#account_preferences_modal {
+  width: 90%;
+  max-height: 90%;
+}
+#bio-text {
+  color: black;
+  font-size: 18
+}
+
+#createLessonSubmitButton {
+  padding-top: 10px;
+  line-height: 28px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #FAAD00;
+}
+#createLessonBody {
+  font-size:13px;
+  color: white;
+}
+#new_lesson_modal {
+  width: 95%;
+}
+
+.lessonReq{
+  padding-left: 0;
+}
+/* End of home menu*/
+
+
+
+/*****instructors*****/
+
+
+.card-title{
+  font: black;
+}
+.card{
+  margin: 20px;
+}
+
+#instructor_bio {
+  font-size: 16px;
+  display: flex;
+  justify-content: left;
+}
+
+#lessonAvail {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+}
+
+#instructorLogo{
+  margin-top: -37px;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #faad00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+/*****end instructors*****/
+
+
+
+/*****lessons*****/
+#confirmButton {
+  font-size: 20px;
+  padding: 10px;
+}
+#cancelButton {
+  font-size: 20px;
+  padding: 10px;
+}
+#home_lessons_btn{
+  line-height: inherit;
+  margin-bottom: 80px;
+  font-size: 20px;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#addLessonButton{
+  position: relative;
+  top: 10px;
+  width: 201px;
+  padding-top: 9px;
+  font-size: 20px;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#lessonsTable{
+  padding-top: -180px;
+  font-size: 14px;
+  color: #fff
+}
+#open_lesson_{
+  background-color: #FAAD00;
+}
+#lesson_card_name{
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.white-text{
+  font-size: 17px;
+}
+
+.addLesson {
+  font-size: 22px;
+}
+.table-row-lessons {
+  height: 90px;
+}
+/*****end lessons*****/
+
+
+/*****my lessons*****/
+#home_my_lessons_btn{
+  padding-top: 3px;
+  line-height: 27px;
+  margin-bottom: 80px;
+  font-size: 20px;
+  background-color: #FAAD00;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  width: 210px;
+}
+
+#myLessonsTable{
+  padding-top: -180px;
+  font-size: 14px;
+  color: #fff
+}
+
+/*****end my lessons*****/
+
+/*****sign up*****/
+#newAccount {
+  position: relative;
+  top: -8px;
+  background-color: #FAAD00;
+  font-size: 20px;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+/***** end sign up*****/

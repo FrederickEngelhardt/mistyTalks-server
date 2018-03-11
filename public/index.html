@@ -1,28 +1,118 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Send stuff to robot</title>
-  </head>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-  <script src="main.js"></script>
-  <body>
-    test
-    <main class = 'main'>
-    <div id= "mainContainer"></div>
-    <input id="mod-id" type= "hidden">
 
-    <label for="name">Post</label>
-    <input type= "text" name= "name" id= "name">
+<head>
+  <meta charset="utf-8">
+  <title>Send stuff to robot</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
-    <label for= "name">Message</label>
-    <input type= "text" name = "message" id= "message">
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="./src/index.js"></script>
+<link rel="stylesheet" href="./css/styles.css">
+<body>
+  <main class="center">
+    <div class="row">
+      <div class="text">
+        <h1 class="appName">Misty</h1>
+        <!-- <img src="./images/misty_symbol_black.png" alt=""> -->
+        <h1 class="appName">Talks</h1>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="container">
+      <div class="row">
+        <a href="#login-modal" id="open_login" class="waves-effect waves-light btn modal-trigger">
+          <h5 class="login-button">log in</h5>
+        </a>
+      </div>
+      <div class="row">
+        <a href="#signup-modal" id="open_signup" class="waves-effect waves-light btn modal-trigger">
+          <h5 class="login-button">sign up</h5>
+        </a>
+      </div>
+    </div>
 
-    <button type= "button" name= "button" id="addButton">ADD</button> <!--  former postButton -->
-    <button type= "button" name= "button" id="modifyButton">MODIFY</button>  <!--  former editButton -->
   </main>
-  </body>
+  <div id="login-modal" class="modal">
+   <div class="modal-content">
+     <!-- profile information is inserted in here -->
+     <div id="profile_card" class="row center">
+       <div class="col s12 m12 l12">
+         <div class="row">
+         </div>
+         <div id="login-menu">
+           <table>
+             <thead>
+               <div><h3 class="modal-font left">Login</h3></div>
+               <div id="show_avatar_image"></div>
+           </thead>
+             <tbody class="profBody">
+               <tr>
+                 <td class="modal-font">Username</td>
+                 <td id="username"><input class="login-input-text" type="text" name="" value=""></td>
+               </tr>
+               <tr>
+                 <td class="modal-font">Password</td>
+                 <td id="password"><input class="login-input-text" type="text" name="" value=""></td>
+               </tr>
+             </tbody>
+           </table>
+           <div class="row center">
+             <button id="login-btn" class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div id="signup-modal" class="modal">
+  <div class="modal-content">
+    <!-- profile information is inserted in here -->
+    <div id="profile_card" class="row center">
+      <div class="col s12 m12 l12">
+        <div class="row">
+        </div>
+        <div id="signup-menu">
+          <table>
+            <thead>
+              <div><h3 class="modal-font left">Create Account</h3></div>
+              <div id="show_avatar_image"></div>
+          </thead>
+            <tbody class="profBody">
+              <tr>
+                <td class="modal-font">Username</td>
+                <td id="username"><input class="signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font">Password</td>
+                <td id="password"><input class="signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font">Re-enter password</td>
+                <td id="password"><input class="signup-input-text" type="text" name="" value=""></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row center">
+            <button id="signup-btn" class="btn waves-effect waves-light" type="submit" name="action">Create Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
 </html>

@@ -1,19 +1,21 @@
+console.log("Congradulations you have made it to the home.js file!");
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:4001/speak",
+  "url": "http://localhost:3000/watson/receive",
   "method": "POST",
   "headers": {
-    "Content-Type": "application/x-www-form-urlencoded",
-    "Authorization": "Basic ZnJlMTk5NEBnbWFpbC5jb206VGVzdGVyQDQwNA==",
+    "Content-Type": "application/json",
+    "Accept": "audio/wav",
+    "Authorization": "Basic ZThiM2QwMjQtOGUyMC00YjU4LTg5MzQtZWZiZGI1NDk2MzIyOmdzeDI4R3FpWG1SSQ==",
     "Cache-Control": "no-cache"
   },
-  "data": {
-    "text": "Alexa! Stop playing music!"
-  }
+  "processData": false,
+  "data": "{\n\t\"text\": \"Whats going on Brother!\"\n}"
 }
-$.ajax(settings).done(function(data) {
-  // console.log(data.DataAsByteArrayString);
+
+$.ajax(settings).done(function (data) {
+  console.log(data.DataAsByteArrayString);
   let byteString = JSON.stringify(data.DataAsByteArrayString)
   console.log(byteString);
   var settings2 = {
@@ -40,15 +42,13 @@ $.ajax(settings).done(function(data) {
       "url": "http://192.168.1.129/Api/PlayAudioClip",
       "method": "POST",
       "headers": {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache"
       },
       "processData": false,
       "data": "{\n  \"AssetId\":\"textResponse.wav\"\n}"
     }
 
-    $.ajax(settings3).done(function(response3) {
-      console.log(response3);
+    $.ajax(settings3).done(function (response) {
+      console.log(response);
     });
   });
 })

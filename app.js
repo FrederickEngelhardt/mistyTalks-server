@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const socketIo = require("socket.io");
+const socket = require("socket.io");
 const axios = require("axios");
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
@@ -13,7 +13,25 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// server side socket variable, this will not cross over into the front end
+let server = app.listen(3500, function() {
+  console.log('listening to requests on port 3500');
+});
+
 app.use(express.static('public'))
+
+// Socket SETUP on the server awaiting to be called...
+let io = socket(server);
+
+// when the client connects, we are going to listen with the connection method
+  // fire callback function that uses a new socket
+  // still awaiting call...by itself it just waits
+io.on('connection', function (socket){
+
+// socket.id is a unique connection (like an ip address) that changes every time
+  console.log("made socket connection", socket.id)
+})
+
 
 // ROUTES
 const watsonRoutes = require('./routes/watson')
@@ -24,6 +42,15 @@ app.use(twilioRoutes)
 app.use(watsonRoutes)
 app.use(userRoutes)
 
-const server = http.createServer(app);
+app.use((req, res, next) => {
+  res.sendStatus(404)
+})
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+app.use((err, req, res, next) => {
+  const status = err.status || 500
+  res.status(status).send(err.message)
+})
+
+app.listen(port, () => console.log(`Listening on port ${port}`))
+
+module.exports = app

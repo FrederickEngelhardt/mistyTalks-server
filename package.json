@@ -37,6 +37,7 @@
     "request": "^2.83.0",
     "socket.io": "^2.0.4",
     "twilio": "^3.13.0",
+    "unirest": "^0.5.1",
     "watson-developer-cloud": "^3.0.7"
   },
   "devDependencies": {

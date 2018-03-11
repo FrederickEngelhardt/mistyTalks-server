@@ -86,7 +86,7 @@ router.get('/misty_preferences/:id', (req, res, next) => {
     })
 })
 
-// POST Route   ...x-www.form-urlencoded
+// POST Route Posting a new id with info  ...x-www.form-urlencoded
 router.post('/users', (req, res, next) => {
   const first_name = '';
   const last_name = '';
@@ -181,6 +181,23 @@ router.post('/users', (req, res, next) => {
 //       next(err)
 //     })
 // })
+
+
+
+router.post('/users/:id', (req, res, next) => {
+  first_name;
+  last_name;
+  const { email, password } = req.body
+  const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
+  console.log(req.body);
+
+              const dataFields = {first_name, last_name, email, password}
+              return knex.insert(dataFields, '*').into ('users')
+              .then(() => {res.status(200).send('success')
+            })
+            })
+
+
 
 
 //
