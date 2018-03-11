@@ -3,7 +3,7 @@ const knex = require('../knex')
 const router = express.Router()
 // const watson = require('./watson')
 
-function testing (body,res) {
+function testing(body, res) {
   console.log(body);
 
   const authorization_numbers = [process.env.FREDERICK_NUMBER, process.env.SCOTT_NUMBER]
@@ -21,7 +21,7 @@ function testing (body,res) {
   // Message is a string
   let message = body.Body
   message.includes('#voice')
-  if (message.includes("https://messages.alexa.amazon.com")){
+  if (message.includes("https://messages.alexa.amazon.com")) {
     message = message.split(`\nhttps://messages.alexa.amazon.com/`)[0]
     console.log(message);
   }
@@ -47,7 +47,8 @@ function testing (body,res) {
   //   res.status(200).send("success")
   // });
 }
-testing({ ToCountry: 'US',
+testing({
+  ToCountry: 'US',
   ToState: 'OR',
   NumMedia: '0',
   ToCity: '',
@@ -61,7 +62,8 @@ testing({ ToCountry: 'US',
   ToZip: '',
   NumSegments: '1',
   From: '+15038063822',
-  ApiVersion: '2010-04-01' })
+  ApiVersion: '2010-04-01'
+})
 
 router.post('/twilio/receive', (req, res) => {
   console.log(req.body);
@@ -74,22 +76,24 @@ router.post('/twilio/receive', (req, res) => {
   let authorized = false
   for (let i in authorization_numbers) {
     if (authorization_numbers[i] === received_number) {
+      console.log("User is authorized.");
       authorized = true
     }
   }
   if (authorized === false) {
+    console.log("User was rejected. Authorization is null.");
     return res.status(403).send(`Your number ${received_number} is not authorized on this misty server.`)
   }
   /*
     End of user Authorization
   */
 
-/*
-  Alexa message url removal
-*/
-  let message = body.Body
+  /*
+    Alexa message url removal
+  */
+  let message = req.body.Body
   message.includes('#voice')
-  if (message.includes("https://messages.alexa.amazon.com")){
+  if (message.includes("https://messages.alexa.amazon.com")) {
     message = message.split(`\nhttps://messages.alexa.amazon.com/`)[0]
     console.log(message);
   }
@@ -118,7 +122,7 @@ router.post('/twilio/receive', (req, res) => {
     "text": `${message}`
   });
 
-  request.end(function (response) {
+  request.end(function(response) {
     if (response.error) throw new Error(res.error);
 
     console.log(response.body);
