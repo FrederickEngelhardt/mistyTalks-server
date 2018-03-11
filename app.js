@@ -27,9 +27,15 @@ let io = socket(server);
   // fire callback function that uses a new socket
   // still awaiting call...by itself it just waits
 io.on('connection', function (socket){
-  
-// socket.id is a unique connection (like an ip address) that changes every time
+  // socket.id is a unique connection (like an ip address) that changes every time
   console.log("made socket connection", socket.id)
+
+  // individual socket is on and when loading is finished, ...
+  socket.on('load', function (data) {
+    io.sockets.emit('load', data)
+  })
+
+
 })
 
 
