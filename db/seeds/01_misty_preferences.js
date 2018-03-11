@@ -36,6 +36,11 @@ exports.seed = function(knex, Promise) {
           time_restriction_start: '14:26:16',
           time_restriction_end: '14:26:16'
         }
-      ]);
-    });
-};
+        ]);
+      })
+    .then(function() {
+      return knex.raw(
+        "SELECT setval('misty_preferences_id_seq', (SELECT MAX(id) FROM misty_preferences))"
+      )
+    })
+  };

@@ -1,3 +1,9 @@
+// Make Connection
+// second variable called socket...will not cross to the server...
+// on refresh will listen for requests
+let socket = io.connect('http://localhost:3500');
+
+
 $(".login_btn").click(() => {
   console.log("clicked");
 })

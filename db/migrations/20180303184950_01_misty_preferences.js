@@ -16,6 +16,3 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
   return knex.schema.dropTable('misty_preferences')
 };
-
-// .defaultTo(knex.raw('now()'))
-// required for tests to pass
