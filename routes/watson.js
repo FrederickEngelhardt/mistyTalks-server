@@ -123,6 +123,32 @@ function playAudio(misty_filename) {
   })
 }
 // playAudio("Im-Mr-Meeseeks-look-at-me.wav")
+
+
+function getWatsonToken () {
+  /*NOTE: Use this function to get a user token for watson WebSocket calls*/
+  return new Promise((resolve) => {
+    var request = require("request");
+
+    var options = { method: 'GET',
+    url: 'https://stream.watsonplatform.net/authorization/api/v1/token',
+    qs: { url: 'https://stream.watsonplatform.net/text-to-speech/api' },
+    headers:
+    { 'Cache-Control': 'no-cache',
+    Authorization: process.env.WATSON_BASIC_TOKEN_AUTH } };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      console.log(body);
+      return resolve(body)
+    });
+  })
+}
+router.get("/watson/token", async function (req, res, next) {
+  const get_token = await getWatsonToken()
+  res.status(200).send(get_token)
+})
+
 router.post('/watson/receive', async function(req, res, next) {
   /*
   NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
@@ -130,7 +156,7 @@ router.post('/watson/receive', async function(req, res, next) {
   TODO: Add error handling for each function that does NOT break server with throw.
 */
   let voice = 'US_AllisonVoice',
-      text = ''
+    text = ''
   if (req.body.text) text = req.body.text
   else if (!req.body.text) res.status(400).send("No text was sent. Bad request")
 
