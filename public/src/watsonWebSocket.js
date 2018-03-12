@@ -5,6 +5,20 @@ var token = `xZWasUs4J2OWvZLd542F6%2FWQmS8pfiQ93oWZvPw%2FoLrBvn4jkrsVhH%2BVTyVVt
 var wsURI = "wss://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?voice=" +
   voice + "&watson-token=" + token;
 
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/watson/token",
+    "method": "GET",
+    "headers": {
+      "Cache-Control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+
 function onOpen(evt) {
   var message = {
     text: "Hello world",
