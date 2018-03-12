@@ -47,23 +47,23 @@ function testing(body, res) {
   //   res.status(200).send("success")
   // });
 }
-testing({
-  ToCountry: 'US',
-  ToState: 'OR',
-  NumMedia: '0',
-  ToCity: '',
-  FromZip: '97230',
-  FromState: 'OR',
-  SmsStatus: 'received',
-  FromCity: 'PORTLAND',
-  Body: 'Alexa\nhttps://messages.alexa.amazon.com/s/UvmVAW45xZnpzYlWqsB3nC',
-  FromCountry: 'US',
-  To: '+19718035516',
-  ToZip: '',
-  NumSegments: '1',
-  From: '+15038063822',
-  ApiVersion: '2010-04-01'
-})
+// testing({
+//   ToCountry: 'US',
+//   ToState: 'OR',
+//   NumMedia: '0',
+//   ToCity: '',
+//   FromZip: '97230',
+//   FromState: 'OR',
+//   SmsStatus: 'received',
+//   FromCity: 'PORTLAND',
+//   Body: 'Alexa\nhttps://messages.alexa.amazon.com/s/UvmVAW45xZnpzYlWqsB3nC',
+//   FromCountry: 'US',
+//   To: '+19718035516',
+//   ToZip: '',
+//   NumSegments: '1',
+//   From: '+15038063822',
+//   ApiVersion: '2010-04-01'
+// })
 
 router.post('/twilio/receive', (req, res) => {
   console.log(req.body);
