@@ -89,8 +89,11 @@ router.get('/misty_preferences/:id', (req, res, next) => {
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
 router.post('/users', (req, res, next) => {
-  const first_name = '';
-  const last_name = '';
+  console.log(res)
+
+
+
+
   const { email, password } = req.body
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
   console.log(req.body);

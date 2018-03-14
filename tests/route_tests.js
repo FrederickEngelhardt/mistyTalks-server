@@ -2,6 +2,7 @@ var request = require('supertest');
 var app = require('../app').app;
 const mocha = require('mocha')
 const chai = require('chai')
+const expect = chai.expect;
 
 describe('test to see if our routes are responding', function () {
   beforeEach(function () {

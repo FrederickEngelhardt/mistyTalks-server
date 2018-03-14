@@ -11,9 +11,9 @@ Knex
 
 
 Run NPM tests:
-  npm test test/migration_tests
-  npm test test/route_tests
-  npm test test/seed_tests
+  npm test tests/migration_tests
+  npm test tests/route_tests
+  npm test tests/seed_tests
 
 
 Twilio API (TextToSpeech)

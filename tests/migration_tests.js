@@ -1,13 +1,14 @@
-
 const fs = require('fs')
 const path = require('path')
 const mocha = require('mocha')
 const chai = require('chai')
 const knex = require('../knex')
+const expect = chai.expect
+
 // *** Users Table Testing ***
 describe('Users Table', () => {
   beforeEach(() => {
-    this.config = { directory: path.join(__dirname, '.', '/db/migrations') }
+    this.config = { directory: path.join(__dirname, '../db/migrations') }
     return knex.migrate.latest(this.config).catch(err => {
       expect.fail(null, null, err)
     })
@@ -18,13 +19,24 @@ describe('Users Table', () => {
       .columnInfo()
       .then(actual => {
         const expected = {
-          user_id: {
+          id: {
             type: 'integer',
             maxLength: null,
             nullable: false,
             defaultValue: "nextval('users_user_id_seq'::regclass)"
           },
-
+          first_name: {
+            type: 'character varying',
+            maxLength: 255,
+            nullable: false,
+            defaultValue: "''::character varying"
+          },
+          last_name: {
+            type: 'character varying',
+            maxLength: 255,
+            nullable: false,
+            defaultValue: "''::character varying"
+          },
           email: {
             type: 'character varying',
             maxLength: 255,
@@ -36,30 +48,7 @@ describe('Users Table', () => {
             maxLength: 255,
             nullable: false,
             defaultValue: "''::character varying"
-          },
-          misty_voice: {
-            type: 'character varying',
-            maxLength: 255,
-            nullable: false,
-            defaultValue: "''::character varying"
-          },
-          set_emotions: {
-            type: 'character varying',
-            maxLength: 255,
-            nullable: false,
-            defaultValue: "''::character varying"
-          },
-          time_restriction_start: {
-            type: 'character varying',
-            maxLength: 25,
-            nullable: false,
-            defaultValue: "''::character varying"
-          },
-          time_restriction_end: {
-            type: 'character varying',
-            maxLength: 25,
-            nullable: false,
-            defaultValue: "''::character varying"
+
           }
         }
         for (const column in expected) {
@@ -90,7 +79,7 @@ describe('Users Table', () => {
 // *** Users-Misty_Preferences JOINED Table Testing ***
 describe('Users-Misty_Preferences Table', () => {
   beforeEach(() => {
-    this.config = { directory: path.join(__dirname, '.', 'db/migrations') }
+    this.config = { directory: path.join(__dirname, '../db/migrations') }
     return knex.migrate.latest(this.config).catch(err => {
       expect.fail(null, null, err)
     })
@@ -101,20 +90,24 @@ describe('Users-Misty_Preferences Table', () => {
     .columnInfo()
     .then(actual => {
       const expected = {
-        users_id: {
+        id: {
           type: 'integer',
           maxLength: null,
           nullable: false,
-          defaultValue: "nextval('workshops_workshop_id_seq'::regclass)"
+          defaultValue: "nextval('misty_preferences_id_seq'::regclass)"
         },
-
-        misty_preference_id: {
+        user_id: {
           type: 'integer',
           maxLength: null,
           nullable: false,
-          defaultValue: "nextval('mentors_mentor_id_seq'::regclass)"
+          defaultValue: "nextval('misty_preferences_misty_preferences_user_id_user_id_seq'::regclass)"
+        // },
+        // user_id: {
+        //   type: 'foreign',
+        //   maxLength: null,
+        //   nullable: false,
+        //   defaultValue: "nextval('misty_preferences_user_id_user_id_seq'::regclass)"
         }
-
       }
       for (const column in expected) {
         const err = `Column ${column} is not the same`
@@ -145,7 +138,7 @@ describe('Users-Misty_Preferences Table', () => {
 // *** Misty_Preferences Testing ***
 describe('Misty_Preferences Table', () => {
   beforeEach(() => {
-    this.config = { directory: path.join(__dirname, '.', 'db/migrations') }
+    this.config = { directory: path.join(__dirname, '../db/migrations') }
     return knex.migrate.latest(this.config).catch(err => {
       expect.fail(null, null, err)
     })
@@ -156,7 +149,7 @@ describe('Misty_Preferences Table', () => {
       .columnInfo()
       .then(actual => {
         const expected = {
-          misty_preference_id: {
+          id: {
             type: 'integer',
             maxLength: null,
             nullable: false,
@@ -175,7 +168,12 @@ describe('Misty_Preferences Table', () => {
             nullable: false,
             defaultValue: "''::character varying"
           },
-
+          auth_numbers_string: {
+            type: 'character varying',
+            maxLength: 255,
+            nullable: false,
+            defaultValue: "''::character varying"
+          },
           ip_address: {
             type: 'character varying',
             maxLength: 25,
@@ -184,12 +182,23 @@ describe('Misty_Preferences Table', () => {
           },
 
           port_number: {
-            type: 'character varying',
+            type: 'integer',
             maxLength: 25,
             nullable: false,
             defaultValue: "''::character varying"
+          },
+          misty_voice: {
+            type: 'character varying',
+            maxLength: 255,
+            nullable: false,
+            defaultValue: "''::character varying"
+          },
+          set_emotion: {
+            type: 'character varying',
+            maxLength: 255,
+            nullable: false,
+            defaultValue: "''::character varying"
           }
-
         }
         for (const column in expected) {
           const err = `Column ${column} is not the same`
