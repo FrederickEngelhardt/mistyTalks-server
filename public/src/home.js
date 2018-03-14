@@ -256,19 +256,16 @@ const getAllImagesMisty = () => {
       "url": "http://192.168.1.129/Api/GetListOfImages",
       "method": "GET",
       "headers": {
-        "Cache-Control": "no-cache"
+        "Access-Control-Allow-Origin": "*"
       }
     }
 
-    $.ajax(settings).done(function(response) {
-      let audioFiles = response[0].result
-      for (let i in audioFiles) {
-        console.log(audioFiles[i]);
-      }
+    $.ajax(settings).done(function (response) {
       console.log(response);
     });
   })
 }
+
 getAllImagesMisty()
 $(document).ready(() => {
   add_all_voices()
@@ -278,6 +275,17 @@ $(document).ready(() => {
   /*
     Materialize functions
   */
+  $('.timepicker').pickatime({
+  default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+  fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+  twelvehour: false, // Use AM/PM or 24-hour format
+  donetext: 'OK', // text for done-button
+  cleartext: 'Clear', // text for clear-button
+  canceltext: 'Cancel', // Text for cancel-button
+  autoclose: false, // automatic close timepicker
+  ampmclickable: true, // make AM PM clickable
+  aftershow: function(){} //Function for after opening timepicker
+});
   $('select').material_select();
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
