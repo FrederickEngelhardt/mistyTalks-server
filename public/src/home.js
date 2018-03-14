@@ -1,3 +1,6 @@
+/*
+  BEGGINING OF FORM SUBMISSION FUNCTIONS
+*/
 const add_number = (count) => {
 
   return (`<div class="deleteNumberFields${count} row center">
@@ -197,26 +200,6 @@ const add_all_voices = () => {
 */
 let added_number_count = 1
 
-// Make Connection
-// second variable called socket...will not cross to the server...
-// on refresh will listen for requests
-
-// Validate new user password matches in both fields.
-// let socket = io.connect('http://localhost:3500');
-//
-// let password = document.getElementById("password")
-//   , confirm_password = document.getElementById("confirm_password");
-//
-// function validatePassword(){
-//   if(password.value != confirm_password.value) {
-//     confirm_password.setCustomValidity("Passwords Don't Match");
-//   } else {
-//     confirm_password.setCustomValidity('');
-//   }
-// }
-// password.onchange = validatePassword;
-// confirm_password.onkeyup = validatePassword;
-// end password validation
 
 console.log("loaded home.js");
 
@@ -262,8 +245,31 @@ const retrieveSubmitFormData = (event) => {
   // Missing phone numeber iteration
 }
 const sendSubmitForm = (data) => {}
+/*
+  END OF FORM SUBMISION FUNCTIONS
+*/
+const getAllImagesMisty = () => {
+  return new Promise((resolve) => {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://192.168.1.129/Api/GetListOfImages",
+      "method": "GET",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
+    }
 
-
+    $.ajax(settings).done(function(response) {
+      let audioFiles = response[0].result
+      for (let i in audioFiles) {
+        console.log(audioFiles[i]);
+      }
+      console.log(response);
+    });
+  })
+}
+getAllImagesMisty()
 $(document).ready(() => {
   add_all_voices()
   create_listeners();

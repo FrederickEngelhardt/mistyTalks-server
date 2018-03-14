@@ -115,7 +115,7 @@ function playAudio(misty_filename) {
     }));
 
     req.end(function(res) {
-      if (res.error) throw new Error(res.error);
+      if (res.error) console.log(res.error);
       else {
         resolve('audioPlayed')
       }
@@ -165,7 +165,6 @@ router.post('/watson/receive', async function(req, res, next) {
 
   if (req.body.voice) voice = req.body.voice
   const write_file = await writeFile(req.body.text)
-  console.log();
   const read_file = await read()
   const write_audio_misty = await writeAudioMisty(read_file)
   const play_audio = await playAudio()
