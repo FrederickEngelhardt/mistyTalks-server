@@ -1,24 +1,16 @@
 const express = require("express")
 const router = express.Router();
 const env = require("dotenv").config()
-<<<<<<< HEAD
 
 // Watson API references
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 const fs = require('fs');
-// const txt = require('unit8array-loader')
-=======
-// Watson API references
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-const fs = require('fs');
->>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
 
 const text_to_speech = new TextToSpeechV1({
   username: process.env.USERNAME,
   password: process.env.PASSWORD
 });
 
-<<<<<<< HEAD
 function read() {
   return new Promise((resolve, reject) => {
     const path = './textResponse.wav'
@@ -39,8 +31,6 @@ function read() {
   })
 }
 
-=======
->>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
 function writeFile(text, voice) {
   // Params are the defaults of information requested from watson API
   let params = {
@@ -48,15 +38,9 @@ function writeFile(text, voice) {
     voice: 'en-US_AllisonVoice',
     accept: 'audio/wav'
   }
-<<<<<<< HEAD
 
   // Check to see if writeFile has new information
   // Updates params if the values are present
-  if (voice) params["voice"] = voice
-=======
-// Check to see if writeFile has new information
-// Updates params if the values are present
->>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
   if (text) params["text"] = text;
   if (voice) params["voice"] = voice;
 
