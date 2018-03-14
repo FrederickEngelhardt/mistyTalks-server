@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Account Settings</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./src/home.js"></script>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+        <ul class="right">
+          <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">home</i></a></li>
+          <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">help</i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="mobile-demo">
+    <li><a class="go_to_home" href="home.html">Home</a></li>
+    <li><a class="go_to_misty_preferences" href="">Misty Preferences</a></li>
+    <li><a class="go_to_dev_console" href="">Dev Console</a></li>
+    <li>
+      <a class="logout" href="index.html">
+        <div class="logout_text">Logout</div>
+      </a>
+    </li>
+  </ul>
+  <div class="account_settings_container">
+    <div class="profile_card white">
+
+      <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
+        <h4 class="title_box">Misty Preference</h4>
+        <!--First Name-->
+        <h5>Preference Name:</h5>
+        <div class="row center">
+          <div class="col s9 m9 l9">
+            <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+          </div>
+        </div>
+        <!--End First Name-->
+
+        <!-- Last Name -->
+        <h5>Robot Name:</h5>
+        <div class="row center">
+          <div class="col s9 m9 l9">
+            <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
+          </div>
+        </div>
+        <!-- End Last Name -->
+
+        <!--user email -->
+        <h5>IP Address:</h5>
+        <div class="row center">
+          <div class="col s9 m9 l9">
+            <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+          </div>
+        </div>
+        <!-- end of user email  -->
+
+        <!--user email -->
+        <h5>Port Number(if applicable):</h5>
+        <div class="row">
+          <div class="col s9 m9 l9">
+            <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+          </div>
+        </div>
+        <!-- end of user email  -->
+
+        <!--Authorize numbers input here -->
+        <div id="add_phone_number_location">
+          <h5>Authorized Phone Numbers:</h5>
+          <div class="row center">
+            <div class="col s2 m2 l2">
+              <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+            </div>
+            <div class="col s7 m7 l7">
+              <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+            </div>
+            <div class="col s2 m2 l2">
+              <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+              <i class="material-icons">add</i>
+            </a>
+            </div>
+          </div>
+        </div>
+        <!-- End authorization numbers -->
+
+        <!--misty voice settings -->
+        <h5>Misty Voice</h5>
+        <div class="row">
+          <div class="input-field col browser-default s9 m9 l9">
+            <select id="choose_voices">
+                <option value="" disabled selected>Choose your misty Voice</option>
+              </select>
+          </div>
+        </div>
+        <!-- end of misty voice settings-->
+
+        <!--misty voice settings -->
+        <h5>Misty Robot Face</h5>
+        <div class="row">
+          <div class="input-field col browser-default s9 m9 l9">
+            <select id="choose_face_image">
+                <option value="" disabled selected>Choose Misty Face</option>
+              </select>
+          </div>
+        </div>
+        <!-- end of misty voice settings-->
+
+        <!-- Form submit/exit buttons here.  -->
+
+        <div class="row center">
+          <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+          <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+        </div>
+      </form>
+
+
+
+
+    </div>
+  </div>
+</body>
+
+</html>

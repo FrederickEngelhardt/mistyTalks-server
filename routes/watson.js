@@ -1,16 +1,77 @@
 const express = require("express")
 const router = express.Router();
 const env = require("dotenv").config()
+<<<<<<< HEAD
 
 // Watson API references
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 const fs = require('fs');
 // const txt = require('unit8array-loader')
+=======
+// Watson API references
+const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+const fs = require('fs');
+>>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
 
 const text_to_speech = new TextToSpeechV1({
   username: process.env.USERNAME,
   password: process.env.PASSWORD
 });
+
+<<<<<<< HEAD
+function read() {
+  return new Promise((resolve, reject) => {
+    const path = './textResponse.wav'
+    // file is a ArrayBuffer
+    let file = fs.readFileSync(path)
+
+    // Using global Buffer class in node.js we instantiate a new buffer class using the ArrayBuffer from file.
+    var b = new Buffer(file)
+
+    // ab refers to the undlying ArrayBuffer created with b.
+    var ab = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+
+    // Turns the buffer in unsigned integer 8 array string
+    var ui8 = new Uint8Array(b.buffer, b.byteOffset, b.byteLength / Uint8Array.BYTES_PER_ELEMENT).toString()
+
+    // Resolves the promise and returns the ui8 string
+    return resolve(ui8)
+  })
+}
+
+=======
+>>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
+function writeFile(text, voice) {
+  // Params are the defaults of information requested from watson API
+  let params = {
+    text: 'No text was sent.',
+    voice: 'en-US_AllisonVoice',
+    accept: 'audio/wav'
+  }
+<<<<<<< HEAD
+
+  // Check to see if writeFile has new information
+  // Updates params if the values are present
+  if (voice) params["voice"] = voice
+=======
+// Check to see if writeFile has new information
+// Updates params if the values are present
+>>>>>>> 1b8eaf11777c01f68acfff7efbfc49f51430a24b
+  if (text) params["text"] = text;
+  if (voice) params["voice"] = voice;
+
+  return new Promise((resolve, reject) => {
+    // Creation of file using watson's node_module and calling their function synthesize
+    const writable = fs.createWriteStream('textResponse.wav')
+    text_to_speech.synthesize(params).on('error', function(error) {
+      console.log('Error:', error);
+    }).pipe(writable)
+    // Add listeners to writable so that the promise is not resolved until writable finishes
+    writable
+      .on('error', (err) => reject(err)) // NOTE: potential breakage here for making this function 1 line :)
+      .on('finish', resolve("success")) // check for promise to resolve with file
+  })
+}
 
 function read() {
   return new Promise((resolve, reject) => {
@@ -32,32 +93,6 @@ function read() {
   })
 }
 
-function writeFile(text, voice) {
-  // Params are the defaults of information requested from watson API
-  let params = {
-    text: 'No text was sent.',
-    voice: 'en-US_AllisonVoice',
-    accept: 'audio/wav'
-  }
-
-  // Check to see if writeFile has new information
-  // Updates params if the values are present
-  if (voice) params["voice"] = voice
-  if (text) params["text"] = text;
-  return new Promise((resolve, reject) => {
-    const writable = fs.createWriteStream('textResponse.wav')
-    text_to_speech.synthesize(params).on('error', function(error) {
-      console.log('Error:', error);
-    }).pipe(writable)
-    writable
-      .on('error', (err) => {
-        reject(err)
-      })
-      .on('finish', resolve)
-    // check for promise to resolve with file
-  })
-}
-
 function writeAudioMisty(byteStreamArray, filename) {
   /*
     byteStreamArray to be sent to misty and written as a file on the misty robot.
@@ -69,9 +104,9 @@ function writeAudioMisty(byteStreamArray, filename) {
   if (!byteStreamArray) throw new Error('ByteStreamArray not sent')
 
   return new Promise((resolve, reject) => {
-    var unirest = require("unirest");
+    const unirest = require("unirest");
 
-    var req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
+    const req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
 
     req.headers({
       "Cache-Control": "no-cache"
@@ -115,7 +150,7 @@ function playAudio(misty_filename) {
     }));
 
     req.end(function(res) {
-      if (res.error) throw new Error(res.error);
+      if (res.error) console.log(res.error);
       else {
         resolve('audioPlayed')
       }
