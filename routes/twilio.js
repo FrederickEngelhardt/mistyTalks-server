@@ -1,7 +1,6 @@
 const express = require('express')
 const knex = require('../knex')
 const router = express.Router()
-// const watson = require('./watson')
 
 function testing(body, res) {
   console.log(body);
