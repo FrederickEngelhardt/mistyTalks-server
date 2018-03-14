@@ -112,8 +112,7 @@ for (let i = 0; i < newArr.length; i++){
   }
 }
 
-
-// secondary way that failed...
+// Secondary way for above...
 // from.includes('#voice')
 // let newArr = []
 // let newStr = ''
@@ -122,6 +121,9 @@ for (let i = 0; i < newArr.length; i++){
 // for (let i = 0; i < newArr.length; i++){
 //  i === newArr.length-1 ? from = newArr.join('') : newArr[i] += ' , '
 // }
+
+
+
 
 
   /*
