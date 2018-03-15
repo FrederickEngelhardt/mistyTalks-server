@@ -2,4 +2,4 @@
 .env
 .DS_Store
 textResponse.wav
-/audio
+audio/*

@@ -188,7 +188,9 @@ input::placeholder {
 input.login-input-text {
   color: #6700ED;
 }
-
+.hide_this {
+  display: none;
+}
 #open_login{
   background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
