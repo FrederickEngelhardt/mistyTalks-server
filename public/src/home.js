@@ -78,10 +78,188 @@ let added_number_count = 1
 console.log("loaded home.js");
 
 const create_listeners = () => {
+  // **** MAIN HOME PAGE LISTENERS ****
+  /*
+    Edit/View Account information
+  */
   $("#button_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
-    $()
+    const html = `  <div class="account_settings_container">
+        <div class="profile_card white">
+          <h4 class="title_box">Account Information</h4>
+          <form id="edit_card_body">
+
+            <!--First Name-->
+            <h5>First Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="first_name" name="first" value="" placeholder="First Name" required>
+              </div>
+            </div>
+            <!--End First Name-->
+
+            <!-- Last Name -->
+            <h5>Last Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="last_name" name="last" value="" placeholder="Last Name" required>
+              </div>
+            </div>
+            <!-- End Last Name -->
+
+            <!--user email -->
+            <h5>Email:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="email" id="email" name="email" value="" placeholder="email@mistytalks.com" required>
+              </div>
+            </div>
+            <!-- end of user email  -->
+
+            <!--user email -->
+            <h5>New Password:</h5>
+            <div class="row">
+              <div class="col s9 m9 l9">
+                <input type="password" id="password" name="email" value="" placeholder="password" required>
+                <input type="password" id="confirm_password" name="email" value="" placeholder="confirm password" required>
+              </div>
+            </div>
+            <!-- end of user email  -->
+
+            <!-- Form submit/exit buttons here.  -->
+            <div class="row center">
+              <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+              <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+            </div>
+          </form>
+
+
+
+
+        </div>
+      </div>`
+    $(".container").append(html)
   })
+  /*
+    End of Edit/View Account
+  */
+
+  $('#button_preferences').on("click", () => {
+    $(".display_home").addClass("hide_this")
+    const html =  `
+    <div class="account_settings_container">
+      <div class="profile_card white">
+
+        <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
+          <h4 class="title_box">Misty Preferences</h4>
+          <!--First Name-->
+          <h5>Preference Name:</h5>
+          <div class="row center">
+            <div class="col s9 m9 l9">
+              <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+            </div>
+          </div>
+          <!--End First Name-->
+
+          <!-- Last Name -->
+          <h5>Robot Name:</h5>
+          <div class="row center">
+            <div class="col s9 m9 l9">
+              <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
+            </div>
+          </div>
+          <!-- End Last Name -->
+
+          <!--user email -->
+          <h5>IP Address:</h5>
+          <div class="row center">
+            <div class="col s9 m9 l9">
+              <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+            </div>
+          </div>
+          <!-- end of user email  -->
+
+          <!--user email -->
+          <h5>Port Number(if applicable):</h5>
+          <div class="row">
+            <div class="col s9 m9 l9">
+              <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+            </div>
+          </div>
+          <!-- end of user email  -->
+
+          <!--Authorize numbers input here -->
+          <div id="add_phone_number_location">
+            <h5>Authorized Phone Numbers:</h5>
+            <div class="row center">
+              <div class="col s2 m2 l2">
+                <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+              </div>
+              <div class="col s7 m7 l7">
+                <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+              </div>
+              <div class="col s2 m2 l2">
+                <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+                <i class="material-icons">add</i>
+              </a>
+              </div>
+            </div>
+          </div>
+          <!-- End authorization numbers -->
+
+          <!--misty voice settings -->
+          <h5>Misty Voice</h5>
+          <div class="row">
+            <div class="input-field col browser-default s9 m9 l9">
+              <select id="choose_voices">
+                  <option value="" disabled selected>Choose your misty Voice</option>
+                </select>
+            </div>
+          </div>
+          <!-- end of misty voice settings-->
+
+          <!--misty face settings -->
+          <h5>Misty Robot Face</h5>
+          <div class="row">
+            <div class="input-field col browser-default s9 m9 l9">
+              <select id="choose_face_image">
+                  <option value="" disabled selected>Choose Misty Face</option>
+                </select>
+            </div>
+          </div>
+          <!-- end of misty face settings-->
+
+          <!--misty face settings -->
+          <h5>Misty Robot Quiet Hours</h5>
+          <div class="row">
+              <p class="col s6 m6 l6">Start Time:</p>
+              <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+              <p class="col s6 m6 l6">End Time:</p>
+              <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+          </div>
+          <!-- end of misty face settings-->
+
+          <!-- Form submit/exit buttons here.  -->
+
+          <div class="row center">
+            <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+            <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    `
+    $(`.container`).append(html)
+    add_all_voices()
+    getAllImagesMisty()
+  })
+
+  /*
+    Edit/View Preferences
+  */
+
+  // *** END OF MAIN HOME PAGE LISTENERS*
 
   /*
     addNumber lets you add multiple numbers to the form.
@@ -125,43 +303,10 @@ const sendSubmitForm = (data) => {}
   END OF FORM SUBMISION FUNCTIONS
 */
 const getAllImagesMisty = () => {
-  // return new Promise((resolve) => {
-    let settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "http://192.168.1.129/Api/GetListOfImages",
-      "method": "GET",
-      "headers": {
-      }
-    }
+  
+}
 
-    $.ajax(settings).done(function (response) {
-      console.log(response[0].result)
-      let array = response[0].result
-      for (let i in array) {
-        console.log(array[i].name);
-        let html = `<option value="${i}">${array[i].name}</option>`
-        console.log(html);
-        $('#choose_face_image').append(html)
-        return resolve(response)
-      }
-    });
-  // })
-}
-function test (data) {
-  $(`#choose_face_image`).append(`<option value="${data}" disabled selected>Choose Misty Face</option>`)
-}
-$.ajax({
-  url: `http://192.168.1.129/Api/GetListOfImages`,
-  method: "GET",
-  success: function(data) {
-    console.log(data);
-    $('#choose_face_image').append(`<option value="" disabled selected>Choose Misty Face</option>`);
-  }
-});
 $(document).ready(() => {
-  // $(".container").css("display", "none")
-  add_all_voices()
   create_listeners();
   /*
     Materialize functions

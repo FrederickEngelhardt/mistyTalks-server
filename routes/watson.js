@@ -162,9 +162,6 @@ function getWatsonToken () {
 router.get("/watson/token", async function (req, res, next) {
   const get_token = await getWatsonToken()
   res.status(200).send(get_token)
-  res.render('user2', { name: 'Tobi' }, function(err, html) {
-    // ...
-  });
 })
 
 router.post('/watson/receive', async function(req, res, next) {
