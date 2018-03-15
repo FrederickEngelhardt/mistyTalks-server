@@ -44,34 +44,30 @@ function writeFile(text, voice) {
   if (text) params["text"] = text;
   if (voice) params["voice"] = voice;
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // Creation of file using watson's node_module and calling their function synthesize
-    const writable = fs.createWriteStream('textResponse.wav')
+    const writable = fs.createWriteStream('./audio/textResponse.wav')
     text_to_speech.synthesize(params).on('error', function(error) {
       console.log('Error:', error);
     }).pipe(writable)
-    // Add listeners to writable so that the promise is not resolved until writable finishes
-    writable
-      .on('error', (err) => reject(err)) // NOTE: potential breakage here for making this function 1 line :)
-      .on('finish', resolve("success")) // check for promise to resolve with file
+
+    // Waits till writable completes
+    writable.on('error', (err) => {(err)}).on('finish', function() {resolve("success")})
   })
 }
 
 function read() {
   return new Promise((resolve, reject) => {
-    const path = './textResponse.wav'
+    const path = './audio/textResponse.wav'
     // file is a ArrayBuffer
     let file = fs.readFileSync(path)
-
     // Using global Buffer class in node.js we instantiate a new buffer class using the ArrayBuffer from file.
     var b = new Buffer(file)
-
     // ab refers to the undlying ArrayBuffer created with b.
     var ab = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
 
     // Turns the buffer in unsigned integer 8 array string
     var ui8 = new Uint8Array(b.buffer, b.byteOffset, b.byteLength / Uint8Array.BYTES_PER_ELEMENT).toString()
-
     // Resolves the promise and returns the ui8 string
     return resolve(ui8)
   })

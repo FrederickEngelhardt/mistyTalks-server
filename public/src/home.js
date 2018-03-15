@@ -20,171 +20,45 @@ const add_number = (count) => {
 
 const voices = [{
     "name": "es-LA_SofiaVoice",
-    "language": "es-LA",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-LA_SofiaVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Sofia: Latin American Spanish (español latinoamericano) female voice."
   },
   {
     "name": "pt-BR_IsabelaVoice",
-    "language": "pt-BR",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/pt-BR_IsabelaVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Isabela: Brazilian Portuguese (português brasileiro) female voice."
   },
   {
     "name": "en-GB_KateVoice",
-    "language": "en-GB",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Kate: British English female voice."
   },
   {
     "name": "de-DE_BirgitVoice",
-    "language": "de-DE",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Birgit: Standard German of Germany (Standarddeutsch) female voice."
   },
   {
     "name": "en-US_AllisonVoice",
-    "language": "en-US",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonVoice",
-    "supported_features": {
-      "voice_transformation": true,
-      "custom_pronunciation": true
-    },
-    "description": "Allison: American English female voice."
   },
   {
     "name": "fr-FR_ReneeVoice",
-    "language": "fr-FR",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Renee: French (français) female voice."
   },
   {
     "name": "it-IT_FrancescaVoice",
-    "language": "it-IT",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Francesca: Italian (italiano) female voice."
   },
   {
     "name": "es-ES_LauraVoice",
-    "language": "es-ES",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Laura: Castilian Spanish (español castellano) female voice."
   },
   {
     "name": "ja-JP_EmiVoice",
-    "language": "ja-JP",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Emi: Japanese (日本語) female voice."
   },
   {
     "name": "es-ES_EnriqueVoice",
-    "language": "es-ES",
-    "customizable": true,
-    "gender": "male",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Enrique: Castilian Spanish (español castellano) male voice."
   },
   {
     "name": "de-DE_DieterVoice",
-    "language": "de-DE",
-    "customizable": true,
-    "gender": "male",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Dieter: Standard German of Germany (Standarddeutsch) male voice."
   },
   {
     "name": "en-US_LisaVoice",
-    "language": "en-US",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaVoice",
-    "supported_features": {
-      "voice_transformation": true,
-      "custom_pronunciation": true
-    },
-    "description": "Lisa: American English female voice."
   },
   {
     "name": "en-US_MichaelVoice",
-    "language": "en-US",
-    "customizable": true,
-    "gender": "male",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice",
-    "supported_features": {
-      "voice_transformation": true,
-      "custom_pronunciation": true
-    },
-    "description": "Michael: American English male voice."
   },
   {
     "name": "es-US_SofiaVoice",
-    "language": "es-US",
-    "customizable": true,
-    "gender": "female",
-    "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaVoice",
-    "supported_features": {
-      "voice_transformation": false,
-      "custom_pronunciation": true
-    },
-    "description": "Sofia: North American Spanish (español norteamericano) female voice."
   }
 ]
 const add_all_voices = () => {
@@ -204,8 +78,9 @@ let added_number_count = 1
 console.log("loaded home.js");
 
 const create_listeners = () => {
-  $(".login_btn").click(() => {
-    console.log("clicked");
+  $("#button_my_account").on("click", () => {
+    $(".display_home").addClass("hide_this")
+    $()
   })
 
   /*
@@ -221,6 +96,7 @@ const create_listeners = () => {
       console.log(added_number_count);
     })
   })
+  // end of addNumber
 }
 
 const retrieveSubmitFormData = (event) => {
@@ -249,35 +125,58 @@ const sendSubmitForm = (data) => {}
   END OF FORM SUBMISION FUNCTIONS
 */
 const getAllImagesMisty = () => {
-  return new Promise((resolve) => {
-    var settings = {
+  // return new Promise((resolve) => {
+    let settings = {
       "async": true,
       "crossDomain": true,
       "url": "http://192.168.1.129/Api/GetListOfImages",
       "method": "GET",
       "headers": {
-        "Cache-Control": "no-cache"
       }
     }
 
-    $.ajax(settings).done(function(response) {
-      let audioFiles = response[0].result
-      for (let i in audioFiles) {
-        console.log(audioFiles[i]);
+    $.ajax(settings).done(function (response) {
+      console.log(response[0].result)
+      let array = response[0].result
+      for (let i in array) {
+        console.log(array[i].name);
+        let html = `<option value="${i}">${array[i].name}</option>`
+        console.log(html);
+        $('#choose_face_image').append(html)
+        return resolve(response)
       }
-      console.log(response);
     });
-  })
+  // })
 }
-getAllImagesMisty()
+function test (data) {
+  $(`#choose_face_image`).append(`<option value="${data}" disabled selected>Choose Misty Face</option>`)
+}
+$.ajax({
+  url: `http://192.168.1.129/Api/GetListOfImages`,
+  method: "GET",
+  success: function(data) {
+    console.log(data);
+    $('#choose_face_image').append(`<option value="" disabled selected>Choose Misty Face</option>`);
+  }
+});
 $(document).ready(() => {
+  // $(".container").css("display", "none")
   add_all_voices()
   create_listeners();
-
-
   /*
     Materialize functions
   */
+  $('.timepicker').pickatime({
+  default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+  fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+  twelvehour: false, // Use AM/PM or 24-hour format
+  donetext: 'OK', // text for done-button
+  cleartext: 'Clear', // text for clear-button
+  canceltext: 'Cancel', // Text for cancel-button
+  autoclose: false, // automatic close timepicker
+  ampmclickable: true, // make AM PM clickable
+  aftershow: function(){} //Function for after opening timepicker
+});
   $('select').material_select();
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal

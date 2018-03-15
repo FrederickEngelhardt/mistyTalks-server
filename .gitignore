@@ -2,5 +2,5 @@
 .env
 .DS_Store
 textResponse.wav
-/audio
-public/src/scottsNotes.js
+audio/*
+/public/src/scottsNotes.js

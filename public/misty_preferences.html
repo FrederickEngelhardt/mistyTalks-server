@@ -45,7 +45,7 @@
     <div class="profile_card white">
 
       <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
-        <h4 class="title_box">Misty Preference</h4>
+        <h4 class="title_box">Misty Preferences</h4>
         <!--First Name-->
         <h5>Preference Name:</h5>
         <div class="row center">
@@ -112,7 +112,7 @@
         </div>
         <!-- end of misty voice settings-->
 
-        <!--misty voice settings -->
+        <!--misty face settings -->
         <h5>Misty Robot Face</h5>
         <div class="row">
           <div class="input-field col browser-default s9 m9 l9">
@@ -121,7 +121,17 @@
               </select>
           </div>
         </div>
-        <!-- end of misty voice settings-->
+        <!-- end of misty face settings-->
+
+        <!--misty face settings -->
+        <h5>Misty Robot Quiet Hours</h5>
+        <div class="row">
+            <p class="col s6 m6 l6">Start Time:</p>
+            <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+            <p class="col s6 m6 l6">End Time:</p>
+            <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+        </div>
+        <!-- end of misty face settings-->
 
         <!-- Form submit/exit buttons here.  -->
 
