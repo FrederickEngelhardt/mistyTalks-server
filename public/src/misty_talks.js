@@ -16,11 +16,7 @@ const newOutbound = (first_name, last_name, phone_number, message) => {
   if(first_name || last_name){
     first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
     last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
-    let userSender = `${first_name} ${last_name} `;
-    console.log(userSender, " ",  message)
-    console.log(message)
-
-    let outMessage = `<p><strong> ${userSender}: </strong> ${message}</p>`
+    let outMessage = `<p><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
 
     $("#chat-window").prepend(outMessage)
 
@@ -28,9 +24,17 @@ const newOutbound = (first_name, last_name, phone_number, message) => {
     $("#message").val('')
   }
 
-// use number as identifier name if no first or last is available
-//if (first_name === null && last_name === null){
+// use phone number as identifier name if no first or last is available
+  if (first_name === null && last_name === null){
+//phone_number =  = first_name.charAt(0).toUpperCase() + first_name.slice(1)
+last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
+let outMessage = `<p><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
 
+$("#chat-window").prepend(outMessage)
+
+// output
+$("#message").val('')
+}
 // return "wow"
 // (`<div class="messageOut row center"><div class="col s2 m2 l2"><`)
 //}
