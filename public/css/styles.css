@@ -1,7 +1,7 @@
 *{
   margin: 0;
   padding: 0;
-  font-family: 'helvetica', 'arial', 'helvetica';
+  font-family: 'arial', 'arial', 'helvetica';
   font-weight: 100;
 }
 a {
@@ -17,7 +17,7 @@ body {
   font-size: x-small;
   color: #666666;
   /* background: url("../images/Misty_side.jpeg") */
-  background: #FFFEFD; /*Off White */
+  /* background: #FFFEFD; /*Off White */ */
   background: #f6eaff /*very light  purple */
   no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -74,7 +74,7 @@ h1.navigation {
   top: -50px;
 }
 
-main .container {
+main.container {
   position: absolute;
   top: 50%;
   left: 20px;
@@ -108,20 +108,10 @@ main .container {
   top: 10%;
 }
 
-.input-field {
-  color: white;
-  background-color: rgba(105,100,100,0.8);
-  opacity: 30%;
-  height: 50%;
-}
-#pageDescription {
-  border-radius: 25px;
-  background-color: #FAAD00;
-}
 
 /* Beginning of home.html*/
 nav {
-  background-color: #FAAD00;
+  background-color: #6700ED;
   padding-left: 0%;
   padding-right: 5%;
 }
@@ -138,24 +128,49 @@ label {
 .profBody {
   font-size: 20px;
 }
-#profile_card {
-  color: white;
+.account_settings_container {
+  padding: 20px;
+  display: grid;
+  justify-content: center;
+}
+.profile_card {
+  grid-column: 1;
+  min-width: 300px;
+  max-width: 800px;
+  /* height: 500px; */
+  background: blue;
+  padding: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #edit_card_body {
-  color: white;
+  color: black;
   font-size: 20px;
 }
-#submitButton {
+.title_box, input {
+  color: black;
+}
+input::placeholder {
+  color: grey;
+}
+#saveButton {
   margin-top: 50px;
   line-height: 25px;
   padding-top: 5px;
   font-size: 20px;
-  background-color: #FAAD00;
+  background-color: green;
 }
-/*****index*****/
+#cancelButton {
+  margin-top: 50px;
+  line-height: 25px;
+  padding-top: 5px;
+  font-size: 20px;
+  background-color: red;
+}
+
+
+/*****index/login page*****/
 .modal {
   background: #f0e0ff; /*slightly darker white purple*/
-  width: 95%;
 }
 .modal-font {
   color: #6700ED;
@@ -196,6 +211,12 @@ input.login-input-text {
 
 /*****start home*****/
 
+.form_input {
+  position: relative;
+  width: 60%;
+  box-sizing: border-box;
+  /* background: white; */
+}
 #loginScreenButton {
   line-height: 28px;
   height: 60px;
@@ -276,43 +297,7 @@ input.login-input-text {
   width: 95%;
 }
 
-.lessonReq{
-  padding-left: 0;
-}
 /* End of home menu*/
-
-
-
-/*****instructors*****/
-
-
-.card-title{
-  font: black;
-}
-.card{
-  margin: 20px;
-}
-
-#instructor_bio {
-  font-size: 16px;
-  display: flex;
-  justify-content: left;
-}
-
-#lessonAvail {
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-}
-
-#instructorLogo{
-  margin-top: -37px;
-  font-size: 20px;
-  font-weight: 300;
-  background-color: #faad00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-/*****end instructors*****/
 
 
 
@@ -325,74 +310,3 @@ input.login-input-text {
   font-size: 20px;
   padding: 10px;
 }
-#home_lessons_btn{
-  line-height: inherit;
-  margin-bottom: 80px;
-  font-size: 20px;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-#addLessonButton{
-  position: relative;
-  top: 10px;
-  width: 201px;
-  padding-top: 9px;
-  font-size: 20px;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-#lessonsTable{
-  padding-top: -180px;
-  font-size: 14px;
-  color: #fff
-}
-#open_lesson_{
-  background-color: #FAAD00;
-}
-#lesson_card_name{
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-.white-text{
-  font-size: 17px;
-}
-
-.addLesson {
-  font-size: 22px;
-}
-.table-row-lessons {
-  height: 90px;
-}
-/*****end lessons*****/
-
-
-/*****my lessons*****/
-#home_my_lessons_btn{
-  padding-top: 3px;
-  line-height: 27px;
-  margin-bottom: 80px;
-  font-size: 20px;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  width: 210px;
-}
-
-#myLessonsTable{
-  padding-top: -180px;
-  font-size: 14px;
-  color: #fff
-}
-
-/*****end my lessons*****/
-
-/*****sign up*****/
-#newAccount {
-  position: relative;
-  top: -8px;
-  background-color: #FAAD00;
-  font-size: 20px;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-/***** end sign up*****/

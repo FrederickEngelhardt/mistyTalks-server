@@ -5,7 +5,6 @@ const env = require("dotenv").config()
 // Watson API references
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 const fs = require('fs');
-// const txt = require('unit8array-loader')
 
 const text_to_speech = new TextToSpeechV1({
   username: process.env.USERNAME,
@@ -42,19 +41,39 @@ function writeFile(text, voice) {
 
   // Check to see if writeFile has new information
   // Updates params if the values are present
-  if (voice) params["voice"] = voice
   if (text) params["text"] = text;
+  if (voice) params["voice"] = voice;
+
   return new Promise((resolve, reject) => {
+    // Creation of file using watson's node_module and calling their function synthesize
     const writable = fs.createWriteStream('textResponse.wav')
     text_to_speech.synthesize(params).on('error', function(error) {
       console.log('Error:', error);
     }).pipe(writable)
+    // Add listeners to writable so that the promise is not resolved until writable finishes
     writable
-      .on('error', (err) => {
-        reject(err)
-      })
-      .on('finish', resolve)
-    // check for promise to resolve with file
+      .on('error', (err) => reject(err)) // NOTE: potential breakage here for making this function 1 line :)
+      .on('finish', resolve("success")) // check for promise to resolve with file
+  })
+}
+
+function read() {
+  return new Promise((resolve, reject) => {
+    const path = './textResponse.wav'
+    // file is a ArrayBuffer
+    let file = fs.readFileSync(path)
+
+    // Using global Buffer class in node.js we instantiate a new buffer class using the ArrayBuffer from file.
+    var b = new Buffer(file)
+
+    // ab refers to the undlying ArrayBuffer created with b.
+    var ab = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+
+    // Turns the buffer in unsigned integer 8 array string
+    var ui8 = new Uint8Array(b.buffer, b.byteOffset, b.byteLength / Uint8Array.BYTES_PER_ELEMENT).toString()
+
+    // Resolves the promise and returns the ui8 string
+    return resolve(ui8)
   })
 }
 
@@ -69,9 +88,9 @@ function writeAudioMisty(byteStreamArray, filename) {
   if (!byteStreamArray) throw new Error('ByteStreamArray not sent')
 
   return new Promise((resolve, reject) => {
-    var unirest = require("unirest");
+    const unirest = require("unirest");
 
-    var req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
+    const req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
 
     req.headers({
       "Cache-Control": "no-cache"
@@ -115,7 +134,7 @@ function playAudio(misty_filename) {
     }));
 
     req.end(function(res) {
-      if (res.error) throw new Error(res.error);
+      if (res.error) console.log(res.error);
       else {
         resolve('audioPlayed')
       }
@@ -123,6 +142,35 @@ function playAudio(misty_filename) {
   })
 }
 // playAudio("Im-Mr-Meeseeks-look-at-me.wav")
+
+
+function getWatsonToken () {
+  /*NOTE: Use this function to get a user token for watson WebSocket calls*/
+  return new Promise((resolve) => {
+    var request = require("request");
+
+    var options = { method: 'GET',
+    url: 'https://stream.watsonplatform.net/authorization/api/v1/token',
+    qs: { url: 'https://stream.watsonplatform.net/text-to-speech/api' },
+    headers:
+    { 'Cache-Control': 'no-cache',
+    Authorization: process.env.WATSON_BASIC_TOKEN_AUTH } };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      console.log(body);
+      return resolve(body)
+    });
+  })
+}
+router.get("/watson/token", async function (req, res, next) {
+  const get_token = await getWatsonToken()
+  res.status(200).send(get_token)
+  res.render('user2', { name: 'Tobi' }, function(err, html) {
+    // ...
+  });
+})
+
 router.post('/watson/receive', async function(req, res, next) {
   /*
   NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
@@ -130,7 +178,7 @@ router.post('/watson/receive', async function(req, res, next) {
   TODO: Add error handling for each function that does NOT break server with throw.
 */
   let voice = 'US_AllisonVoice',
-      text = ''
+    text = ''
   if (req.body.text) text = req.body.text
   else if (!req.body.text) res.status(400).send("No text was sent. Bad request")
 
