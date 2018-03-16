@@ -82,7 +82,7 @@ h1.navigation {
 }
 .container {
   position: relative;
-  top: -50px;
+  top: 0px;
 }
 
 main.container {
@@ -110,7 +110,7 @@ main.container {
 }
 .home-button {
   position: relative;
-  top: 80px;
+  top: 50px;
 }
 
 .login-button {

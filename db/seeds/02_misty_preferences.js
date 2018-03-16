@@ -8,15 +8,16 @@ exports.seed = function(knex, Promise) {
          id: 1,
          misty_preference_id: 1,
          preference_name: 'home',
-         robot_name: 'jill',
-         auth_numbers_string: '123456769',
-         ip_address: '10.0.10.205',
-         port_number: 88,
-         misty_voice: 'candi',
-         set_emotion: 'unhappiness',
-         time_restriction_start: '14:26:16',
-         time_restriction_end: '14:26:16'
-
+         robot_name: 'Jungle Joe',
+         auth_numbers_string: '+',
+         ip_address: '192.168.1.129',
+         port_number: '',
+         misty_voice: 'US_MichaelVoice',
+         set_emotion_valence: '0.2',
+         set_emotion_arousal: '0.2',
+         set_emotion_dominance: '-0.2',
+         time_restriction_start: '20:00:00',
+         time_restriction_end: '6:30:00'
         },
         {
           id: 2,
@@ -24,10 +25,12 @@ exports.seed = function(knex, Promise) {
           preference_name: 'work',
           robot_name: 'jane',
           auth_numbers_string: '123456770',
-          ip_address: '10.0.10.208',
-          port_number: 80,
-          misty_voice: 'cinnamon',
-          set_emotion: 'sassy',
+          ip_address: '192.168.1.129',
+          port_number: '',
+          misty_voice: 'US_AllisonVoice',
+          set_emotion_valence: '0.2',
+          set_emotion_arousal: '0.2',
+          set_emotion_dominance: '-0.2',
           time_restriction_start: '14:26:16',
           time_restriction_end: '14:26:16'
 
@@ -39,9 +42,11 @@ exports.seed = function(knex, Promise) {
           robot_name: 'june',
           auth_numbers_string: '123456700',
           ip_address: '10.0.10.210',
-          port_number: 90,
+          port_number: '',
           misty_voice: 'ginger',
-          set_emotion: 'awkward',
+          set_emotion_valence: '0.2',
+          set_emotion_arousal: '0.2',
+          set_emotion_dominance: '-0.2',
           time_restriction_start: '14:26:16',
           time_restriction_end: '14:26:16'
         }

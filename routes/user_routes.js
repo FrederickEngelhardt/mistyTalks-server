@@ -67,15 +67,16 @@ router.get('/misty_preferences', (req, res, next) => {
 })
 
 // GET INDIVIDUAL ITEMS IN MISTY_PREFERENCES TABLE BY ID(preference_name, robot_name, ip_address, port_number)
-router.get('/misty_preferences/:id', (req, res, next) => {
+router.get('/users/:id/misty_preferences', (req, res, next) => {
   const id = parseInt(req.params.id)
   if (Number.isNaN(id)) {
     return next({ status: 404, message: `Not Found` })
   }
-  return knex('users')
+  return knex('misty_preferences')
     .where({id})
     .first()
     .then(data => {
+      console.log(data);
       if (!data) {
         return next({ status: 404, message: `Not Found` })
       }
