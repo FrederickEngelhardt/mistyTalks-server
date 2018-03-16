@@ -350,6 +350,7 @@ const getAllImagesMisty = () => {
 
 $(document).ready(() => {
   create_listeners();
+  $('.collapsible').collapsible();  // for "about page" collapsible containers
   /*
     Materialize functions
   */
