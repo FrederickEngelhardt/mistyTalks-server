@@ -95,6 +95,13 @@ const create_listeners = () => {
   /*
     Edit/View Account information
   */
+  $(".go_to_home").on("click", () => {
+    if (homeState.current_page !== "home"){
+      remove_all_divs()
+      $(".display_home").removeClass("hide_this")
+      homeState.current_page = "home"
+    }
+  })
   $(".go_to_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
     const html = `  <div class="card_container">
