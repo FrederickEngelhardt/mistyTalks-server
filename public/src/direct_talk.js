@@ -61,12 +61,6 @@ $("#clearBtn").click(() => {
 })
 }
 
-// Does not work
-// $("#clearAllBtn").click(() => {
-//   $("#output").val('')
-// })
-
-
 $(document).ready(() => {
   direct_talks_listeners()
   })
