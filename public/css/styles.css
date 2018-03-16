@@ -53,20 +53,20 @@ main {
 
 @media screen and (min-width: 600px){
   .appName {
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
     /* top: -8px;
     padding-top: 56px; */
-    font-size: 65px;
+    font-size: 25px;
   }
 }
 @media screen and (max-width: 600px){
   .appName {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     /* top: -8px;
     padding-top: 56px; */
-    font-size: 30px;
+    font-size: 15px;
   }
 }
 #appNameMisty {
@@ -97,21 +97,20 @@ main.container {
   padding: 20px;
 }
 
-.btn-name {
+.button-text {
   position: relative;
-  top: 50%;
-  left: 20px;
-  right: 20px;
-  height: 50;
-  margin-top: -70px;
+  top: 5px;
   color: white;
-  padding: 20px;
 }
 .btn {
   background-color: #6700ED;
-  height: 60px;
+  height: 50px;
   width: 200px;
   border-radius: 35px;
+}
+.home-button {
+  position: relative;
+  top: 80px;
 }
 
 .login-button {

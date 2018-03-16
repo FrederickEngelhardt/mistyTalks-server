@@ -105,7 +105,7 @@ const myAccount_listener = () => {
         <div class="card_container">
           <div class="profile_card">
             <h4 class="title_box">Account Information
-              <a style="background-color:  orange" class="my_account_edit btn-floating btn-small waves-effect waves-light">
+              <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
                 <i class="my_account_edit material-icons">edit
                 </i>
               </a></h4>
@@ -139,11 +139,21 @@ const myAccount_listener = () => {
   })
 }
 const myAccountEdit_listener = () => {
+  // NOTE function requires myAccount to run.
   $(".my_account_edit").on("click", () => {
     const html = `  <div class="card_container">
         <div class="profile_card">
           <h4 class="title_box">Account Information</h4>
           <form id="edit_card_body">
+
+            <!--user email -->
+            <h5>Email:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="email" id="email" name="email" value="" placeholder="email@mistytalks.com" required>
+              </div>
+            </div>
+            <!-- end of user email  -->
 
             <!--First Name-->
             <h5>First Name:</h5>
@@ -164,15 +174,6 @@ const myAccountEdit_listener = () => {
             <!-- End Last Name -->
 
             <!--user email -->
-            <h5>Email:</h5>
-            <div class="row center">
-              <div class="col s9 m9 l9">
-                <input type="email" id="email" name="email" value="" placeholder="email@mistytalks.com" required>
-              </div>
-            </div>
-            <!-- end of user email  -->
-
-            <!--user email -->
             <h5>New Password:</h5>
             <div class="row">
               <div class="col s9 m9 l9">
@@ -188,10 +189,6 @@ const myAccountEdit_listener = () => {
               <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
             </div>
           </form>
-
-
-
-
         </div>
       </div>`
     if (homeState.current_page !== "my_account_edit") {
@@ -202,121 +199,188 @@ const myAccountEdit_listener = () => {
   })
 }
 
+const mistyPreferences_listener = () => {
+  $(".go_to_misty_preferences").on("click", () => {
+    $(".display_home").addClass("hide_this")
+    const html = `  <div class="card_container">
+        <div class="profile_card">
+          <h4 class="title_box">Misty Preferences
+            <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
+              <i class="edit_misty_preferences material-icons">edit
+              </i>
+            </a></h4>
+          <table>
+            <tr>
+              <td>Preference Name:</td>
+              <td>Default Settings</td>
+            </tr>
+            <tr>
+              <td>Robot Name:</td>
+              <td>MISTY-YALE</td>
+            </tr>
+            <tr>
+              <td>IP Address:</td>
+              <td>192.168.1.129</td>
+            </tr>
+            <tr>
+              <td>Port Number:</td>
+              <td>N/A</td>
+            </tr>
+            <tr>
+              <td>Authorized Phone Numbers</td>
+              <td>
+                <div class="row">
+                  <div class="col s12 m12 l12">+1(555)555-5555</div>
+                  <div class="col s12 m12 l12">+1(555)555-5556</div>
+                  <div class="col s12 m12 l12">+1(555)555-5557</div>
+                  <div class="col s12 m12 l12">+1(555)555-5558</div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Misty Voice:</td>
+              <td>US-ALLISON</td>
+            </tr>
+            <tr>
+              <td>Misty Robot Face</td>
+              <td>V: 0.2, A: 0.8, D: -1.0</td>
+            </tr>
+            <tr>
+              <td>Quiet Hours</td>
+              <td>Between 9:30pm and 6:00am</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      `
+
+    if (homeState.current_page !== "misty_preferences_view") {
+      remove_all_divs()
+      $(".container").append(html)
+    }
+    homeState.current_page = "misty_preferences_view"
+    /*
+      Must call this listner b/c classes inside listner do not exist outside of this scope
+    */
+    edit_misty_preferences()
+  })
+}
 const editMistyPreferences_listener = () => {
+  // NOTE function requires mistyPreferences_listener to run.
   $('.edit_misty_preferences').on("click", () => {
     $(".display_home").addClass("hide_this")
     const html = `
-    <div class="card_container">
-      <div class="profile_card white">
+          <div class="card_container">
+            <div class="profile_card white">
 
-    <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
-      <h4 class="title_box">Misty Preferences</h4>
-      <!--First Name-->
-      <h5>Preference Name:</h5>
-      <div class="row center">
-        <div class="col s9 m9 l9">
-          <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
-        </div>
-      </div>
-      <!--End First Name-->
+          <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
+            <h4 class="title_box">Misty Preferences</h4>
+            <!--First Name-->
+            <h5>Preference Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+              </div>
+            </div>
+            <!--End First Name-->
 
-      <!-- Last Name -->
-      <h5>Robot Name:</h5>
-      <div class="row center">
-        <div class="col s9 m9 l9">
-          <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
-        </div>
-      </div>
-      <!-- End Last Name -->
+            <!-- Last Name -->
+            <h5>Robot Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
+              </div>
+            </div>
+            <!-- End Last Name -->
 
-      <!--user email -->
-      <h5>IP Address:</h5>
-      <div class="row center">
-        <div class="col s9 m9 l9">
-          <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
-        </div>
-      </div>
-      <!-- end of user email  -->
+            <!--user email -->
+            <h5>IP Address:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+              </div>
+            </div>
+            <!-- end of user email  -->
 
-      <!--user email -->
-      <h5>Port Number(if applicable):</h5>
-      <div class="row">
-        <div class="col s9 m9 l9">
-          <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
-        </div>
-      </div>
-      <!-- end of user email  -->
+            <!--user email -->
+            <h5>Port Number(if applicable):</h5>
+            <div class="row">
+              <div class="col s9 m9 l9">
+                <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+              </div>
+            </div>
+            <!-- end of user email  -->
 
-      <!--Authorize numbers input here -->
-      <div id="add_phone_number_location">
-        <h5>Authorized Phone Numbers:</h5>
-        <div class="row center">
-          <div class="col s2 m2 l2">
-            <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+            <!--Authorize numbers input here -->
+            <div id="add_phone_number_location">
+              <h5>Authorized Phone Numbers:</h5>
+              <div class="row center">
+                <div class="col s2 m2 l2">
+                  <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+                </div>
+                <div class="col s7 m7 l7">
+                  <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+                </div>
+                <div class="col s2 m2 l2">
+                  <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+                  <i class="material-icons">add</i>
+                </a>
+                </div>
+              </div>
+            </div>
+            <!-- End authorization numbers -->
+
+            <!--misty voice settings -->
+            <h5>Misty Voice</h5>
+            <div class="row">
+              <div class="input-field col browser-default s9 m9 l9">
+                <select id="choose_voices">
+                    <option value="" disabled selected>Choose your misty Voice</option>
+                  </select>
+              </div>
+            </div>
+            <!-- end of misty voice settings-->
+
+            <!--misty face settings -->
+            <h5>Misty Robot Face</h5>
+            <div class="row">
+              <div class="input-field col browser-default s9 m9 l9">
+                <p class="small-text col s6 m6 l6">Valence:</p>
+                <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="0.0 - 1.0">
+                <p class="small-text col s6 m6 l6">Arousal:</p>
+                <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="0.0 - 1.0">
+                <p class="small-text col s6 m6 l6">Dominance:</p>
+                <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="0.0 - 1.0">
+              </div>
+            </div>
+            <!-- end of misty face settings-->
+
+            <!--misty face settings -->
+            <h5>Misty Robot Quiet Hours</h5>
+            <div class="row">
+                <p class="small-text col s6 m6 l6">Start Time:</p>
+                <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+                <p class="small-text col s6 m6 l6">End Time:</p>
+                <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+            </div>
+            <!-- end of misty face settings-->
+
+            <!-- Form submit/exit buttons here.  -->
+
+            <div class="row center">
+              <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+              <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+            </div>
+          </form>
+
+            </div>
           </div>
-          <div class="col s7 m7 l7">
-            <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
-          </div>
-          <div class="col s2 m2 l2">
-            <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
-            <i class="material-icons">add</i>
-          </a>
-          </div>
-        </div>
-      </div>
-      <!-- End authorization numbers -->
-
-      <!--misty voice settings -->
-      <h5>Misty Voice</h5>
-      <div class="row">
-        <div class="input-field col browser-default s9 m9 l9">
-          <select id="choose_voices">
-              <option value="" disabled selected>Choose your misty Voice</option>
-            </select>
-        </div>
-      </div>
-      <!-- end of misty voice settings-->
-
-      <!--misty face settings -->
-      <h5>Misty Robot Face</h5>
-      <div class="row">
-        <div class="input-field col browser-default s9 m9 l9">
-          <p class="small-text col s6 m6 l6">Valence:</p>
-          <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="0.0 - 1.0">
-          <p class="small-text col s6 m6 l6">Arousal:</p>
-          <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="0.0 - 1.0">
-          <p class="small-text col s6 m6 l6">Dominance:</p>
-          <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="0.0 - 1.0">
-        </div>
-      </div>
-      <!-- end of misty face settings-->
-
-      <!--misty face settings -->
-      <h5>Misty Robot Quiet Hours</h5>
-      <div class="row">
-          <p class="small-text col s6 m6 l6">Start Time:</p>
-          <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-          <p class="small-text col s6 m6 l6">End Time:</p>
-          <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-      </div>
-      <!-- end of misty face settings-->
-
-      <!-- Form submit/exit buttons here.  -->
-
-      <div class="row center">
-        <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
-        <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
-      </div>
-    </form>
-
-      </div>
-    </div>
     `
-    if (homeState.current_page !== "misty_preferences") {
+    if (homeState.current_page !== "misty_preferences_edit") {
       remove_all_divs()
       $(`.container`).append(html)
     }
-    homeState.current_page = "misty_preferences"
+    homeState.current_page = "misty_preferences_edit"
     add_all_voices()
     getAllImagesMisty()
     $('.timepicker').pickatime({
@@ -334,20 +398,13 @@ const editMistyPreferences_listener = () => {
 }
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
-  /*
-    Edit/View Account information
-  */
   goHome_listener()
+
+  /*Edit/View Account*/
   myAccount_listener()
-  /*
-    End of Edit/View Account
-  */
 
-
-
-  /*
-    Edit/View Preferences
-  */
+  /*Edit/View Preferences*/
+  mistyPreferences_listener()
 
   // *** END OF MAIN HOME PAGE LISTENERS*
 
