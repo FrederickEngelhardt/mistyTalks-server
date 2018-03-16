@@ -10,7 +10,9 @@ exports.up = function(knex, Promise) {
     table.string('ip_address').notNullable()
     table.integer('port_number').notNullable()
     table.string('misty_voice').notNullable();
-    table.string('set_emotion').notNullable();
+    table.string('set_emotion_valence').notNullable();
+    table.string('set_emotion_arousal').notNullable();
+    table.string('set_emotion_dominance').notNullable();
     table.time('time_restriction_start');
     table.time('time_restriction_end');
   })
