@@ -89,12 +89,7 @@ const remove_all_divs = () => {
   $(`.card_container`).remove()
 }
 
-
-const create_listeners = () => {
-  // **** MAIN HOME PAGE LISTENERS ****
-  /*
-    Edit/View Account information
-  */
+const goHome_listener = () => {
   $(".go_to_home").on("click", () => {
     if (homeState.current_page !== "home"){
       remove_all_divs()
@@ -102,10 +97,51 @@ const create_listeners = () => {
       homeState.current_page = "home"
     }
   })
+}
+const myAccount_listener = () => {
   $(".go_to_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
+    const html = `
+        <div class="card_container">
+          <div class="profile_card">
+            <h4 class="title_box">Account Information
+              <a style="background-color:  orange" class="my_account_edit btn-floating btn-small waves-effect waves-light">
+                <i class="my_account_edit material-icons">edit
+                </i>
+              </a></h4>
+            <table>
+              <tr>
+                <td>Email</td>
+                <td>fre1994@gmail.com</td>
+              </tr>
+              <tr>
+                <td>First Name</td>
+                <td>Frederick</td>
+              </tr>
+              <tr>
+                <td>Last Name</td>
+                <td>Engelhardt</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        `
+        if (homeState.current_page !== "my_account_view") {
+          remove_all_divs()
+          $(".container").append(html)
+        }
+        homeState.current_page = "my_account_view"
+
+        /*
+          NOTE: Need to call this listener here b/c class does not exist outside this scope.
+        */
+        myAccountEdit_listener()
+  })
+}
+const myAccountEdit_listener = () => {
+  $(".my_account_edit").on("click", () => {
     const html = `  <div class="card_container">
-        <div class="profile_card white">
+        <div class="profile_card">
           <h4 class="title_box">Account Information</h4>
           <form id="edit_card_body">
 
@@ -158,17 +194,16 @@ const create_listeners = () => {
 
         </div>
       </div>`
-    if (homeState.current_page !== "my_account") {
+    if (homeState.current_page !== "my_account_edit") {
       remove_all_divs()
       $(".container").append(html)
     }
-    homeState.current_page = "my_account"
+    homeState.current_page = "my_account_edit"
   })
-  /*
-    End of Edit/View Account
-  */
+}
 
-  $('.go_to_misty_preferences').on("click", () => {
+const editMistyPreferences_listener = () => {
+  $('.edit_misty_preferences').on("click", () => {
     $(".display_home").addClass("hide_this")
     const html = `
     <div class="card_container">
@@ -285,17 +320,30 @@ const create_listeners = () => {
     add_all_voices()
     getAllImagesMisty()
     $('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function(){} //Function for after opening timepicker
+      default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+      fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+      twelvehour: false, // Use AM/PM or 24-hour format
+      donetext: 'OK', // text for done-button
+      cleartext: 'Clear', // text for clear-button
+      canceltext: 'Cancel', // Text for cancel-button
+      autoclose: false, // automatic close timepicker
+      ampmclickable: true, // make AM PM clickable
+      aftershow: function(){} //Function for after opening timepicker
     });
   })
+}
+const create_listeners = () => {
+  // **** MAIN HOME PAGE LISTENERS ****
+  /*
+    Edit/View Account information
+  */
+  goHome_listener()
+  myAccount_listener()
+  /*
+    End of Edit/View Account
+  */
+
+
 
   /*
     Edit/View Preferences
