@@ -460,7 +460,7 @@ const populate_misty_preferences = (user_id) => {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost:3000/users/1",
+    "url": "http://localhost:3000/users/1/misty_preferences",
     "method": "GET",
     "headers": {
       "Cache-Control": "no-cache"
@@ -468,23 +468,46 @@ const populate_misty_preferences = (user_id) => {
   }
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     const target = [{
-        location: "account_email_preferences",
-        user_info: "email"
+        location: "misty_preference_name",
+        user_info: "preference_name"
       },
       {
-        location: "account_first_name_preferences",
-        user_info: "first_name"
+        location: "misty_robot_name",
+        user_info: "robot_name"
       },
       {
-        location: "account_last_name_preferences",
-        user_info: "last_name"
+        location: "misty_authorized_numbers",
+        user_info: "auth_numbers_string"
+      },
+      {
+        location: "misty_ip_address",
+        user_info: "ip_address"
+      },
+      {
+        location: "misty_port_number",
+        user_info: "port_number"
+      },
+      {
+        location: "misty_robot_face",
+        user_info: "set_emotion"
+      },
+      {
+        location: "misty_quiet_hours",
+        user_info: ["time_restriction_start", "time_restriction_end"]
       }
     ]
     console.log(target[0].location)
     for (var i = 0; i < target.length; i++) {
-      const data = response[target[i]['user_info']]
-      $(`.${target[i].location}`).text(data)
+      if (target[i].location === "misty_quiet_hours"){
+        const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+        $(`.${target[i].location}`).text(data)
+      }
+      else {
+        const data = response[target[i]['user_info']]
+        $(`.${target[i].location}`).text(data)
+      }
       // $(`${target[i].location}`).val(response[target[i].user_info])
     }
   });
@@ -520,6 +543,7 @@ const getAllImagesMisty = () => {
 
 $(document).ready(() => {
   populate_account_preferences()
+  populate_misty_preferences()
   create_listeners();
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
