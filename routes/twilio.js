@@ -97,9 +97,9 @@ router.post('/twilio/receive', (req, res) => {
   /*
     End Alexa message url removal
   */
+  // Removes '+' from number and a comma between each number (spacing for pauses) for the number to be said by misty prior to going to Watson
  from.includes('#voice')
 let newArr = []
-let newStr = ''
 newArr = from.split("")
 newArr.shift()
 for (let i = 0; i < newArr.length; i++){
@@ -141,7 +141,7 @@ for (let i = 0; i < newArr.length; i++){
 
   request.type('json')
   request.send({
-    text: `You have a new message from ${from}. who says ${message}`
+    text: `You have a new message from ${from}, who says ${message}`
   })
 
   request.end(function(response) {
