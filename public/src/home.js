@@ -262,7 +262,7 @@ const mistyPreferences_listener = () => {
     /*
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
-    edit_misty_preferences()
+    editMistyPreferences_listener()
   })
 }
 const editMistyPreferences_listener = () => {
