@@ -20,25 +20,28 @@
 </head>
 
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right">
-        <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">home</i></a></li>
-        <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">help</i></a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li><a class="go_to_home" href="home.html">Home</a></li>
-        <li><a class="go_to_misty_preferences" href="">Misty Preferences</a></li>
-        <li><a class="go_to_dev_console" href="">Dev Console</a></li>
-        <li>
-          <a class="logout" href="index.html">
-            <div class="logout_text">Logout:</div>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+        <ul class="right">
+          <li><a class="go_to_home waves-effect waves-orange"><i class="material-icons">home</i></a></li>
+          <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">help</i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="mobile-demo">
+    <li><a class="go_to_home">Home</a></li>
+    <li><a class="go_to_misty_preferences">Misty Preferences</a></li>
+    <li><a class="go_to_my_account">Account</a></li>
+    <li><a class="go_to_direct_talk" href="">Direct Talk</a></li>
+    <li>
+      <a class="logout" href="index.html">
+        <div class="logout_text">Logout</div>
+      </a>
+    </li>
+  </ul>
   <div class="row">
     <div class="text">
       <h1 class="appName">Misty [•_•] Talks</h1>
@@ -54,20 +57,20 @@
 
       <div class="row home-menu center">
         <div class="center col s12 m12 l12">
-          <a id="button_my_account" class="home-button btn waves-effect waves-light modal-trigger" type="submit" name="action">
+          <a class="go_to_my_account home-button btn waves-effect waves-light modal-trigger" type="submit" name="action">
           <text class="button-text">My Account</text></a>
         </div>
       </div>
       <div class="row home-menu center">
         <div class="center col s12 m12 l12">
-          <a id="button_preferences" class="home-button btn waves-effect waves-light" type="submit" name="action">
+          <a class="go_to_misty_preferences home-button btn waves-effect waves-light" type="submit" name="action">
         <text>Preferences</text></a>
         </div>
       </div>
       <div class="row home-menu center">
         <div class="center col s12 m12 l12">
-          <a id="button_misty_talkToMe" class="home-button btn waves-effect waves" type="submit" name="action">
-          <text>Misty Talk To Me!</text></a>
+          <a class="go_to_direct_talk home-button btn waves-effect waves" type="submit" name="action">
+          <text>Direct Talk</text></a>
         </div>
       </div>
       <div class="row home-menu center">

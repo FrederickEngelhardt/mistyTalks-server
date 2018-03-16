@@ -1,6 +1,12 @@
 /*
   BEGGINING OF FORM SUBMISSION FUNCTIONS
 */
+class State {
+  constructor(current_page) {
+    this.current_page = current_page
+  }
+}
+let homeState = new State('home')
 const add_number = (count) => {
 
   return (`<div class="deleteNumberFields${count} row center">
@@ -18,6 +24,7 @@ const add_number = (count) => {
           </div>`)
 }
 
+// Array of all watson voices
 const voices = [{
     "name": "es-LA_SofiaVoice",
   },
@@ -61,6 +68,8 @@ const voices = [{
     "name": "es-US_SofiaVoice",
   }
 ]
+
+// HTML code to add all voices into the selection zone
 const add_all_voices = () => {
   for (let i in voices) {
     let html = `<option value="${i}">${voices[i].name}</option>`
@@ -69,7 +78,6 @@ const add_all_voices = () => {
 }
 
 /*
-    Defaults the number count to be 1.
     We use this variable to count the number of added phones in an array
 */
 let added_number_count = 1
@@ -77,14 +85,26 @@ let added_number_count = 1
 
 console.log("loaded home.js");
 
+const remove_all_divs = () => {
+  $(`.card_container`).remove()
+}
+
+
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   /*
     Edit/View Account information
   */
-  $("#button_my_account").on("click", () => {
+  $(".go_to_home").on("click", () => {
+    if (homeState.current_page !== "home"){
+      remove_all_divs()
+      $(".display_home").removeClass("hide_this")
+      homeState.current_page = "home"
+    }
+  })
+  $(".go_to_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
-    const html = `  <div class="account_settings_container">
+    const html = `  <div class="card_container">
         <div class="profile_card white">
           <h4 class="title_box">Account Information</h4>
           <form id="edit_card_body">
@@ -138,121 +158,143 @@ const create_listeners = () => {
 
         </div>
       </div>`
-    $(".container").append(html)
+    if (homeState.current_page !== "my_account") {
+      remove_all_divs()
+      $(".container").append(html)
+    }
+    homeState.current_page = "my_account"
   })
   /*
     End of Edit/View Account
   */
 
-  $('#button_preferences').on("click", () => {
+  $('.go_to_misty_preferences').on("click", () => {
     $(".display_home").addClass("hide_this")
-    const html =  `
-    <div class="account_settings_container">
+    const html = `
+    <div class="card_container">
       <div class="profile_card white">
 
-        <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
-          <h4 class="title_box">Misty Preferences</h4>
-          <!--First Name-->
-          <h5>Preference Name:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
-            </div>
-          </div>
-          <!--End First Name-->
+    <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
+      <h4 class="title_box">Misty Preferences</h4>
+      <!--First Name-->
+      <h5>Preference Name:</h5>
+      <div class="row center">
+        <div class="col s9 m9 l9">
+          <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+        </div>
+      </div>
+      <!--End First Name-->
 
-          <!-- Last Name -->
-          <h5>Robot Name:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
-            </div>
-          </div>
-          <!-- End Last Name -->
+      <!-- Last Name -->
+      <h5>Robot Name:</h5>
+      <div class="row center">
+        <div class="col s9 m9 l9">
+          <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
+        </div>
+      </div>
+      <!-- End Last Name -->
 
-          <!--user email -->
-          <h5>IP Address:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
-            </div>
-          </div>
-          <!-- end of user email  -->
+      <!--user email -->
+      <h5>IP Address:</h5>
+      <div class="row center">
+        <div class="col s9 m9 l9">
+          <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+        </div>
+      </div>
+      <!-- end of user email  -->
 
-          <!--user email -->
-          <h5>Port Number(if applicable):</h5>
-          <div class="row">
-            <div class="col s9 m9 l9">
-              <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
-            </div>
-          </div>
-          <!-- end of user email  -->
+      <!--user email -->
+      <h5>Port Number(if applicable):</h5>
+      <div class="row">
+        <div class="col s9 m9 l9">
+          <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+        </div>
+      </div>
+      <!-- end of user email  -->
 
-          <!--Authorize numbers input here -->
-          <div id="add_phone_number_location">
-            <h5>Authorized Phone Numbers:</h5>
-            <div class="row center">
-              <div class="col s2 m2 l2">
-                <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
-              </div>
-              <div class="col s7 m7 l7">
-                <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
-              </div>
-              <div class="col s2 m2 l2">
-                <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
-                <i class="material-icons">add</i>
-              </a>
-              </div>
-            </div>
+      <!--Authorize numbers input here -->
+      <div id="add_phone_number_location">
+        <h5>Authorized Phone Numbers:</h5>
+        <div class="row center">
+          <div class="col s2 m2 l2">
+            <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
           </div>
-          <!-- End authorization numbers -->
-
-          <!--misty voice settings -->
-          <h5>Misty Voice</h5>
-          <div class="row">
-            <div class="input-field col browser-default s9 m9 l9">
-              <select id="choose_voices">
-                  <option value="" disabled selected>Choose your misty Voice</option>
-                </select>
-            </div>
+          <div class="col s7 m7 l7">
+            <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
           </div>
-          <!-- end of misty voice settings-->
-
-          <!--misty face settings -->
-          <h5>Misty Robot Face</h5>
-          <div class="row">
-            <div class="input-field col browser-default s9 m9 l9">
-              <select id="choose_face_image">
-                  <option value="" disabled selected>Choose Misty Face</option>
-                </select>
-            </div>
+          <div class="col s2 m2 l2">
+            <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+            <i class="material-icons">add</i>
+          </a>
           </div>
-          <!-- end of misty face settings-->
+        </div>
+      </div>
+      <!-- End authorization numbers -->
 
-          <!--misty face settings -->
-          <h5>Misty Robot Quiet Hours</h5>
-          <div class="row">
-              <p class="col s6 m6 l6">Start Time:</p>
-              <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-              <p class="col s6 m6 l6">End Time:</p>
-              <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-          </div>
-          <!-- end of misty face settings-->
+      <!--misty voice settings -->
+      <h5>Misty Voice</h5>
+      <div class="row">
+        <div class="input-field col browser-default s9 m9 l9">
+          <select id="choose_voices">
+              <option value="" disabled selected>Choose your misty Voice</option>
+            </select>
+        </div>
+      </div>
+      <!-- end of misty voice settings-->
 
-          <!-- Form submit/exit buttons here.  -->
+      <!--misty face settings -->
+      <h5>Misty Robot Face</h5>
+      <div class="row">
+        <div class="input-field col browser-default s9 m9 l9">
+          <p class="small-text col s6 m6 l6">Valence:</p>
+          <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="0.0 - 1.0">
+          <p class="small-text col s6 m6 l6">Arousal:</p>
+          <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="0.0 - 1.0">
+          <p class="small-text col s6 m6 l6">Dominance:</p>
+          <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="0.0 - 1.0">
+        </div>
+      </div>
+      <!-- end of misty face settings-->
 
-          <div class="row center">
-            <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
-            <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
-          </div>
-        </form>
+      <!--misty face settings -->
+      <h5>Misty Robot Quiet Hours</h5>
+      <div class="row">
+          <p class="small-text col s6 m6 l6">Start Time:</p>
+          <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+          <p class="small-text col s6 m6 l6">End Time:</p>
+          <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+      </div>
+      <!-- end of misty face settings-->
+
+      <!-- Form submit/exit buttons here.  -->
+
+      <div class="row center">
+        <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+        <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+      </div>
+    </form>
 
       </div>
     </div>
     `
-    $(`.container`).append(html)
+    if (homeState.current_page !== "misty_preferences") {
+      remove_all_divs()
+      $(`.container`).append(html)
+    }
+    homeState.current_page = "misty_preferences"
     add_all_voices()
     getAllImagesMisty()
+    $('.timepicker').pickatime({
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: false, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function(){} //Function for after opening timepicker
+    });
   })
 
   /*
@@ -303,7 +345,7 @@ const sendSubmitForm = (data) => {}
   END OF FORM SUBMISION FUNCTIONS
 */
 const getAllImagesMisty = () => {
-  
+
 }
 
 $(document).ready(() => {
@@ -312,16 +354,16 @@ $(document).ready(() => {
     Materialize functions
   */
   $('.timepicker').pickatime({
-  default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-  fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-  twelvehour: false, // Use AM/PM or 24-hour format
-  donetext: 'OK', // text for done-button
-  cleartext: 'Clear', // text for clear-button
-  canceltext: 'Cancel', // Text for cancel-button
-  autoclose: false, // automatic close timepicker
-  ampmclickable: true, // make AM PM clickable
-  aftershow: function(){} //Function for after opening timepicker
-});
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: false, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function() {} //Function for after opening timepicker
+  });
   $('select').material_select();
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
