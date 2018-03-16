@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Account Settings</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./src/home.js"></script>
+  <script src="./src/index.js"></script>
+  <script src="./src/misty_talks.js"></script>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+        <ul class="right">
+          <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">home</i></a></li>
+          <li><a class="waves-effect waves-orange modal-trigger" href="#MODALID"><i class="material-icons">help</i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="mobile-demo">
+    <li><a class="go_to_home" href="home.html">Home</a></li>
+    <li><a class="go_to_misty_preferences" href="">Misty Preferences</a></li>
+    <li><a class="go_to_dev_console" href="">Dev Console</a></li>
+    <li>
+      <a class="logout" href="index.html">
+        <div class="logout_text">Logout</div>
+      </a>
+    </li>
+  </ul>
+  <div class="account_settings_container">
+    <div class="profile_card white">
+
+      <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
+        <center><h4 class="title_box">Misty Talks</h4></center>
+        <center><img src="./images/misty_symbol_black.png" height= "125px" width= "175px" alt="misty symbol"></center>
+        <!--Message Title-->
+        <center><h5>Misty Direct Talk</h5></center>
+        <div id="user-chat">
+          <!-- Where everything is displayed -->
+          <div id="chat-window">
+            <!-- Where output is displayed -->
+          <div id="output"></div>
+        </div>
+      <input type="text" id="message" placeholder= "Message">
+      <div class="row center">
+        <button class="btn waves-effect waves-light" id="sendBtn">Send</button>
+        <button class="btn waves-effect waves-light" id="clearBtn" >Clear</button>
+        <button class="btn waves-effect waves-light" id="clearAllBtn" >Clear All</button>
+      </div>
+    </div>
+
+
+    </div>
+  </div>
+</body>
+
+</html>
