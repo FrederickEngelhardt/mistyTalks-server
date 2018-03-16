@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>Send stuff to robot</title>
@@ -13,10 +12,10 @@
   <!--Import materialize.css-->
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <script src="./src/home.js"></script>
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="./src/home.js"></script>
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 
@@ -37,7 +36,7 @@
     <li><a class="go_to_home">Home</a></li>
     <li><a class="go_to_misty_preferences">Misty Preferences</a></li>
     <li><a class="go_to_my_account">Account</a></li>
-    <li><a class="go_to_direct_talk" href="">Direct Talk</a></li>
+    <li><a class="go_to_direct_talk" href="./direct_talk.html">Direct Talk</a></li>
     <li>
       <a class="logout" href="index.html">
         <div class="logout_text">Logout</div>
@@ -68,13 +67,217 @@
       </div>
       <div class="row home-menu center">
         <div class="center col s12 m12 l12">
-          <a id="button_about" class="home-button btn waves-effect waves-orange modal-trigger" type="submit" href="#MODALNAME" name="action">
+          <a id="button_about" class="home-button waves-effect waves-light btn modal-trigger" type="submit" href="#aboutModal" name="action">
           <text class="button-text">About</text></a>
+
+           <!-- About Modal Structure -->
+           <div id="aboutModal" class="modal modal-fixed-footer">
+             <div class="modal-content">
+<!-- About Misty Modal Structure -->
+               <h2>About Operating Misty</h2>
+               <div class= "about_text">
+<!-- Getting Started Start -->
+                 <ul class="collapsible" data-collapsible="accordion">
+                  <li>
+                  <div class="collapsible-header"><i class="material-icons">whatshot</i><h5>Getting Started</h5></div>
+                  <div class="collapsible-body">
+                     <ul class="collapsible" data-collapsible="accordion">
+                     <li>
+                     <div class="collapsible-header"><i class="material-icons">gps_not_fixed</i><h6>Getting Started Overview</h6></div>
+                     <div class="collapsible-body">
+                        <ol>
+                          <li>Ensure that Misty is plugged in and rear switch is turned on (or up)</li>
+                          <li>Ensure that your phone is connected to the WIFI and Bluetooth is on</li>
+                          <li>Connect to Misty via Bluetooth (Yale?)</li>
+                          <li>Ensure that your Twilio Account is active and set up properly</li>
+                          <li>Visit the Account Settings section to Enter basic information</li>
+                          <li>Visit the Preferences section to Properly Configure Misty to your Router (?)</li>
+                          <li>Test with an SMS messsage</li>
+                        </ol>
+
+                     </div>
+                     </li>
+                   </ul>
+                 </div>
+<!-- Getting Started End -->
+<!-- Account Settings Start -->
+                     <ul class="collapsible" data-collapsible="accordion">
+                      <li>
+                      <div class="collapsible-header"><i class="material-icons">whatshot</i><h5>Account Settings</h5></div>
+                      <div class="collapsible-body">
+                         <ul class="collapsible" data-collapsible="accordion">
+                         <li>
+                         <div class="collapsible-header"><i class="material-icons">gps_not_fixed</i><h6>Account Settings Overview</h6></div>
+                         <div class="collapsible-body"><span>The Account Settings Section is for entering personal information such as name, email and if you want to change your password.</span></div>
+                         </li>
+                         </ul>
+                       </div>
+<!-- Account Settings End -->
+<!-- Preferences Begin -->
+                          <ul class="collapsible" data-collapsible="accordion">
+                           <li>
+                           <div class="collapsible-header"><i class="material-icons">whatshot</i><h5>Preferences</h5></div>
+                           <div class="collapsible-body">
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">gps_not_fixed</i><h6>Preferences Overview</h6></div>
+                              <div class="collapsible-body"><span>The Preferences Section is to create personalized options for day to day Misty operations including setting the IP Address, Authorized Phone Numbers and Quiet Hours.</span></div>
+                            </li><br>
+<!-- Custom Preference Name Begins -->
+                              <li><h5>Custom Preference Name</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Choosing a Custom Preference Name</div>
+                              <div class="collapsible-body"><span>This Section will allow personalized information for Misty under the user designated name.</span></div>
+                              </li>
+                              </ul>
+<!-- Custom Preference Name End -->
+<!-- Custom Robot Name Begin -->
+                              <li><h5>Custom Robot Name</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Choosing a Custom Name</div>
+                              <div class="collapsible-body"><span>This Section will allow for the user to change Misty's name.</span></div>
+                              </li>
+                              </ul>
+<!-- Custom Robot Name End -->
+<!-- IP Address Begin -->
+                              <li><h5>IP Address</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Set IP Address</div>
+                              <div class="collapsible-body">
+                                <ol>
+                                  <li>Verify your IP address by......XXX</li>
+                                  <li>XXXXXXXXX</li>
+                                  <li>XXXXXXXXX</li>
+                                  <li>XXXXXXXXXX</li>
+                                  <li>XXXXXXXXXX</li>
+                                </ol>
+                              </div>
+<!-- IP Address End -->
+<!-- Port Number Begin -->
+                              <li><h5>Port Number (If Applicable)</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Set Port Number</div>
+                              <div class="collapsible-body"><ol>
+                                <li>Verify if you require a Port Number by ...XXX</li>
+                                <li>XXXXXXXXX</li>
+                                <li>XXXXXXXXX</li>
+                                <li>XXXXXXXXXX</li>
+                                <li>XXXXXXXXXX</li>
+                              </ol></div>
+                              </li>
+                              </ul>
+<!-- Port Number End -->
+<!-- Authorized Phone Numbers Begin -->
+                              <li><h5>Add or Delete an Authorized Phone Number</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Add A Number</div>
+                              <div class="collapsible-body">
+                                <ol>
+                                  <li>Locate the blank line and add the desired phone number</li>
+                                  <li>Click on the Green Button next to the number</li>
+                                  <li>Verify it has updated on the list</li>
+                              </ol>
+                            </div>
+                              </li>
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">place</i>Delete a Number</div>
+                              <div class="collapsible-body">
+                                  <ol>
+                                  <li>Locate the number you wish to delete</li>
+                                  <li>Click on the Red Button next to the number</li>
+                                  <li>Verify it has disappeared from the list</li>
+                                </ol>
+                              </div>
+                              </li>
+                              </ul>
+<!-- Authorized Phone Numbers End -->
+<!-- Misty Voice Begin -->
+                              <li><h5>Choose a Default Voice for Misty</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Choose Default Voice</div>
+                              <div class="collapsible-body"><span>Select an option from the drop-down menu.</span></div>
+                              </li>
+                              </ul>
+<!-- Misty Voice End -->
+<!-- Misty Default Expression Begin -->
+                              <li><h5>Default Face for Misty</h5></h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Choose a Valence Value</div>
+                              <div class="collapsible-body"><span>This is a feature that often is related to trustworthiness.  Select a number between 0-1.</span></div>
+                              </li>
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">place</i>Choose a Arousal Value</div>
+                              <div class="collapsible-body"><span>This is a feature often perceived as being excited or awake. Select a number between 0-1.</span></div>
+                              </li>
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">whatshot</i>Choose a Dominance Value</div>
+                              <div class="collapsible-body"><span>This is a feature often perceived as being in control or overly confident. Select a number between 0-1.</span></div>
+                              </li>
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">whatshot</i>Face Selection</div>
+                              <div class="collapsible-body"><span>The culmination of the 3 values entered will determine the facial expression of Misty.</span></div>
+                              </li>
+                              </ul>
+<!-- Misty Default Expression End -->
+<!-- Misty Quiet Hours Begin -->
+                              <li><h5>Choose Misty's Quiet Hours</h5></li>
+                              <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Choose a Start Time</div>
+                              <div class="collapsible-body"><span>The Start Time is the beginning time for Misty to not send any notifications to the user.  Setting the time can be accomplished in either 12 or 24 Hr time. .</span></div>
+                              </li>
+                              <li>
+                              <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+                              <div class="collapsible-body"><span>The End Time is the final time for Misty to not send any notifications to the user.  Setting the time can be accomplished in either 12 or 24 Hr time.</span></div>
+                              </li>
+                              </ul>
+                              </li>
+                              </ul>
+                            </div>
+<!-- Misty Quiet Hours End -->
+<!-- Preferences End -->
+<!-- Direct Talk Start -->
+                            <ul class="collapsible" data-collapsible="accordion">
+                             <li>
+                             <div class="collapsible-header"><i class="material-icons">whatshot</i><h5>Direct Talk</h5></div>
+                             <div class="collapsible-body">
+                                <ul class="collapsible" data-collapsible="accordion">
+                                <li>
+                                <div class="collapsible-header"><i class="material-icons">gps_not_fixed</i><h6>Direct Talk Overview</h6></div>
+                                <div class="collapsible-body"><span>The Direct Talk section allows for communication with Misty through SMS messages which Misty will speak aloud.</span></div>
+                                </li>
+                            <!-- Custom Preference Name Begins -->
+                                <li><h5>Messaging</h5></li>
+                                <ul class="collapsible" data-collapsible="accordion">
+                                <li>
+                                <div class="collapsible-header"><i class="material-icons">filter_drama</i>Send a Message</div>
+                                <div class="collapsible-body"><ol>
+                                  <li>Select the "Message" text box above the colored buttons.</li>
+                                  <li>Type in the message you would like to send.</li>
+                                  <li>Click the "Send" button and when it populated in the chat window, you have sent your message!</li>
+                              </ol></div>
+                                </li>
+                                </ul>
+                             </div>
+                          </div>
+                        </div>
+<!-- Direct Talk End -->
+             <div class="modal-footer">
+               <a href="#aboutModal" class="modal-action modal-close waves-effect waves-green btn-flat ">Back</a>
+             </div>
+             </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </body>
-
 </html>
