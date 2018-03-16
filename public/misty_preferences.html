@@ -116,9 +116,12 @@
         <h5>Misty Robot Face</h5>
         <div class="row">
           <div class="input-field col browser-default s9 m9 l9">
-            <select id="choose_face_image">
-                <option value="" disabled selected>Choose Misty Face</option>
-              </select>
+            <p class="small-text col s6 m6 l6">Valence:</p>
+            <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="0.0 - 1.0">
+            <p class="col s6 m6 l6">Arousal:</p>
+            <input class="small-text col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="0.0 - 1.0">
+            <p class="col s6 m6 l6">Dominance:</p>
+            <input class="small-text col s3 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="0.0 - 1.0">
           </div>
         </div>
         <!-- end of misty face settings-->
@@ -126,9 +129,9 @@
         <!--misty face settings -->
         <h5>Misty Robot Quiet Hours</h5>
         <div class="row">
-            <p class="col s6 m6 l6">Start Time:</p>
+            <p class="small-text col s6 m6 l6">Start Time:</p>
             <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-            <p class="col s6 m6 l6">End Time:</p>
+            <p class="small-text col s6 m6 l6">End Time:</p>
             <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
         </div>
         <!-- end of misty face settings-->
