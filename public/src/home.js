@@ -91,7 +91,7 @@ const remove_all_divs = () => {
 
 const goHome_listener = () => {
   $(".go_to_home").on("click", () => {
-    if (homeState.current_page !== "home"){
+    if (homeState.current_page !== "home") {
       remove_all_divs()
       $(".display_home").removeClass("hide_this")
       homeState.current_page = "home"
@@ -126,16 +126,16 @@ const myAccount_listener = () => {
           </div>
         </div>
         `
-        if (homeState.current_page !== "my_account_view") {
-          remove_all_divs()
-          $(".container").append(html)
-        }
-        homeState.current_page = "my_account_view"
+    if (homeState.current_page !== "my_account_view") {
+      remove_all_divs()
+      $(".container").append(html)
+    }
+    homeState.current_page = "my_account_view"
 
-        /*
-          NOTE: Need to call this listener here b/c class does not exist outside this scope.
-        */
-        myAccountEdit_listener()
+    /*
+      NOTE: Need to call this listener here b/c class does not exist outside this scope.
+    */
+    myAccountEdit_listener()
   })
 }
 const myAccountEdit_listener = () => {
@@ -385,14 +385,14 @@ const editMistyPreferences_listener = () => {
     getAllImagesMisty()
     $('.timepicker').pickatime({
       default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-      fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+      fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
       twelvehour: false, // Use AM/PM or 24-hour format
       donetext: 'OK', // text for done-button
       cleartext: 'Clear', // text for clear-button
       canceltext: 'Cancel', // Text for cancel-button
       autoclose: false, // automatic close timepicker
       ampmclickable: true, // make AM PM clickable
-      aftershow: function(){} //Function for after opening timepicker
+      aftershow: function() {} //Function for after opening timepicker
     });
   })
 }
@@ -423,7 +423,72 @@ const create_listeners = () => {
   })
   // end of addNumber
 }
+const populate_account_preferences = (user_id) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/users/1",
+    "method": "GET",
+    "headers": {
+      "Cache-Control": "no-cache"
+    }
+  }
 
+  $.ajax(settings).done(function(response) {
+    const target = [{
+        location: "account_email_preferences",
+        user_info: "email"
+      },
+      {
+        location: "account_first_name_preferences",
+        user_info: "first_name"
+      },
+      {
+        location: "account_last_name_preferences",
+        user_info: "last_name"
+      }
+    ]
+    console.log(target[0].location)
+    for (var i = 0; i < target.length; i++) {
+      const data = response[target[i]['user_info']]
+      $(`.${target[i].location}`).text(data)
+      // $(`${target[i].location}`).val(response[target[i].user_info])
+    }
+  });
+}
+const populate_misty_preferences = (user_id) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/users/1",
+    "method": "GET",
+    "headers": {
+      "Cache-Control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function(response) {
+    const target = [{
+        location: "account_email_preferences",
+        user_info: "email"
+      },
+      {
+        location: "account_first_name_preferences",
+        user_info: "first_name"
+      },
+      {
+        location: "account_last_name_preferences",
+        user_info: "last_name"
+      }
+    ]
+    console.log(target[0].location)
+    for (var i = 0; i < target.length; i++) {
+      const data = response[target[i]['user_info']]
+      $(`.${target[i].location}`).text(data)
+      // $(`${target[i].location}`).val(response[target[i].user_info])
+    }
+  });
+}
 const retrieveSubmitFormData = (event) => {
   event.preventDefault()
 
@@ -454,8 +519,9 @@ const getAllImagesMisty = () => {
 }
 
 $(document).ready(() => {
+  populate_account_preferences()
   create_listeners();
-  $('.collapsible').collapsible();  // for "about page" collapsible containers
+  $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions
   */
