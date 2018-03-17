@@ -1,13 +1,22 @@
 const createAccount = (data='') => {
         if (data === '') {
-          let bio = ''
-          let first_name = $('#first_name').val()
-          let last_name = $('#last_name').val()
-          let phone_number = $('#phone_number').val()
-          let skill_level_id = $('#skill_level').val()
-          let email_address = $('#email').val()
-          let password = $('#password').val()
-          data = {first_name, last_name, phone_number, skill_level_id, email_address, password, bio}
+          console.log("new user");
+          let email_address = $('.email-signup-input-text').val()
+          let password = $('.password-signup-input-text').val()
+          let password_confirm = $('.password_confirm-signup-input-text').val()
+
+          if (password === password_confirm) {
+            console.log("it worked good pword");
+            console.log(password, " ", password_confirm);
+            data = {email_address, password}
+          }
+
+          else {
+            console.log("it worked bad pword");
+            alert("Passwords do not match.")
+            return false
+          }
+
         }
         console.log(data)
         $.ajax({
@@ -40,8 +49,7 @@ const createAccount = (data='') => {
         })
 }
 $(document).ready( () => {
-  $('.modal').modal();
-  $('#newAccount').click(function(event){
+  $('#signup-btn').click(function(event){
     event.preventDefault()
     createAccount()
   })
