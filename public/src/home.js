@@ -571,6 +571,80 @@ const retrievePreferencesSubmitFormData = (event) => {
   // Missing phone numeber iteration
 }
 
+}
+// Start of Web Token Data
+
+(function (){
+
+  $.getJSON('/token')
+    .done(loggedIn => {
+      if (loggedIn) {
+        $('.logout').on('click', () => {
+          localStorage.clear()
+          const options = {
+            dataType: 'json',
+            type: 'DELETE',
+            url: '/token'
+          }
+          $.ajax(options)
+            .done(() => {
+              window.location.href = '/index.html'
+            })
+            .fail(() => {
+              Materialize.toast('Unable to log out', 3000)
+            })
+        })
+      }
+    })
+
+
+
+}) ()
+
+
+
+const checkPrivileges = () => {
+  $.get('/token').done( (result) => {
+    const id = result.cookie.user_id
+    $.get(`/users/${id}`)
+      .done(data => {
+        skill_level = data.skill_level_id
+          return
+      })
+  })
+}
+
+
+const createAccountOverview = (data) => {
+  const newCard = `
+    <div id="myProfile">
+      `
+      $('#edit_card').remove()
+      $('#profile_card').append(newCard)
+      $('#email_address').append(data.email_address)
+      $('#editButton').click(function(event) {
+        event.preventDefault()
+        editWindow()
+      })
+    }
+
+
+
+
+
+    const createListenersLogin = () => {
+      $('#submitButton').click((event) => {
+        event.preventDefault()
+        submitEdit()
+      })
+    }
+
+
+
+
+
+// End of Web Token Data
+
 
 $(document).ready(() => {
 $('form').submit(function(e){
@@ -579,6 +653,7 @@ $('form').submit(function(e){
 })
   populate_account_preferences()
   create_listeners();
+
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions

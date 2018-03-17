@@ -43,10 +43,15 @@ io.on('connection', function (socket){
 const watsonRoutes = require('./routes/watson')
 const twilioRoutes = require('./routes/twilio')
 const userRoutes = require('./routes/user_routes')
+const token = require('./routes/token')
+
+
 
 app.use(twilioRoutes)
 app.use(watsonRoutes)
 app.use(userRoutes)
+app.use(token)
+
 
 app.use((req, res, next) => {
   res.sendStatus(404)

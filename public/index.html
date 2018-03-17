@@ -15,6 +15,7 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./src/signup.js" charset="utf-8"></script>
   <script src="./src/index.js"></script>
   <link rel="stylesheet" href="./css/styles.css">
 </head>
@@ -34,12 +35,12 @@
     <div class="container">
       <div class="row">
         <a href="#login-modal" id="open_login" class="waves-effect waves-light btn modal-trigger">
-          <h5 class="login-button">log in</h5>
+          <h5 class="login-button">Login</h5>
         </a>
       </div>
       <div class="row">
         <a href="#signup-modal" id="open_signup" class="waves-effect waves-light btn modal-trigger">
-          <h5 class="login-button">sign up</h5>
+          <h5 class="login-button">Sign Up</h5>
         </a>
       </div>
     </div>
@@ -60,12 +61,12 @@
            </thead>
              <tbody class="profBody">
                <tr>
-                 <td class="modal-font">Username</td>
-                 <td id="username"><input class="login-input-text" type="text" name="" value=""></td>
+                 <td class="modal-font">Email</td>
+                 <td id="email"><input class="email-login-input-text" type="text" name="" value=""></td>
                </tr>
                <tr>
                  <td class="modal-font">Password</td>
-                 <td id="password"><input class="login-input-text" type="text" name="" value=""></td>
+                 <td id="password"><input class="password-login-input-text" type="text" name="" value=""></td>
                </tr>
              </tbody>
            </table>
@@ -92,16 +93,16 @@
           </thead>
             <tbody class="profBody">
               <tr>
-                <td class="modal-font">Username</td>
-                <td id="username"><input class="signup-input-text" type="text" name="" value=""></td>
+                <td class="modal-font">Email</td>
+                <td id="email"><input class="email-signup-input-text" type="text" name="" value=""></td>
               </tr>
               <tr>
                 <td class="modal-font">Password</td>
-                <td id="password"><input class="signup-input-text" type="text" name="" value=""></td>
+                <td id="password"><input class="password-signup-input-text" type="text" name="" value=""></td>
               </tr>
               <tr>
                 <td class="modal-font">Re-enter password</td>
-                <td id="password"><input class="signup-input-text" type="text" name="" value=""></td>
+                <td id="password_confirm"><input class="password_confirm-signup-input-text" type="text" name="" value=""></td>
               </tr>
             </tbody>
           </table>
