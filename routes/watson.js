@@ -170,13 +170,14 @@ router.post('/watson/receive', async function(req, res, next) {
         2. After await completes send back a success response
   TODO: Add error handling for each function that does NOT break server with throw.
 */
+console.log(req.body.voice);
   let voice = 'US_AllisonVoice',
     text = ''
   if (req.body.text) text = req.body.text
   else if (!req.body.text) res.status(400).send("No text was sent. Bad request")
 
   if (req.body.voice) voice = req.body.voice
-  const write_file = await writeFile(req.body.text)
+  const write_file = await writeFile(req.body.text, voice)
   const read_file = await read()
   const write_audio_misty = await writeAudioMisty(read_file)
   const play_audio = await playAudio()

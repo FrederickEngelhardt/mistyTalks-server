@@ -82,9 +82,6 @@ const add_all_voices = () => {
 */
 let added_number_count = 1
 
-
-console.log("loaded home.js");
-
 const remove_all_divs = () => {
   $(`.card_container`).remove()
 }
@@ -138,6 +135,40 @@ const myAccount_listener = () => {
     myAccountEdit_listener()
   })
 }
+const populate_account_preferences = (user_id) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/users/1",
+    "method": "GET",
+    "headers": {
+      "Cache-Control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function(response) {
+    const target = [{
+        location: "account_email_preferences",
+        user_info: "email"
+      },
+      {
+        location: "account_first_name_preferences",
+        user_info: "first_name"
+      },
+      {
+        location: "account_last_name_preferences",
+        user_info: "last_name"
+      }
+    ]
+    console.log(target[0].location)
+    for (var i = 0; i < target.length; i++) {
+      const data = response[target[i]['user_info']]
+      $(`.${target[i].location}`).text(data)
+      // $(`${target[i].location}`).val(response[target[i].user_info])
+    }
+  });
+}
+
 const myAccountEdit_listener = () => {
   // NOTE function requires myAccount to run.
   $(".my_account_edit").on("click", () => {
@@ -212,42 +243,35 @@ const mistyPreferences_listener = () => {
           <table>
             <tr>
               <td>Preference Name:</td>
-              <td>Default Settings</td>
+              <td class="misty_preference_name"></td>
             </tr>
             <tr>
               <td>Robot Name:</td>
-              <td>MISTY-YALE</td>
+              <td class="misty_robot_name"></td>
             </tr>
             <tr>
               <td>IP Address:</td>
-              <td>192.168.1.129</td>
+              <td class="misty_ip_address"></td>
             </tr>
             <tr>
               <td>Port Number:</td>
-              <td>N/A</td>
+              <td class="misty_port_number"></td>
             </tr>
             <tr>
               <td>Authorized Phone Numbers</td>
-              <td>
-                <div class="row">
-                  <div class="col s12 m12 l12">+1(555)555-5555</div>
-                  <div class="col s12 m12 l12">+1(555)555-5556</div>
-                  <div class="col s12 m12 l12">+1(555)555-5557</div>
-                  <div class="col s12 m12 l12">+1(555)555-5558</div>
-                </div>
-              </td>
+              <td class="misty_authorized_numbers"></td>
             </tr>
             <tr>
               <td>Misty Voice:</td>
-              <td>US-ALLISON</td>
+              <td class="misty_voice"></td>
             </tr>
             <tr>
               <td>Misty Robot Face</td>
-              <td>V: 0.2, A: 0.8, D: -1.0</td>
+              <td class="misty_robot_face"></td>
             </tr>
             <tr>
               <td>Quiet Hours</td>
-              <td>Between 9:30pm and 6:00am</td>
+              <td class="misty_quiet_hours"></td>
             </tr>
           </table>
         </div>
@@ -263,7 +287,70 @@ const mistyPreferences_listener = () => {
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
     editMistyPreferences_listener()
+    populate_misty_preferences()
+
   })
+}
+const populate_misty_preferences = (user_id) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/users/1/misty_preferences",
+    "method": "GET",
+    "headers": {
+      "Cache-Control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    const target = [{
+        location: "misty_preference_name",
+        user_info: "preference_name"
+      },
+      {
+        location: "misty_robot_name",
+        user_info: "robot_name"
+      },
+      {
+        location: "misty_authorized_numbers",
+        user_info: "auth_numbers_string"
+      },
+      {
+        location: "misty_ip_address",
+        user_info: "ip_address"
+      },
+      {
+        location: "misty_port_number",
+        user_info: "port_number"
+      },
+      {
+        location: "misty_voice",
+        user_info: "misty_voice"
+      },
+      {
+        location: "misty_robot_face",
+        user_info: ["set_emotion_valence", "set_emotion_arousal", "set_emotion_dominance"]
+      },
+      {
+        location: "misty_quiet_hours",
+        user_info: ["time_restriction_start", "time_restriction_end"]
+      }
+    ]
+    for (var i = 0; i < target.length; i++) {
+      if (target[i].location === "misty_quiet_hours") {
+        const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+        $(`.${target[i].location}`).text(data)
+      } else if (target[i].location === "misty_robot_face") {
+        const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
+        $(`.${target[i].location}`).html(data)
+      } else {
+        const data = response[target[i]['user_info']]
+        $(`.${target[i].location}`).text(data)
+      }
+      // $(`${target[i].location}`).val(response[target[i].user_info])
+    }
+  });
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
@@ -423,101 +510,48 @@ const create_listeners = () => {
   })
   // end of addNumber
 }
-const populate_account_preferences = (user_id) => {
+
+
+const retrieveAccountSubmitFormData = () => {
+  if ($("#confirm_password").val() === $("#password").val()) {
+    console.log("Password's match");
+  }
+  else {
+    alert("Passwords do not match.")
+    return false
+  }
+  /*Iterate through form information. The store inside a JSON object*/
+  let data = new Object()
+  let form_ids = ["email", "first_name", "last_name", "password"]
+  for (let key in form_ids) {
+    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
+  }
+  console.log(data);
+}
+const sendAccountSubmitForm = (data) => {
   var settings = {
     "async": true,
     "crossDomain": true,
     "url": "http://localhost:3000/users/1",
-    "method": "GET",
+    "method": "PATCH",
     "headers": {
+      "Content-Type": "application/json",
       "Cache-Control": "no-cache"
-    }
-  }
-
-  $.ajax(settings).done(function(response) {
-    const target = [{
-        location: "account_email_preferences",
-        user_info: "email"
-      },
-      {
-        location: "account_first_name_preferences",
-        user_info: "first_name"
-      },
-      {
-        location: "account_last_name_preferences",
-        user_info: "last_name"
-      }
-    ]
-    console.log(target[0].location)
-    for (var i = 0; i < target.length; i++) {
-      const data = response[target[i]['user_info']]
-      $(`.${target[i].location}`).text(data)
-      // $(`${target[i].location}`).val(response[target[i].user_info])
-    }
-  });
-}
-const populate_misty_preferences = (user_id) => {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "http://localhost:3000/users/1/misty_preferences",
-    "method": "GET",
-    "headers": {
-      "Cache-Control": "no-cache"
-    }
+    },
+    "processData": false,
+    "data": JSON.stringify(data)
   }
 
   $.ajax(settings).done(function(response) {
     console.log(response);
-    const target = [{
-        location: "misty_preference_name",
-        user_info: "preference_name"
-      },
-      {
-        location: "misty_robot_name",
-        user_info: "robot_name"
-      },
-      {
-        location: "misty_authorized_numbers",
-        user_info: "auth_numbers_string"
-      },
-      {
-        location: "misty_ip_address",
-        user_info: "ip_address"
-      },
-      {
-        location: "misty_port_number",
-        user_info: "port_number"
-      },
-      {
-        location: "misty_robot_face",
-        user_info: "set_emotion"
-      },
-      {
-        location: "misty_quiet_hours",
-        user_info: ["time_restriction_start", "time_restriction_end"]
-      }
-    ]
-    console.log(target[0].location)
-    for (var i = 0; i < target.length; i++) {
-      if (target[i].location === "misty_quiet_hours"){
-        const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
-        $(`.${target[i].location}`).text(data)
-      }
-      else {
-        const data = response[target[i]['user_info']]
-        $(`.${target[i].location}`).text(data)
-      }
-      // $(`${target[i].location}`).val(response[target[i].user_info])
-    }
   });
 }
-const retrieveSubmitFormData = (event) => {
+const retrievePreferencesSubmitFormData = (event) => {
   event.preventDefault()
 
   /*Iterate through form information. The store inside a JSON object*/
   let data = new Object()
-  let form_ids = ["preference_name", "robot_name", "ip_address", "port_number"]
+  let form_ids = ["email", "first_name", "last_name", "port_number"]
   for (let key in form_ids) {
     data[form_ids[key]] = $(`#${form_ids[key]}`).val()
   }
@@ -533,17 +567,14 @@ const retrieveSubmitFormData = (event) => {
   }
   // Missing phone numeber iteration
 }
-const sendSubmitForm = (data) => {}
-/*
-  END OF FORM SUBMISION FUNCTIONS
-*/
-const getAllImagesMisty = () => {
 
-}
 
 $(document).ready(() => {
+$('form').submit(function(e){
+  e.preventDefault()
+  retrieveAccountSubmitFormData()
+})
   populate_account_preferences()
-  populate_misty_preferences()
   create_listeners();
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
