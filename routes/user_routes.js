@@ -37,24 +37,6 @@ router.get('/users/:id', (req, res, next) => {
     })
 })
 
-
-
-//GET ROUTE FOR ALL ACCESS TO BOTH USERS AND MISTY_PREFERENCES
-// router.get('/users/:id/misty_preferences', (req, res, next) => {
-//   const id = parseInt(req.params.id)
-//   if (Number.isNaN(id)) {
-//     return next({ status: 404, message: `Not Found` })
-//   }
-//   return knex('users')
-//     .join('lessons', 'users.id', 'lessons.user_client_id')
-//     .where('lessons.user_client_id', id)
-//     .first()
-//     .then(result => {
-//       res.status(200).json(result)
-//     })
-// })
-//
-
 // GET ALL ACCESS TO MISTY_PREFERENCES (preference_name, robot_name, ip_address, port_number)
 router.get('/misty_preferences', (req, res, next) => {
   return knex('users').orderBy('id', 'asc')
@@ -90,12 +72,8 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
 router.post('/users', (req, res, next) => {
-  console.log(res)
 
-
-
-
-  const { email, password } = req.body
+  const { first_name, last_name, email, password } = req.body
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
   console.log(req.body);
   //   if (!re.test(password)) {
@@ -118,6 +96,7 @@ router.post('/users', (req, res, next) => {
               //   }
               //})
               const dataFields = {first_name, last_name, email, password}
+              console.log(dataFields);
               return knex.insert(dataFields, '*').into ('users')
               .then(() => {res.status(200).send('success')
             })
@@ -205,33 +184,33 @@ router.post('/users/:id', (req, res, next) => {
 
 
 
-//
-// router.patch('/users/:id', (req, res, next) => {
-//   const id = parseInt(req.params.id)
-//   if (Number.isNaN(id)) {
-//     return next({ status: 400, message: `Invalid ID` })
-//   }
-//   return knex('users')
-//     .where({id})
-//     .first()
-//     .then(user => {
-//       if (!user) {
-//         return next({ status: 404, message: `User not found` })
-//       }
-//       const { phone_number, bio } = req.body
-//       const insert = { phone_number, bio }
-//
-//       return knex('users')
-//         .update(insert, '*')
-//         .where({id})
-//     })
-//     .then(data => {
-//       res.status(201).json(data)
-//     })
-//     .catch(err => {
-//       next(err)
-//     })
-// })
+
+router.patch('/users/:id', (req, res, next) => {
+  const id = parseInt(req.params.id)
+  if (Number.isNaN(id)) {
+    return next({ status: 400, message: `Invalid ID` })
+  }
+  return knex('users')
+    .where({id})
+    .first()
+    .then(user => {
+      if (!user) {
+        return next({ status: 404, message: `User not found` })
+      }
+      const { email, first_name, last_name, password } = req.body
+      const insert = { email, first_name, last_name, password}
+      console.log(insert);
+      return knex('users')
+        .update(insert, '*')
+        .where({id})
+    })
+    .then(data => {
+      res.status(201).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+})
 
 
 // //delete set up...not working...update or delete on table users violates foreign key constraint misty_preferences_user_id_foreign on table misty_preferences

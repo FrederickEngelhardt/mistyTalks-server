@@ -3,12 +3,12 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('misty_preferences', table => {
     table.increments()
     table.integer('misty_preference_id')
-    table.foreign('user_id').references('misty_preference_id')
+    table.foreign('misty_preference_id').references('users.id')
     table.string('preference_name').notNullable()
     table.string('robot_name').notNullable()
     table.string('auth_numbers_string').notNullable()
     table.string('ip_address').notNullable()
-    table.integer('port_number').notNullable()
+    table.integer('port_number').defaultTo(null)
     table.string('misty_voice').notNullable();
     table.string('set_emotion_valence').notNullable();
     table.string('set_emotion_arousal').notNullable();
