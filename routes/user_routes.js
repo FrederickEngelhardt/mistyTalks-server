@@ -182,15 +182,33 @@ router.post('/users/:id', (req, res, next) => {
             })
 
 
-
-
+/*
+  Use this function hash any number of passwords sent through the parameters
+*/
+const bcrypt_hash_password = (...passwords) => {
+  return passwords.map( (myPlaintextPassword) => {
+    const saltRounds = 10;
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      console.log(salt);
+      bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
+        if(err) console.log("SERVER ERROR: Bcrypt password hash failed");
+        // Store hash in your password DB.
+        console.log(hash);
+        return hash
+      });
+    });
+  })
+}
 
 router.patch('/users/:id', (req, res, next) => {
   const id = parseInt(req.params.id)
-  const { email, first_name, last_name, password } = req.body
+  const { email, first_name, last_name,last_password, password } = req.body
   if (Number.isNaN(id)) {
     return next({ status: 400, message: `Invalid ID` })
   }
+
+  // Use bcrypt on the passwords
+
 
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
   if (!re.test(password)){
@@ -204,6 +222,9 @@ router.patch('/users/:id', (req, res, next) => {
     .then(user => {
       if (!user) {
         return next({ status: 404, message: `User not found` })
+      }
+      if (user.password !== last_password) {
+        return next({ status: 400, message: `Invalid previous password.`})
       }
       const insert = { email, first_name, last_name, password}
       console.log(insert);
