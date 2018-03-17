@@ -187,8 +187,16 @@ router.post('/users/:id', (req, res, next) => {
 
 router.patch('/users/:id', (req, res, next) => {
   const id = parseInt(req.params.id)
+  const { email, first_name, last_name, password } = req.body
   if (Number.isNaN(id)) {
     return next({ status: 400, message: `Invalid ID` })
+  }
+
+  const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
+  if (!re.test(password)){
+    return next({ status: 400, message: `Password needs to be at least 8 digits. May contain any characters.` })
+  }else {
+    console.log('passed the password check');
   }
   return knex('users')
     .where({id})
@@ -197,7 +205,6 @@ router.patch('/users/:id', (req, res, next) => {
       if (!user) {
         return next({ status: 404, message: `User not found` })
       }
-      const { email, first_name, last_name, password } = req.body
       const insert = { email, first_name, last_name, password}
       console.log(insert);
       return knex('users')
@@ -205,7 +212,7 @@ router.patch('/users/:id', (req, res, next) => {
         .where({id})
     })
     .then(data => {
-      res.status(201).json(data)
+      res.status(201).send("User information updated")
     })
     .catch(err => {
       next(err)

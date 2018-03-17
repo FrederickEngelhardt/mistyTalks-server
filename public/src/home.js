@@ -513,8 +513,10 @@ const create_listeners = () => {
 
 
 const retrieveAccountSubmitFormData = () => {
-  if ($("#confirm_password").val() === $("#password").val()) {
-    console.log("Password's match");
+  let password = $("#confirm_password").val(),
+      password_confirm  = $("#password").val()
+  if (password === password_confirm) {
+
   }
   else {
     alert("Passwords do not match.")
@@ -527,6 +529,7 @@ const retrieveAccountSubmitFormData = () => {
     data[form_ids[key]] = $(`#${form_ids[key]}`).val()
   }
   console.log(data);
+  sendAccountSubmitForm(data)
 }
 const sendAccountSubmitForm = (data) => {
   var settings = {
