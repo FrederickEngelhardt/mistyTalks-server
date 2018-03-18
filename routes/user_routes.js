@@ -108,10 +108,26 @@ router.post('/users', (req, res, next) => {
         email,
         password: hashPassword
       }
-      console.log(dataFields);
       return knex
         .insert(dataFields, '*')
         .into('users')
+        .then((user) => {
+          console.log("this is the user:",user);
+          const claim = {
+            user_id:  `${user[0].id}`,
+            email: `${user[0].email}`
+           }
+           console.log(claim);
+          const token = jwt.sign(claim, process.env.JWT_KEY, {
+            expiresIn: '1 day'
+          })
+          res.cookie('token', token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+            secure: router.get('env') === 'production'
+
+          })
+        })
         .then(() => {
           res.status(200).json(
             {
