@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const router = express.Router()
 
-router.get('/token', (req, res) => {
+router.get('users/token', (req, res) => {
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.status(200).send(false)
@@ -15,10 +15,10 @@ router.get('/token', (req, res) => {
   })
 })
 
-router.post('/token', (req, res, next) => {
-  const { email_address, password } = req.body
+router.post('users/token', (req, res, next) => {
+  const { email, password } = req.body
     console.log("This is your token",req.body);
-  if (!email_address) {
+  if (!email) {
     return next({ status: 400, message: `Email must not be blank` })
   }
   if (!password) {
@@ -26,7 +26,7 @@ router.post('/token', (req, res, next) => {
   }
   let user;
   return knex('users')
-    .where({email_address})
+    .where({email})
     .first()
     .then(data => {
       if (!data) {
@@ -52,7 +52,7 @@ router.post('/token', (req, res, next) => {
     })
 })
 
-router.delete('/token', (req, res, next) => {
+router.delete('users/token', (req, res, next) => {
   res.clearCookie('token')
   res.end()
 })

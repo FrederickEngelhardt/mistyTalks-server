@@ -34,7 +34,7 @@ const createAccount = (data='') => {
            success: function (msg) {
              console.log("got here");
                if (msg) {
-                   console.log("User" + " was added in list !");
+                   console.log("User " + " was added in list !");
                    // location.reload(true);
                    /* Activate this refresh when we hit submit.
                    even better way is:
