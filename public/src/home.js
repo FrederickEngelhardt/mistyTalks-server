@@ -9,11 +9,12 @@ socket.on('message', function(data) {
 });
 
 class State {
-  constructor(current_page) {
+  constructor(current_page, user) {
     this.current_page = current_page
+    this.user = {}
   }
 }
-let homeState = new State('home')
+let homeState = new State('home', {})
 const add_number = (count) => {
 
   return (`<div class="deleteNumberFields${count} row center">
@@ -489,8 +490,32 @@ const editMistyPreferences_listener = () => {
     });
   })
 }
+
+const verifyUserPermissionsToken = () => {
+
+// grab user token, see whos logged in
+//put into state class for user
+
+  $.get('/users/token').done( (result) => {
+    console.log('result',result);
+    // if (!result) window.location.href = '/index.html'
+    homeState.user.id = result.cookie.user_id
+    homeState.user.email = result.cookie.email
+    console.log(homeState);
+  }).fail((msg) => {
+     Materialize.toast(msg.responseText, 3000);
+     setTimeout(function(){
+       return window.location.href = '/index.html'
+     }, 1000)
+
+  })
+}
+
+
+
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
+  verifyUserPermissionsToken()
   goHome_listener()
 
   /*Edit/View Account*/

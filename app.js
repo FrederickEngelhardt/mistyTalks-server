@@ -52,10 +52,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(token)
 app.use(twilioRoutes)
 app.use(watsonRoutes)
 app.use(userRoutes)
-app.use(token)
 
 
 app.use((req, res, next) => {

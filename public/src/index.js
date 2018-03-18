@@ -3,8 +3,9 @@ function createLoginListener(){
 
 $('#login-btn').on('click', (event) => {
    event.preventDefault()
-   const email = $('#email').val()
-   const password = $('#password').val()
+   const email = $('.email-login-input-text').val()
+   const password = $('.password-login-input-text').val()
+
 
    const options = {
      contentType: 'application/json',
