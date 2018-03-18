@@ -103,6 +103,8 @@ const goHome_listener = () => {
     }
   })
 }
+
+/* Account function*/
 const myAccount_listener = () => {
   $(".go_to_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
@@ -117,15 +119,15 @@ const myAccount_listener = () => {
             <table>
               <tr>
                 <td>Email</td>
-                <td>fre1994@gmail.com</td>
+                <td class="account_email_preferences">fre1994@gmail.com</td>
               </tr>
               <tr>
                 <td>First Name</td>
-                <td>Frederick</td>
+                <td class="account_first_name_preferences">Frederick</td>
               </tr>
               <tr>
                 <td>Last Name</td>
-                <td>Engelhardt</td>
+                <td class="account_last_name_preferences">Engelhardt</td>
               </tr>
             </table>
           </div>
@@ -141,13 +143,15 @@ const myAccount_listener = () => {
       NOTE: Need to call this listener here b/c class does not exist outside this scope.
     */
     myAccountEdit_listener()
+    console.log("THIS IS USER ID", homeState.user.id);
+    populate_account_preferences(homeState.user.id)
   })
 }
 const populate_account_preferences = (user_id) => {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost:3000/users/1",
+    "url": `http://localhost:3000/users/${user_id}`,
     "method": "GET",
     "headers": {
       "Cache-Control": "no-cache"
@@ -179,64 +183,121 @@ const populate_account_preferences = (user_id) => {
 const myAccountEdit_listener = () => {
   // NOTE function requires myAccount to run.
   $(".my_account_edit").on("click", () => {
-    const html = `  <div class="card_container">
-        <div class="profile_card">
-          <h4 class="title_box">Account Information</h4>
-          <form id="edit_card_body">
+    const html = `
+        <div class="card_container">
+          <div class="profile_card">
+            <h4 class="title_box">Account Information</h4>
+            <form id="edit_card_body">
 
-            <!--user email -->
-            <h5>Email:</h5>
-            <div class="row center">
-              <div class="col s9 m9 l9">
-                <input type="email" id="email" name="email" value="" placeholder="email@mistytalks.com" required>
+              <!--user email -->
+              <h5>Email:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="email" id="email" name="email" value="" placeholder="email@mistytalks.com">
+                </div>
               </div>
-            </div>
-            <!-- end of user email  -->
+              <!-- end of user email  -->
 
-            <!--First Name-->
-            <h5>First Name:</h5>
-            <div class="row center">
-              <div class="col s9 m9 l9">
-                <input type="text" id="first_name" name="first" value="" placeholder="First Name" required>
+              <!--First Name-->
+              <h5>First Name:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="first_name" name="first" value="" placeholder="First Name">
+                </div>
               </div>
-            </div>
-            <!--End First Name-->
+              <!--End First Name-->
 
-            <!-- Last Name -->
-            <h5>Last Name:</h5>
-            <div class="row center">
-              <div class="col s9 m9 l9">
-                <input type="text" id="last_name" name="last" value="" placeholder="Last Name" required>
+              <!-- Last Name -->
+              <h5>Last Name:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="last_name" name="last" value="" placeholder="Last Name">
+                </div>
               </div>
-            </div>
-            <!-- End Last Name -->
+              <!-- End Last Name -->
 
-            <!--user email -->
-            <h5>New Password:</h5>
-            <div class="row">
-              <div class="col s9 m9 l9">
-                <input type="password" id="password" name="email" value="" placeholder="password" required>
-                <input type="password" id="confirm_password" name="email" value="" placeholder="confirm password" required>
+              <!--user password -->
+              <h5>New Password:</h5>
+              <div class="row">
+                <div class="col s9 m9 l9">
+                  <input type="password" id="previous_password" value="" placeholder="previous password">
+                  <input type="password" id="password" name="email" value="" placeholder="password">
+                  <input type="password" id="confirm_password" name="email" placeholder="confirm password">
+                </div>
               </div>
-            </div>
-            <!-- end of user email  -->
+              <!-- end of user password  -->
 
-            <!-- Form submit/exit buttons here.  -->
-            <div class="row center">
-              <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
-              <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
-            </div>
-          </form>
+              <!-- Form submit/exit buttons here.  -->
+              <div class="row center">
+                <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
+                <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>`
+      `
     if (homeState.current_page !== "my_account_edit") {
       remove_all_divs()
       $(".container").append(html)
     }
     homeState.current_page = "my_account_edit"
+    $('form').submit(function(e){
+      e.preventDefault()
+      retrieveAccountSubmitFormData()
+    })
   })
 }
 
+const retrieveAccountSubmitFormData = (   ) => {
+  let password_confirm = $("#confirm_password").val(),
+  password  = $("#password").val(),
+  previous_password = $("#previous_password").val()
+
+  if (password !== password_confirm) {
+    return Materialize.toast('Passwords do not match.', 3000)
+  }
+  if (password.length > 0 && password.length < 8 || password_confirm.length > 0 && password_confirm.length < 8 || previous_password.length > 0 && previous_password.length < 8) {
+    return Materialize.toast('Passwords need to be at least 8 digits.', 3000)
+  }
+  if (password){
+    if (previous_password.length === 0) {
+      return Materialize.toast('Please enter previous passoword.', 3000)
+    }
+  }
+  /*Iterate through form information. The store inside a JSON object*/
+  let data = new Object()
+  let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]
+  for (let key in form_ids) {
+    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
+    if (data[form_ids[key]] === '') {
+      delete data[form_ids[key]]
+    }
+  }
+  sendAccountSubmitForm(data)
+}
+const sendAccountSubmitForm = (data) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost:3000/users/1",
+    "method": "PATCH",
+    "headers": {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(data)
+  }
+
+  $.ajax(settings).done(function(response) {
+    Materialize.toast(response, 3000)
+  }).fail((fail_message) => {
+    Materialize.toast(fail_message.responseText, 3000)
+  })
+}
+// END of account functions
+
+/* MISTY_PREFERENCES Functions*/
 const mistyPreferences_listener = () => {
   $(".go_to_misty_preferences").on("click", () => {
     $(".display_home").addClass("hide_this")
@@ -294,7 +355,7 @@ const mistyPreferences_listener = () => {
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
     editMistyPreferences_listener()
-    populate_misty_preferences()
+    populate_misty_preferences(homeState.user.id)
 
   })
 }
@@ -302,7 +363,7 @@ const populate_misty_preferences = (user_id) => {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost:3000/users/1/misty_preferences",
+    "url": `http://localhost:3000/users/${user_id}/misty_preferences`,
     "method": "GET",
     "headers": {
       "Cache-Control": "no-cache"
@@ -490,23 +551,24 @@ const editMistyPreferences_listener = () => {
     });
   })
 }
+// END of misty preferences Functions
 
 const verifyUserPermissionsToken = () => {
 
-// grab user token, see whos logged in
-//put into state class for user
+  // grab user token, see whos logged in
+  //put into state class for user
 
-  $.get('/users/token').done( (result) => {
-    console.log('result',result);
+  $.get('/users/token').done((result) => {
+    console.log('result', result);
     // if (!result) window.location.href = '/index.html'
     homeState.user.id = result.cookie.user_id
     homeState.user.email = result.cookie.email
     console.log(homeState);
   }).fail((msg) => {
-     Materialize.toast(msg.responseText, 3000);
-     setTimeout(function(){
-       return window.location.href = '/index.html'
-     }, 1000)
+    Materialize.toast(msg.responseText, 3000);
+    setTimeout(function() {
+      return window.location.href = '/index.html'
+    }, 1000)
 
   })
 }
@@ -543,54 +605,6 @@ const create_listeners = () => {
 }
 
 
-const retrieveAccountSubmitFormData = () => {
-  let password_confirm = $("#confirm_password").val(),
-      password  = $("#password").val(),
-      previous_password = $("#previous_password").val()
-
-  if (password !== password_confirm) {
-    return Materialize.toast('Passwords do not match.', 3000)
-  }
-  if (password.length < 8 || password_confirm < 8 || previous_password.length < 8) {
-    return Materialize.toast('Passwords need to be at least 8 digits.', 3000)
-  }
-  if (password){
-    if (previous_password.length === 0) {
-      return Materialize.toast('Please enter previous passoword.', 3000)
-    }
-  }
-  /*Iterate through form information. The store inside a JSON object*/
-  let data = new Object()
-  let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]
-  for (let key in form_ids) {
-    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
-    if (data[form_ids[key]] === '') {
-      delete data[form_ids[key]]
-    }
-  }
-  console.log(data);
-  sendAccountSubmitForm(data)
-}
-const sendAccountSubmitForm = (data) => {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "http://localhost:3000/users/1",
-    "method": "PATCH",
-    "headers": {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache"
-    },
-    "processData": false,
-    "data": JSON.stringify(data)
-  }
-
-  $.ajax(settings).done(function(response) {
-    console.log(response);
-  }).fail((fail_message) => {
-    Materialize.toast(fail_message.responseText, 3000)
-  })
-}
 const retrievePreferencesSubmitFormData = (event) => {
   event.preventDefault()
 
