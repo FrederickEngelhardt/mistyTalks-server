@@ -22,14 +22,22 @@ router.get('/users', (req, res, next) => {
 router.get('/users/:id', (req, res, next) => {
   const id = parseInt(req.params.id)
   if (Number.isNaN(id)) {
-    return next({ status: 404, message: `Not Found` })
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
   }
   return knex('users')
-    .where({ id })
+    .where({
+      id
+    })
     .first()
     .then(data => {
       if (!data) {
-        return next({ status: 404, message: `Not Found` })
+        return next({
+          status: 404,
+          message: `Not Found`
+        })
       }
       res.status(200).json(data)
     })
@@ -54,15 +62,23 @@ router.get('/misty_preferences', (req, res, next) => {
 router.get('/users/:id/misty_preferences', (req, res, next) => {
   const id = parseInt(req.params.id)
   if (Number.isNaN(id)) {
-    return next({ status: 404, message: `Not Found` })
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
   }
   return knex('misty_preferences')
-    .where({ id })
+    .where({
+      id
+    })
     .first()
     .then(data => {
       console.log(data)
       if (!data) {
-        return next({ status: 404, message: `Not Found` })
+        return next({
+          status: 404,
+          message: `Not Found`
+        })
       }
       res.status(200).json(data)
     })
@@ -74,7 +90,12 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
 router.post('/users', (req, res, next) => {
-  const { first_name, last_name, email, password } = req.body
+  const {
+    first_name,
+    last_name,
+    email,
+    password
+  } = req.body
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
 
   if (!re.test(password)) {
@@ -84,10 +105,15 @@ router.post('/users', (req, res, next) => {
     })
   }
   if (!email || (!email.includes('@') && !email.includes('.'))) {
-    return next({ status: 400, message: `Email must be valid` })
+    return next({
+      status: 400,
+      message: `Email must be valid`
+    })
   }
   return knex('users')
-    .where({ email })
+    .where({
+      email
+    })
     .first()
     .then(user => {
       if (!user) {
@@ -96,7 +122,10 @@ router.post('/users', (req, res, next) => {
     })
     .then(password => {
       if (!password) {
-        return next({ status: 400, message: `User account already exists` })
+        return next({
+          status: 400,
+          message: `User account already exists`
+        })
       }
       return
     })
@@ -112,12 +141,12 @@ router.post('/users', (req, res, next) => {
         .insert(dataFields, '*')
         .into('users')
         .then((user) => {
-          console.log("this is the user:",user);
+          console.log("this is the user:", user);
           const claim = {
-            user_id:  `${user[0].id}`,
+            user_id: `${user[0].id}`,
             email: `${user[0].email}`
-           }
-           console.log(claim);
+          }
+          console.log(claim);
           const token = jwt.sign(claim, process.env.JWT_KEY, {
             expiresIn: '1 day'
           })
@@ -129,11 +158,10 @@ router.post('/users', (req, res, next) => {
           })
         })
         .then(() => {
-          res.status(200).json(
-            {
-              status: "success",
-              message: `User: ${email} has been created!`
-            })
+          res.status(200).json({
+            status: "success",
+            message: `User: ${email} has been created!`
+          })
         })
     })
 })
@@ -145,13 +173,13 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
   return new Promise((resolve) => {
     const saltRounds = 10
     bcrypt.genSalt(saltRounds, function(err, salt) {
-      if(err) {
+      if (err) {
         console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
         return
       };
       bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-        if(err) {
-        console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
+        if (err) {
+          console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
           return
         };
         // Send hash: requires await async
@@ -161,48 +189,107 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
   })
 }
 
-router.patch('/users/:id', async function (req, res, next) {
+router.patch('/users/:id', async function(req, res, next) {
   const id = parseInt(req.params.id)
-  const { email, first_name, last_name, previous_password, password } = req.body
+  const {
+    email,
+    first_name,
+    last_name,
+    previous_password,
+    password
+  } = req.body
   if (Number.isNaN(id)) {
-    return next({ status: 400, message: `Invalid ID` })
-  }
-  const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
-  if (!re.test(password)) {
     return next({
       status: 400,
-      message: `Password needs to be at least 8 digits. May contain any characters.`
+      message: `Invalid ID`
     })
   }
-  // Hash Passwords
-  let hashed_previous_password = await bcrypt_hash_password(previous_password)
-  let hashed_new_password = await bcrypt_hash_password(password)
-  // Load hash from your password DB.
-  return knex('users')
-    .where({ id })
-    .first()
-    .then(user => {
-      if (!user) {
-        return next({ status: 404, message: `User not found` })
-      }
-      return bcrypt.compare(previous_password, user.password)
-    }).then((bcryptResponse) => {
-      // If the passwords do not match.
-      if (!bcryptResponse) {
-        return next({ status: 403, message: `Previous user password does not match.` })
-      }
-      // Update the user if they do match
-      const insert = {email, first_name, last_name, "password": hashed_new_password}
-      return knex('users')
-      .update(insert, '*')
-      .where({ id })
-    })
-    .then(data => {
-      return res.status(201).send("User has been updated.")
-    })
-    .catch(err => {
-      next(err)
-    })
+  console.log(req.body);
+  if (previous_password && password) {
+    const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
+    if (!re.test(password)) {
+      return next({
+        status: 400,
+        message: `Password needs to be at least 8 digits. May contain any characters.`
+      })
+    }
+    // Hash Passwords
+    let hashed_previous_password = await bcrypt_hash_password(previous_password)
+    let hashed_new_password = await bcrypt_hash_password(password)
+    return knex('users')
+      .where({
+        id
+      })
+      .first()
+      .then(user => {
+        if (!user) {
+          return next({
+            status: 404,
+            message: `User not found`
+          })
+        }
+        return bcrypt.compare(previous_password, user.password)
+      }).then((bcryptResponse) => {
+        // If the passwords do not match.
+        if (!bcryptResponse) {
+          return next({
+            status: 403,
+            message: `Previous user password does not match.`
+          })
+        }
+        // Update the user if they do match
+        const insert = {
+          email,
+          first_name,
+          last_name,
+          "password": hashed_new_password
+        }
+        return knex('users')
+          .update(insert, '*')
+          .where({
+            id
+          })
+      })
+      .then(data => {
+        return res.status(201).send("User has been updated.")
+      })
+      .catch(err => {
+        next(err)
+      })
+  } else {
+    // Load hash from your password DB.
+    return knex('users')
+      .where({
+        id
+      })
+      .first()
+      .then(user => {
+        if (!user) {
+          return next({
+            status: 404,
+            message: `User not found`
+          })
+        }
+      }).then(() => {
+        // Update the user if they do match
+        const insert = {
+          email,
+          first_name,
+          last_name
+        }
+        return knex('users')
+          .update(insert, '*')
+          .where({
+            id
+          })
+      })
+      .then(data => {
+        return res.status(201).send("User has been updated.")
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 })
 
 // //delete set up...not working...update or delete on table users violates foreign key constraint misty_preferences_user_id_foreign on table misty_preferences
