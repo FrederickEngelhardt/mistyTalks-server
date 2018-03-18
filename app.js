@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
 const socket = require("socket.io");
-const axios = require("axios");
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const app = express();
@@ -14,30 +13,30 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // server side socket variable, this will not cross over into the front end
-let server = app.listen(3500, function() {
-  console.log('listening to requests on port 3500');
+let server = app.listen(port, function() {
+  console.log(`listening to requests on port ${port}`);
+});
+// Socket SETUP on the server awaiting to be called...
+let io = socket.listen(server);
+
+// handle incoming connections from clients
+io.sockets.on('connection', function(socket) {
+  console.log("New connection", socket.id);
+    // once a client has connected, we expect to get a ping from them saying what room they want to join
+    socket.on('mistyChannel', function(mistyChannel) {
+        console.log(`User has joined ${mistyChannel}`);
+        socket.join(mistyChannel);
+    });
 });
 
+// now, it's easy to send a message to just the clients in a given room
+let mistyChannel = "email@email.com";
+io.sockets.in(mistyChannel).emit('message', 'what is going on, party people?');
+
+// this message will NOT go to the client defined above
+io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
+
 app.use(express.static('public'))
-
-// Socket SETUP on the server awaiting to be called...
-let io = socket(server);
-
-// when the client connects, we are going to listen with the connection method
-  // fire callback function that uses a new socket
-  // still awaiting call...by itself it just waits
-io.on('connection', function (socket){
-  // socket.id is a unique connection (like an ip address) that changes every time
-  console.log("made socket connection", socket.id)
-
-  // individual socket is on and when loading is finished, ...
-  socket.on('load', function (data) {
-    io.sockets.emit('load', data)
-  })
-
-
-})
-
 
 // ROUTES
 const watsonRoutes = require('./routes/watson')
@@ -67,7 +66,5 @@ app.use((err, req, res, next) => {
   const status = err.status || 500
   res.status(status).send(err.message)
 })
-
-app.listen(port, () => console.log(`Listening on port ${port}`))
 
 module.exports = app

@@ -1,6 +1,13 @@
-/*
-  BEGGINING OF FORM SUBMISSION FUNCTIONS
-*/
+let socket = io('http://localhost:3000');
+let mistyChannel = "email@email.com"
+socket.on('connect', function () {
+  console.log("new connection", mistyChannel);
+  socket.emit('mistyChannel', mistyChannel)
+});
+socket.on('message', function(data) {
+   console.log('Incoming message:', data);
+});
+
 class State {
   constructor(current_page) {
     this.current_page = current_page
@@ -160,7 +167,6 @@ const populate_account_preferences = (user_id) => {
         user_info: "last_name"
       }
     ]
-    console.log(target[0].location)
     for (var i = 0; i < target.length; i++) {
       const data = response[target[i]['user_info']]
       $(`.${target[i].location}`).text(data)

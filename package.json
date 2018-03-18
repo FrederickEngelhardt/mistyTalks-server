@@ -2,6 +2,7 @@
   "name": "mistyTalks-server",
   "version": "1.0.0",
   "description": "",
+  "author": "",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
@@ -13,7 +14,6 @@
     "url": "git+https://github.com/FrederickEngelhardt/mistyTalks-server.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FrederickEngelhardt/mistyTalks-server/issues"
@@ -37,6 +37,7 @@
     "pg": "^7.4.1",
     "request": "^2.83.0",
     "socket.io": "^2.0.4",
+    "socket.mvc": "^0.2.0",
     "twilio": "^3.13.0",
     "unirest": "^0.5.1",
     "watson-developer-cloud": "^3.0.7"

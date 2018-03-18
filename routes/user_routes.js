@@ -113,7 +113,11 @@ router.post('/users', (req, res, next) => {
         .insert(dataFields, '*')
         .into('users')
         .then(() => {
-          res.status(200).send('success')
+          res.status(200).json(
+            {
+              status: "success",
+              message: `User: ${email} has been created!`
+            })
         })
     })
 })
