@@ -182,13 +182,39 @@ router.post('/users/:id', (req, res, next) => {
             })
 
 
-
-
+/*
+  Use this function hash any number of passwords sent through the parameters
+*/
+const bcrypt_hash_password = (...passwords) => {
+  return passwords.map( (myPlaintextPassword) => {
+    const saltRounds = 10;
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      console.log(salt);
+      bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
+        if(err) console.log("SERVER ERROR: Bcrypt password hash failed");
+        // Store hash in your password DB.
+        console.log(hash);
+        return hash
+      });
+    });
+  })
+}
 
 router.patch('/users/:id', (req, res, next) => {
   const id = parseInt(req.params.id)
+  const { email, first_name, last_name,last_password, password } = req.body
   if (Number.isNaN(id)) {
     return next({ status: 400, message: `Invalid ID` })
+  }
+
+  // Use bcrypt on the passwords
+
+
+  const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
+  if (!re.test(password)){
+    return next({ status: 400, message: `Password needs to be at least 8 digits. May contain any characters.` })
+  }else {
+    console.log('passed the password check');
   }
   return knex('users')
     .where({id})
@@ -197,7 +223,9 @@ router.patch('/users/:id', (req, res, next) => {
       if (!user) {
         return next({ status: 404, message: `User not found` })
       }
-      const { email, first_name, last_name, password } = req.body
+      if (user.password !== last_password) {
+        return next({ status: 400, message: `Invalid previous password.`})
+      }
       const insert = { email, first_name, last_name, password}
       console.log(insert);
       return knex('users')
@@ -205,7 +233,7 @@ router.patch('/users/:id', (req, res, next) => {
         .where({id})
     })
     .then(data => {
-      res.status(201).json(data)
+      res.status(201).send("User information updated")
     })
     .catch(err => {
       next(err)

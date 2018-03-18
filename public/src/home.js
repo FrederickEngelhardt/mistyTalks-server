@@ -513,12 +513,14 @@ const create_listeners = () => {
 
 
 const retrieveAccountSubmitFormData = () => {
-  if ($("#confirm_password").val() === $("#password").val()) {
-    console.log("Password's match");
+  let password = $("#confirm_password").val(),
+      password_confirm  = $("#password").val()
+  if (password === password_confirm) {
+
   }
   else {
-    alert("Passwords do not match.")
-    return false
+    Materialize.toast('Passwords do not match.', 3000)
+    return
   }
   /*Iterate through form information. The store inside a JSON object*/
   let data = new Object()
@@ -527,6 +529,7 @@ const retrieveAccountSubmitFormData = () => {
     data[form_ids[key]] = $(`#${form_ids[key]}`).val()
   }
   console.log(data);
+  sendAccountSubmitForm(data)
 }
 const sendAccountSubmitForm = (data) => {
   var settings = {
@@ -544,7 +547,10 @@ const sendAccountSubmitForm = (data) => {
 
   $.ajax(settings).done(function(response) {
     console.log(response);
-  });
+  }).fail((fail_message) => {
+    console.log("FAIL MESSAGE", fail_message);
+    Materialize.toast('Invalid Email or Password', 3000)
+  })
 }
 const retrievePreferencesSubmitFormData = (event) => {
   event.preventDefault()
@@ -567,79 +573,6 @@ const retrievePreferencesSubmitFormData = (event) => {
   }
   // Missing phone numeber iteration
 }
-
-// Start of Web Token Data
-
-(function (){
-
-  $.getJSON('/token')
-    .done(loggedIn => {
-      if (loggedIn) {
-        $('.logout').on('click', () => {
-          localStorage.clear()
-          const options = {
-            dataType: 'json',
-            type: 'DELETE',
-            url: '/token'
-          }
-          $.ajax(options)
-            .done(() => {
-              window.location.href = '/index.html'
-            })
-            .fail(() => {
-              Materialize.toast('Unable to log out', 3000)
-            })
-        })
-      }
-    })
-
-
-
-}) ()
-
-
-
-const checkPrivileges = () => {
-  $.get('/token').done( (result) => {
-    const id = result.cookie.user_id
-    $.get(`/users/${id}`)
-      .done(data => {
-        skill_level = data.skill_level_id
-          return
-      })
-  })
-}
-
-
-const createAccountOverview = (data) => {
-  const newCard = `
-    <div id="myProfile">
-      `
-      $('#edit_card').remove()
-      $('#profile_card').append(newCard)
-      $('#email_address').append(data.email_address)
-      $('#editButton').click(function(event) {
-        event.preventDefault()
-        editWindow()
-      })
-    }
-
-
-
-
-
-    const createListenersLogin = () => {
-      $('#submitButton').click((event) => {
-        event.preventDefault()
-        submitEdit()
-      })
-    }
-
-
-
-
-
-// End of Web Token Data
 
 
 $(document).ready(() => {
