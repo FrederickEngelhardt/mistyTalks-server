@@ -1,35 +1,40 @@
 const createAccount = (data='') => {
         if (data === '') {
-          console.log("new user");
-          let email_address = $('.email-signup-input-text').val()
+          let first_name = ''
+          let last_name = ''
+          let email = $('.email-signup-input-text').val()
           let password = $('.password-signup-input-text').val()
           let password_confirm = $('.password_confirm-signup-input-text').val()
 
           if (password === password_confirm) {
             console.log("it worked good pword");
             console.log(password, " ", password_confirm);
-            data = {email_address, password}
+            data = {first_name, last_name, email, password}
           }
 
           else {
             console.log("it worked bad pword");
-            alert("Passwords do not match.")
+            Materialize.toast('Passwords Do Not Match', 3000)
             return false
           }
 
         }
+
         console.log(data)
+
+
+
+
         $.ajax({
-           headers : {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
-            },
+           headers:{
+           },
            type: "POST",
-           url: "/users",
+           url: "http://localhost:3000/users",
            dataType: "json",
            success: function (msg) {
+             console.log("got here");
                if (msg) {
-                   console.log("User" + " was added in list !");
+                   console.log("User " + " was added in list !");
                    // location.reload(true);
                    /* Activate this refresh when we hit submit.
                    even better way is:
@@ -39,7 +44,7 @@ const createAccount = (data='') => {
                    alert("Cannot add to list !");
                }
            },
-           data: JSON.stringify(data)
+           data: data
         })
         .done(() => {
           window.location.href = '/home.html'
