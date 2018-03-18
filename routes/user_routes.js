@@ -120,8 +120,8 @@ router.post('/users', (req, res, next) => {
 /*
   Use this function hash any number of passwords sent through the parameters
 */
-const bcrypt_hash_password = (...passwords) => {
-  return passwords.map(myPlaintextPassword => {
+const bcrypt_hash_password = (myPlaintextPassword) => {
+  return new Promise((resolve) => {
     const saltRounds = 10
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if(err) {
@@ -132,24 +132,20 @@ const bcrypt_hash_password = (...passwords) => {
         if(err) {
           console.log("SERVER ERROR: Bcrypt password hash failed")
           return next({ status: 500, message: `Internal Server Error` })
-       };
+        };
         // Store hash in your password DB.
-        return hash
+        return resolve(hash)
       })
     })
   })
 }
 
-router.patch('/users/:id', (req, res, next) => {
+router.patch('/users/:id', async function (req, res, next) {
   const id = parseInt(req.params.id)
   const { email, first_name, last_name, last_password, password } = req.body
   if (Number.isNaN(id)) {
     return next({ status: 400, message: `Invalid ID` })
   }
-
-  // Use bcrypt on the passwords
-  bcrypt_hash_password(last_password, password)
-
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
   if (!re.test(password)) {
     return next({
@@ -159,6 +155,10 @@ router.patch('/users/:id', (req, res, next) => {
   } else {
     console.log('passed the password check')
   }
+  // Hash Passwords
+  let hashed_last_password = bcrypt_hash_password(last_password)
+  let hashed_new_password = bcrypt_hash_password(password)
+
   return knex('users')
     .where({ id })
     .first()
@@ -166,7 +166,7 @@ router.patch('/users/:id', (req, res, next) => {
       if (!user) {
         return next({ status: 404, message: `User not found` })
       }
-      if (user.password !== last_password) {
+      if (user.password !== hashed_last_password) {
         return next({ status: 400, message: `Invalid previous password.` })
       }
       const insert = { email, first_name, last_name, password }
@@ -176,7 +176,7 @@ router.patch('/users/:id', (req, res, next) => {
         .where({ id })
     })
     .then(data => {
-      res.status(201).send('User information updated')
+      res.status(201).send('User information updated.')
     })
     .catch(err => {
       next(err)
