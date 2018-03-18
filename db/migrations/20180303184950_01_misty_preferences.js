@@ -5,16 +5,16 @@ exports.up = function(knex, Promise) {
     table.integer('misty_preference_id')
     table.foreign('misty_preference_id').references('users.id')
     table.string('preference_name').notNullable()
-    table.string('robot_name').notNullable()
+    table.string('robot_name').defaultsTo(null)
     table.string('auth_numbers_string').notNullable()
     table.string('ip_address').notNullable()
     table.integer('port_number').defaultTo(null)
-    table.string('misty_voice').notNullable();
-    table.string('set_emotion_valence').notNullable();
-    table.string('set_emotion_arousal').notNullable();
-    table.string('set_emotion_dominance').notNullable();
-    table.time('time_restriction_start');
-    table.time('time_restriction_end');
+    table.string('misty_voice').defaultsTo(null);
+    table.string('set_emotion_valence').defaultsTo(null);
+    table.string('set_emotion_arousal').defaultsTo(null);
+    table.string('set_emotion_dominance').defaultsTo(null);
+    table.time('time_restriction_start').defaultsTo(null);
+    table.time('time_restriction_end').defaultsTo(null);
   })
 };
 
