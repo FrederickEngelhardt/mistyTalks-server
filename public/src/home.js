@@ -513,20 +513,29 @@ const create_listeners = () => {
 
 
 const retrieveAccountSubmitFormData = () => {
-  let password = $("#confirm_password").val(),
-      password_confirm  = $("#password").val()
-  if (password === password_confirm) {
+  let password_confirm = $("#confirm_password").val(),
+      password  = $("#password").val(),
+      previous_password = $("#previous_password").val()
 
+  if (password !== password_confirm) {
+    return Materialize.toast('Passwords do not match.', 3000)
   }
-  else {
-    Materialize.toast('Passwords do not match.', 3000)
-    return
+  if (password.length < 8 || password_confirm < 8 || previous_password.length < 8) {
+    return Materialize.toast('Passwords need to be at least 8 digits.', 3000)
+  }
+  if (password){
+    if (previous_password.length === 0) {
+      return Materialize.toast('Please enter previous passoword.', 3000)
+    }
   }
   /*Iterate through form information. The store inside a JSON object*/
   let data = new Object()
-  let form_ids = ["email", "first_name", "last_name", "password"]
+  let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]
   for (let key in form_ids) {
     data[form_ids[key]] = $(`#${form_ids[key]}`).val()
+    if (data[form_ids[key]] === '') {
+      delete data[form_ids[key]]
+    }
   }
   console.log(data);
   sendAccountSubmitForm(data)
@@ -548,8 +557,7 @@ const sendAccountSubmitForm = (data) => {
   $.ajax(settings).done(function(response) {
     console.log(response);
   }).fail((fail_message) => {
-    console.log("FAIL MESSAGE", fail_message);
-    Materialize.toast('Invalid Email or Password', 3000)
+    Materialize.toast(fail_message.responseText, 3000)
   })
 }
 const retrievePreferencesSubmitFormData = (event) => {

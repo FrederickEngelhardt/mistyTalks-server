@@ -73,7 +73,7 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
 
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
-router.post('/users', (req, res, next) => {
+router.post('/users', async function(req, res, next) {
   const { first_name, last_name, email, password } = req.body
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
 
@@ -108,6 +108,7 @@ router.post('/users', (req, res, next) => {
         email,
         password: hashPassword
       }
+      console.log(dataFields);
       return knex
         .insert(dataFields, '*')
         .into('users')
@@ -125,15 +126,15 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
     const saltRounds = 10
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if(err) {
-        console.log("SERVER ERROR: Bcrypt password hash failed")
-        return next({ status: 500, message: `Internal Server Error` })
+        console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
+        return
       };
       bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
         if(err) {
-          console.log("SERVER ERROR: Bcrypt password hash failed")
-          return next({ status: 500, message: `Internal Server Error` })
+        console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
+          return
         };
-        // Store hash in your password DB.
+        // Send hash: requires await async
         return resolve(hash)
       })
     })
@@ -142,7 +143,7 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
 
 router.patch('/users/:id', async function (req, res, next) {
   const id = parseInt(req.params.id)
-  const { email, first_name, last_name, last_password, password } = req.body
+  const { email, first_name, last_name, previous_password, password } = req.body
   if (Number.isNaN(id)) {
     return next({ status: 400, message: `Invalid ID` })
   }
@@ -152,13 +153,11 @@ router.patch('/users/:id', async function (req, res, next) {
       status: 400,
       message: `Password needs to be at least 8 digits. May contain any characters.`
     })
-  } else {
-    console.log('passed the password check')
   }
   // Hash Passwords
-  let hashed_last_password = bcrypt_hash_password(last_password)
-  let hashed_new_password = bcrypt_hash_password(password)
-
+  let hashed_previous_password = await bcrypt_hash_password(previous_password)
+  let hashed_new_password = await bcrypt_hash_password(password)
+  // Load hash from your password DB.
   return knex('users')
     .where({ id })
     .first()
@@ -166,17 +165,20 @@ router.patch('/users/:id', async function (req, res, next) {
       if (!user) {
         return next({ status: 404, message: `User not found` })
       }
-      if (user.password !== hashed_last_password) {
-        return next({ status: 400, message: `Invalid previous password.` })
+      return bcrypt.compare(previous_password, user.password)
+    }).then((bcryptResponse) => {
+      // If the passwords do not match.
+      if (!bcryptResponse) {
+        return next({ status: 403, message: `Previous user password does not match.` })
       }
-      const insert = { email, first_name, last_name, password }
-      console.log(insert)
+      // Update the user if they do match
+      const insert = {email, first_name, last_name, "password": hashed_new_password}
       return knex('users')
-        .update(insert, '*')
-        .where({ id })
+      .update(insert, '*')
+      .where({ id })
     })
     .then(data => {
-      res.status(201).send('User information updated.')
+      return res.status(201).send("User has been updated.")
     })
     .catch(err => {
       next(err)

@@ -9,14 +9,14 @@ exports.seed = function(knex, Promise) {
           first_name: 'Bob',
           last_name: 'Ross',
           email: 'me@me.com',
-          password: 'zxcv'
+          password: '$2a$10$uB1nC5RLNVkgQKRwTKxx8eqT4qN4tctGUb9/sF19tbyLjNWL9Ssli'
         },
         {
           id: 2,
           first_name: 'Jim',
           last_name: 'Smith',
           email: 'mine@mine.com',
-          password: 'vbnm'
+          password: '$2a$10$9aTaAGPn4lh7SXvQOT6I0.iB1VdrIAiR6ctt/2AjO/1ifEwGy1Ji2'
         },
         {
           id: 3,
