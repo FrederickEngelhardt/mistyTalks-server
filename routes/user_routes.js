@@ -73,7 +73,7 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
 
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
-router.post('/users', async function(req, res, next) {
+router.post('/users', (req, res, next) => {
   const { first_name, last_name, email, password } = req.body
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
 
@@ -100,8 +100,8 @@ router.post('/users', async function(req, res, next) {
       }
       return
     })
-    .then(() => {
-      let hashPassword = bcrypt_hash_password(password)
+    .then(async function() {
+      let hashPassword = await bcrypt_hash_password(password)
       const dataFields = {
         first_name,
         last_name,
