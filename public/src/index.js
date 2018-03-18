@@ -1,16 +1,31 @@
-// Make Connection
-// second variable called socket...will not cross to the server...
-// on refresh will listen for requests
-// let socket = io.connect('http://localhost:3500');
+function createLoginListener(){
+  // Creating the listener for the login button on the index.html
 
+$('#login-btn').on('click', (event) => {
+   event.preventDefault()
+   const email = $('#email').val()
+   const password = $('#password').val()
 
+   const options = {
+     contentType: 'application/json',
+     data: JSON.stringify({ email, password }),
+     dataType: 'json',
+     type: 'POST',
+     url: 'users/token'
+   };
+   $.ajax(options)
+     .done(() => {
+       window.location.href = '/home.html'
+     })
+     .fail($xhr => {
+       Materialize.toast($xhr.responseText, 3000)
+     })
+ })
+}
 
-
-$(".login_btn").click(() => {
-  console.log("clicked");
-})
-console.log("loaded");
 $(document).ready(() => {
+createLoginListener();
+
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
