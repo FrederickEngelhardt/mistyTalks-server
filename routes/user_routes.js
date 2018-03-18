@@ -189,11 +189,16 @@ const bcrypt_hash_password = (...passwords) => {
   return passwords.map( (myPlaintextPassword) => {
     const saltRounds = 10;
     bcrypt.genSalt(saltRounds, function(err, salt) {
-      console.log(salt);
+      if(err) {
+        console.log("SERVER ERROR: Bcrypt password hash failed")
+        return next({ status: 500, message: `Internal Server Error` })
+      };
       bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-        if(err) console.log("SERVER ERROR: Bcrypt password hash failed");
+        if(err) {
+          console.log("SERVER ERROR: Bcrypt password hash failed")
+          return next({ status: 500, message: `Internal Server Error` })
+       };
         // Store hash in your password DB.
-        console.log(hash);
         return hash
       });
     });
@@ -208,6 +213,7 @@ router.patch('/users/:id', (req, res, next) => {
   }
 
   // Use bcrypt on the passwords
+  bcrypt_hash_password(last_password, password)
 
 
   const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
