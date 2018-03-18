@@ -13,7 +13,6 @@ router.get('/users/token', (req, res, next) => {
   }
   let token = req.headers.cookie.split("token=")[1].split("; io=")[0]
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
-    console.log("Payload", payload);
     if (err) {
       return res.status(403).send(false)
     }
@@ -22,10 +21,7 @@ router.get('/users/token', (req, res, next) => {
 })
 
 router.post('/users/token', (req, res, next) => {
-  console.log("made it to token 1");
   const { email, password } = req.body
-  console.log("made it to token 2", email, password);
-    console.log("This is your token",req.body);
 
   if (!email) {
     return next({ status: 400, message: `Email must not be blank` })

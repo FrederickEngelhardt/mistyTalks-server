@@ -106,7 +106,6 @@ const goHome_listener = () => {
 
 /* Account function*/
 const myAccount_listener = () => {
-  $(".go_to_my_account").on("click", () => {
     $(".display_home").addClass("hide_this")
     const html = `
         <div class="card_container">
@@ -143,9 +142,8 @@ const myAccount_listener = () => {
       NOTE: Need to call this listener here b/c class does not exist outside this scope.
     */
     myAccountEdit_listener()
-    console.log("THIS IS USER ID", homeState.user.id);
     populate_account_preferences(homeState.user.id)
-  })
+
 }
 const populate_account_preferences = (user_id) => {
   var settings = {
@@ -248,7 +246,7 @@ const myAccountEdit_listener = () => {
   })
 }
 
-const retrieveAccountSubmitFormData = (   ) => {
+const retrieveAccountSubmitFormData = () => {
   let password_confirm = $("#confirm_password").val(),
   password  = $("#password").val(),
   previous_password = $("#previous_password").val()
@@ -273,13 +271,13 @@ const retrieveAccountSubmitFormData = (   ) => {
       delete data[form_ids[key]]
     }
   }
-  sendAccountSubmitForm(data)
+  sendAccountSubmitForm(data, homeState.user.id)
 }
-const sendAccountSubmitForm = (data) => {
+const sendAccountSubmitForm = (data, user_id) => {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost:3000/users/1",
+    "url": `http://localhost:3000/users/${user_id}`,
     "method": "PATCH",
     "headers": {
       "Content-Type": "application/json",
@@ -290,7 +288,9 @@ const sendAccountSubmitForm = (data) => {
   }
 
   $.ajax(settings).done(function(response) {
+    myAccount_listener()
     Materialize.toast(response, 3000)
+
   }).fail((fail_message) => {
     Materialize.toast(fail_message.responseText, 3000)
   })
@@ -371,7 +371,6 @@ const populate_misty_preferences = (user_id) => {
   }
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
@@ -551,6 +550,55 @@ const editMistyPreferences_listener = () => {
     });
   })
 }
+const retrieveMistyPreferencesSubmitFormData = () => {
+  let password_confirm = $("#confirm_password").val(),
+  password  = $("#password").val(),
+  previous_password = $("#previous_password").val()
+
+  if (password !== password_confirm) {
+    return Materialize.toast('Passwords do not match.', 3000)
+  }
+  if (password.length > 0 && password.length < 8 || password_confirm.length > 0 && password_confirm.length < 8 || previous_password.length > 0 && previous_password.length < 8) {
+    return Materialize.toast('Passwords need to be at least 8 digits.', 3000)
+  }
+  if (password){
+    if (previous_password.length === 0) {
+      return Materialize.toast('Please enter previous passoword.', 3000)
+    }
+  }
+  /*Iterate through form information. The store inside a JSON object*/
+  let data = new Object()
+  let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]
+  for (let key in form_ids) {
+    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
+    if (data[form_ids[key]] === '') {
+      delete data[form_ids[key]]
+    }
+  }
+  sendAccountSubmitForm(data, homeState.user.id)
+}
+const sendMistyPreferencesSubmitForm = (data, user_id) => {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": `http://localhost:3000/users/${user_id}`,
+    "method": "PATCH",
+    "headers": {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(data)
+  }
+
+  $.ajax(settings).done(function(response) {
+    myAccount_listener()
+    Materialize.toast(response, 3000)
+
+  }).fail((fail_message) => {
+    Materialize.toast(fail_message.responseText, 3000)
+  })
+}
 // END of misty preferences Functions
 
 const verifyUserPermissionsToken = () => {
@@ -559,11 +607,9 @@ const verifyUserPermissionsToken = () => {
   //put into state class for user
 
   $.get('/users/token').done((result) => {
-    console.log('result', result);
     // if (!result) window.location.href = '/index.html'
     homeState.user.id = result.cookie.user_id
     homeState.user.email = result.cookie.email
-    console.log(homeState);
   }).fail((msg) => {
     Materialize.toast(msg.responseText, 3000);
     setTimeout(function() {
@@ -581,7 +627,9 @@ const create_listeners = () => {
   goHome_listener()
 
   /*Edit/View Account*/
-  myAccount_listener()
+  $(".go_to_my_account").on("click", () => {
+    myAccount_listener()
+  })
 
   /*Edit/View Preferences*/
   mistyPreferences_listener()

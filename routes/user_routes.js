@@ -279,14 +279,12 @@ router.patch('/users/:id', async function(req, res, next) {
         }
         return knex('users')
           .update(insert, '*')
-          .where({
-            id
+          .where({id})})
+          .then(data => {
+            console.log(data);
+            return res.status(201).send("User has been updated.")
           })
-      })
-      .then(data => {
-        return res.status(201).send("User has been updated.")
-      })
-      .catch(err => {
+          .catch(err => {
         next(err)
       })
   }
