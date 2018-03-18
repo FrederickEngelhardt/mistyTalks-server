@@ -568,7 +568,6 @@ const retrievePreferencesSubmitFormData = (event) => {
   // Missing phone numeber iteration
 }
 
-}
 // Start of Web Token Data
 
 (function (){
