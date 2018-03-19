@@ -15,10 +15,10 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="./src/home.js"></script>
-  <script src="./src/index.js"></script>
-  <script src="./src/misty_talks.js"></script>
+  <script src="./src/direct_talk.js"></script>
   <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/MTstyle.css">
+
 </head>
 
 <body>
@@ -43,26 +43,50 @@
       </a>
     </li>
   </ul>
-  <div class="account_settings_container">
-    <div class="profile_card white">
 
-      <form id="edit_card_body" onsubmit="return retrieveSubmitFormData(event);">
-        <center><h4 class="title_box">Misty Talks</h4></center>
-        <center><img src="./images/misty_symbol_black.png" height= "125px" width= "175px" alt="misty symbol"></center>
-        <!--Message Title-->
-        <center><h5>Misty Direct Talk</h5></center>
+    <!-- <div class="profile_card white">
+
+      <form id="edit_card_body" class= "chatbox">
+        <center><h5 class="title_box">Misty Direct Talk</h5></center>
+        <center>
         <div id="user-chat">
           <!-- Where everything is displayed -->
-          <div id="chat-window">
+          <!-- <div id="chat-window"> -->
             <!-- Where output is displayed -->
-          <div id="output"></div>
+          <!-- <div id="output"></div>
         </div>
       <input type="text" id="message" placeholder= "Message">
       <div class="row center">
-        <button class="btn waves-effect waves-light" id="sendBtn">Send</button>
         <button class="btn waves-effect waves-light" id="clearBtn" >Clear</button>
-      </div>
-    </div>
+        <button class="btn waves-effect waves-light" id="sendBtn">Send</button>  -->
+
+			<!-- <textarea  id="message" placeholder= "Message"></textarea>
+			<button class="btn waves-effect waves-light" id="sendBtn">Send</button> -->
+
+     <!-- </div> -->
+
+
+     <div class="chatbox" >
+       <center><h5 class="title_box">Misty Direct Talk</h5></center>
+       <center>>
+       <div class="chatlogs">
+
+
+        <!-- 
+         <div class="chat friend">
+           <div class="user-photo"></div>
+           <p class="chat-message">Yo ho
+           </p>
+         </div> -->
+       </div>
+       <div class="chat-form">
+         <textarea id="message" placeholder= "Message">></textarea>
+         <button class="btn waves-effect waves-light" id="sendBtn">Send</button>
+       </div>
+     </div>
+
+
+
 
 
     </div>

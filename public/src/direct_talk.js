@@ -1,7 +1,7 @@
 // need
 // test data
-let first_name = ""
-let last_name = ""
+let first_name = "Leroy"
+let last_name = "Jenkins"
 let phone_number = "+123456789"
 
 // let userSender= document.getElementById('handle');
@@ -13,13 +13,17 @@ let feedback = document.getElementById('feedback');
 const newOutbound = (first_name, last_name, phone_number, message) => {
   console.log(`first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is : ${message}`)
   // use first and last name entered if available
+console.log(first_name.length, last_name.length);
+
+
   if(first_name.length > 0 || last_name.length > 0){
     first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
     last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
+   console.log("in here");
+        let outMessage = `<p class="messBlock"><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
+        console.log(outMessage);
 
-        let outMessage = `<p><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
-
-    $("#chat-window").prepend(outMessage)
+    $(".chatlogs").prepend(outMessage)
     // output
     $("#message").val('')
   }
@@ -31,7 +35,9 @@ const newOutbound = (first_name, last_name, phone_number, message) => {
     console.log(phone_number, newArr)
     newArr.shift()
     phone_number = newArr.join('')
-    let outMessage = `<p><strong> ${phone_number}: </strong> ${message}</p>`
+    let outMessage = `<p class="messBlock"><strong> ${phone_number}: </strong> ${message}</p>`
+
+  console.log(message, "in newOutbound")
 
 $("#chat-window").prepend(outMessage)
 
@@ -49,9 +55,12 @@ return "dang"
 
 
 const direct_talks_listeners = () => {
-$("#sendBtn").click(() => {
+$("#sendBtn").click((event) => {
   message = $("#message").val()
   newOutbound(first_name, last_name, phone_number, message);
+  console.log(message, "in DTL")
+  event.preventDefault()
+  console.log(message, "in DTL #2")
   // works
 })
 
