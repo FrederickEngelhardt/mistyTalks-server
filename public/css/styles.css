@@ -144,6 +144,10 @@ nav {
 /*****index/login page*****/
 .modal {
   background: #f0e0ff; /*slightly darker white purple*/
+  max-height: 85% !important;
+}
+.modal.modal-fixed-footer {
+  height: 85% !important;
 }
 .modal-font {
   color: #6700ED;
