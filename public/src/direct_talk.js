@@ -1,7 +1,7 @@
 // need
 // test data
-let first_name = "Leroy"
-let last_name = "Jenkins"
+let first_name = ""
+let last_name = ""
 let phone_number = "+123456789"
 
 // let userSender= document.getElementById('handle');
@@ -15,17 +15,22 @@ const newOutbound = (first_name, last_name, phone_number, message) => {
   // use first and last name entered if available
 console.log(first_name.length, last_name.length);
 
-
   if(first_name.length > 0 || last_name.length > 0){
     first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
     last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
    console.log("in here");
-        let outMessage = `<p class="messBlock"><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
-        console.log(outMessage);
 
-    $(".chatlogs").prepend(outMessage)
-    // output
-    $("#message").val('')
+   if(message.length > 0){
+
+     let outName = `<div class="chatName"><strong> ${first_name} ${last_name}</strong></div>`
+     let outMessage = `<p class="chatSubj">${message}</p>`
+
+     $(".chatName").prepend(outName)
+     $(".chatSubj").prepend(outMessage)
+     // $(".chatMsgs").prepend(outName, outMessage)
+     // output
+     $("#message").val('')
+  }
   }
 
 // use phone number as identifier name if no first or last is available
@@ -35,14 +40,13 @@ console.log(first_name.length, last_name.length);
     console.log(phone_number, newArr)
     newArr.shift()
     phone_number = newArr.join('')
-    let outMessage = `<p class="messBlock"><strong> ${phone_number}: </strong> ${message}</p>`
-
-  console.log(message, "in newOutbound")
-
-$("#chat-window").prepend(outMessage)
-
+    if(message.length > 0){
+    let outName = `<div class="chatName"><strong> ${phone_number}</strong></div>`
+    let outMessage = `<p class="chatSubj">${message}</p>`
+$(".chatOut").append(outName, outMessage)
 // output
 $("#message").val('')
+}
 }
 
 // return "wow"
@@ -55,7 +59,7 @@ return "dang"
 
 
 const direct_talks_listeners = () => {
-$("#sendBtn").click((event) => {
+$("#sendMessBtn").click((event) => {
   message = $("#message").val()
   newOutbound(first_name, last_name, phone_number, message);
   console.log(message, "in DTL")
@@ -65,9 +69,9 @@ $("#sendBtn").click((event) => {
 })
 
 // works
-$("#clearBtn").click(() => {
-  $("#message").val('')
-})
+// $("#clearBtn").click(() => {
+//   $("#message").val('')
+// })
 }
 
 $(document).ready(() => {
