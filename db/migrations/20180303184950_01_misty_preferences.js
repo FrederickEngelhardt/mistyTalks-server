@@ -11,9 +11,9 @@ exports.up = function(knex, Promise) {
     table.integer('port_number').defaultTo(null)
     table.string('misty_voice_name').defaultsTo(null);
     table.string('misty_face_name').defaultsTo(null);
-    table.integer('set_emotion_valence').defaultsTo(null);
-    table.integer('set_emotion_arousal').defaultsTo(null);
-    table.integer('set_emotion_dominance').defaultsTo(null);
+    table.float('set_emotion_valence').defaultsTo(null);
+    table.float('set_emotion_arousal').defaultsTo(null);
+    table.float('set_emotion_dominance').defaultsTo(null);
     table.time('time_restriction_start').defaultsTo(null);
     table.time('time_restriction_end').defaultsTo(null);
   })

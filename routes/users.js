@@ -186,13 +186,13 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
 } = req.body
 
   const dataFields = {
-    misty_preference_id,
+    misty_user_preference_id,
     preference_name,
     robot_name,
     ip_address,
     auth_numbers_string,
-    misty_voice,
-    misty_face,
+    misty_voice_name,
+    misty_face_name,
     set_emotion_valence,
     set_emotion_arousal,
     set_emotion_dominance,
@@ -206,7 +206,7 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     .then(() => {
       res.status(200).json({
         status: "success",
-        message: `User: ${dataFields} has been created!`
+        message: `Preference: ${dataFields.preference_name} has been created!`
       })
     })
 })
@@ -353,7 +353,7 @@ router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) 
     time_restriction_end
 } = req.body
 const dataFields = {
-  misty_preference_id,
+  misty_user_preference_id,
   preference_name,
   robot_name,
   ip_address,

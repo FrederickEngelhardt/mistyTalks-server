@@ -17,8 +17,8 @@ exports.seed = function(knex, Promise) {
          set_emotion_valence: 0.2,
          set_emotion_arousal: 0.2,
          set_emotion_dominance: -0.2,
-         time_restriction_start: '20:00:00',
-         time_restriction_end: '6:30:00'
+         time_restriction_start: null,
+         time_restriction_end: null
         },
         {
           id: 2,
@@ -49,9 +49,9 @@ exports.seed = function(knex, Promise) {
           set_emotion_valence: 0,
           set_emotion_arousal: 1,
           set_emotion_dominance: 0,
-          time_restriction_start: '14:26:16',
-          time_restriction_end: '14:26:16'
-        }
+          time_restriction_start: null,
+          time_restriction_end: null
+        },
         {
           id: 4,
           misty_user_preference_id: 2,

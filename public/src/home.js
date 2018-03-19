@@ -489,8 +489,14 @@ const populate_misty_preferences = (user_id) => {
     ]
     for (var i = 0; i < target.length; i++) {
       if (target[i].location === "misty_quiet_hours") {
-        const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
-        $(`.${target[i].location}`).text(data)
+        if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null){
+          const data = `Disabled`
+          $(`.${target[i].location}`).text(data)
+        }
+        else{
+          const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+          $(`.${target[i].location}`).text(data)
+        }
       } else if (target[i].location === "misty_robot_face") {
         const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
         $(`.${target[i].location}`).html(data)
@@ -659,18 +665,38 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       misty_face_choice = $("#choose_face_emote :selected").text(),
       misty_face_valence = $("#expression_valence").val(),
       misty_face_arousal = $("#expression_arousal").val(),
-      misty_face_dominance = $("#expression_dominance").val()
-      misty_quiet_start = $("#start_time").val()
-      misty_quiet_end = $("#end_time").val()
-
-  let data = {preference_name, robot_name, ip_address, port_number, phone_number1, misty_voice_choice,misty_face_choice, misty_face_valence, misty_face_arousal, misty_face_dominance, misty_quiet_start, misty_quiet_end}
-
+      misty_face_dominance = $("#expression_dominance").val(),
+      misty_quiet_start = $("#start_time").val(),
+      misty_quiet_end = $("#end_time").val(),
+      data = {
+          "misty_user_preference_id": homeState.user.id,
+          "preference_name": preference_name,
+          "robot_name": robot_name,
+          "ip_address": ip_address,
+          "auth_numbers_string": phone_number1,
+          "misty_voice_name": misty_voice_choice,
+          "misty_face_name": misty_face_choice,
+          "set_emotion_valence": misty_face_valence,
+          "set_emotion_arousal": misty_face_arousal,
+          "set_emotion_dominance": misty_face_dominance,
+          "time_restriction_start": misty_quiet_start,
+          "time_restriction_end": misty_quiet_end
+      }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
     if (data[i] === '') delete data[i]
   }
   if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
+  }
+  if (misty_face_name) {
+    for (let i in eyes) {
+      if (eyes[i].name === misty_face_name){
+        data["set_emotion_valence"] = eyes[i].settings.Valence,
+        data["set_emotion_arousal"] = eyes[i].settings.Arousal,
+        data["set_emotion_dominance"] = eyes[i].settings.Dominance
+      }
+    }
   }
   // IP ADDRESS REGEX
   if (data.ip_address) {
