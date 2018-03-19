@@ -48,6 +48,7 @@ router.get('/users/:id', (req, res, next) => {
 
 // GET ALL ACCESS TO MISTY_PREFERENCES (preference_name, robot_name, ip_address, port_number)
 router.get('users/:id/misty_preferences', (req, res, next) => {
+  console.log();
   return knex('users')
     .orderBy('id', 'asc')
     .then(data => {
@@ -59,9 +60,12 @@ router.get('users/:id/misty_preferences', (req, res, next) => {
 })
 
 // GET INDIVIDUAL ITEMS IN MISTY_PREFERENCES TABLE BY ID(preference_name, robot_name, ip_address, port_number)
-router.get('/users/:id/misty_preferences', (req, res, next) => {
-  const id = parseInt(req.params.id)
-  if (Number.isNaN(id)) {
+router.get('/users/:user_id/misty_preferences/:id', (req, res, next) => {
+  const {
+    user_id,
+    id
+  } = req.params
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
     return next({
       status: 404,
       message: `Not Found`
@@ -69,7 +73,8 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
   }
   return knex('misty_preferences')
     .where({
-      id
+      misty_user_preference_id: user_id,
+      id: id
     })
     .first()
     .then(data => {
@@ -86,7 +91,30 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
       next(err)
     })
 })
-
+router.get('/users/:id/misty_preferences', (req, res, next) => {
+  const id = parseInt(req.params.id)
+  if (Number.isNaN(id)) {
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
+  }
+  return knex('misty_preferences')
+    .where("misty_user_preference_id", id)
+    .then(data => {
+      console.log(data)
+      if (!data) {
+        return next({
+          status: 404,
+          message: `Not Found`
+        })
+      }
+      res.status(200).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+})
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
 
 router.post('/users', (req, res, next) => {
@@ -183,7 +211,7 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     set_emotion_dominance,
     time_restriction_start,
     time_restriction_end
-} = req.body
+  } = req.body
 
   const dataFields = {
     misty_user_preference_id,
@@ -198,7 +226,7 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     set_emotion_dominance,
     time_restriction_start,
     time_restriction_end
-}
+  }
   console.log(dataFields);
   return knex
     .insert(dataFields, '*')
@@ -323,20 +351,24 @@ router.patch('/users/:id', async function(req, res, next) {
         }
         return knex('users')
           .update(insert, '*')
-          .where({id})})
-          .then(data => {
-            console.log(data);
-            return res.status(201).send("User has been updated.")
+          .where({
+            id
           })
-          .catch(err => {
+      })
+      .then(data => {
+        console.log(data);
+        return res.status(201).send("User has been updated.")
+      })
+      .catch(err => {
         next(err)
       })
   }
 })
-router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) {
+router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, next) {
   // This id refers to the id after misty_preferences
   const {
-    id
+    id,
+    user_id
   } = req.params
   const {
     misty_user_preference_id,
@@ -351,21 +383,21 @@ router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) 
     set_emotion_dominance,
     time_restriction_start,
     time_restriction_end
-} = req.body
-const dataFields = {
-  misty_user_preference_id,
-  preference_name,
-  robot_name,
-  ip_address,
-  auth_numbers_string,
-  misty_voice_name,
-  misty_face_name,
-  set_emotion_valence,
-  set_emotion_arousal,
-  set_emotion_dominance,
-  time_restriction_start,
-  time_restriction_end
-}
+  } = req.body
+  const dataFields = {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice_name,
+    misty_face_name,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+  }
   if (Number.isNaN(id)) {
     return next({
       status: 400,
@@ -373,40 +405,49 @@ const dataFields = {
     })
   }
   console.log(req.body);
-    // Load hash from your password DB.
-    return knex('misty_preferences')
-      .where({
-        id
-      })
-      .first()
-      .then(preference => {
-        if (!preference) {
-          return next({
-            status: 404,
-            message: `Preference not found`
-          })
-        }
-      }).then(() => {
-        // Update the user if they do match
-        return knex('misty_preferences')
-          .update(dataFields, '*')
-          .where({id})})
-          .then(data => {
-            console.log(data);
-            return res.status(201).send("User has been updated.")
-          })
-          .catch(err => {
-        next(err)
-      })
+  // Load hash from your password DB.
+  return knex('misty_preferences')
+    .where({
+      misty_user_preference_id: user_id,
+      id: id
+    })
+    .first()
+    .then(preference => {
+      if (!preference) {
+        return next({
+          status: 404,
+          message: `Preference not found`
+        })
+      }
+    }).then(() => {
+      // Update the user if they do match
+      return knex('misty_preferences')
+        .update(dataFields, '*')
+        .where({
+          id
+        })
+    })
+    .then(data => {
+      console.log(data);
+      return res.status(201).send("User has been updated.")
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 router.delete('/users/:id/misty_preferences/:id', (req, res, next) => {
   const id = parseInt(req.params.id)
   if (Number.isNaN(id)) {
-    return next({ status: 404, message: `Not Found` })
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
   }
   return knex('users')
-    .where({id})
+    .where({
+      id
+    })
     .first()
     .del()
     .then(data => {
