@@ -1,9 +1,9 @@
 //
 // // test data
-// let first_name = 'Leroy',
-//   last_name = 'Jenkins',
-//   phone_number = '+12345678',
-//   robot_name = 'misty'
+let first_name = 'Leroy',
+  last_name = 'Jenkins',
+  phone_number = '+12345678',
+  robot_name = 'misty'
 //
 // const newOutbound = (
 //   first_name,

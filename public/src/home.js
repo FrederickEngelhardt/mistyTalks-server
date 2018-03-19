@@ -10,8 +10,8 @@ socket.on('message', function(data) {
 
 class State {
   constructor(current_page, user, misty_preferences) {
-    this.current_page = current_page
-    ;(this.user = {}), (this.misty_preferences = {})
+    this.current_page = current_page,
+    this.user = {}, this.misty_preferences = {}
   }
 }
 
@@ -725,73 +725,6 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
 
 //////////////////////////////////////////////////////////////
 
-// test data
-let first_name = 'leroy',
-  last_name = 'jenkins',
-  phone_number = '+12345678',
-  robot_name = 'mistuy'
-
-const newOutbound = (
-  first_name,
-  last_name,
-  phone_number,
-  message,
-  robot_name
-) => {
-  console.log(
-    `first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is: ${message}`,
-    'robot_name:',
-    robot_name
-  )
-  //
-  //   if (robot_name.length > 0) {
-  //     robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
-  //     console.log(robot_name, 1)
-  //     console.log('in here')
-  //
-  //     if (message.length > 0) {
-  //       console.log('in message length here')
-  //       let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
-  //       //  $(".chatName").prepend(outName)
-  //       // $(".chatSubj").prepend(outMessage)
-  //       $('.chatOut').append(`${outName}`)
-  //       // output
-  //       $('#message').val('')
-  //     }
-  //   } else if (phone_number) {
-  //     // use phone number as identifier name if no first or last is available
-  //     let newArr = []
-  //     newArr = phone_number.split('')
-  //     console.log(phone_number, newArr)
-  //     newArr.shift()
-  //     phone_number = newArr.join('')
-  //     if (message.length > 0) {
-  //       let outName = `<div class="chatName"><strong> ${phone_number}</strong></div>`
-  //       let outMessage = `<p class="chatSubj">${message}</p>`
-  //       $('.chatOut').append(outName, outMessage)
-  //       // output
-  //       $('#message').val('')
-  //     }
-  //   }
-  return 'dang'
-}
-
-const message_listener = () => {
-  console.log('in here')
-  $('#sendMessBtn').onsubmit(event => {
-    console.log('clicked')
-    message = $('#message').val()
-    console.log('about to call newOutbound')
-    newOutbound(first_name, last_name, phone_number, message, robot_name)
-    console.log(message, robot_name, 'in DTL')
-    event.preventDefault()
-    console.log(message, 'in DTL #2')
-    // works
-  })
-}
-
-///////////////////////////////////////////////////////////
-
 const directTalk_listener = () => {
   $('.display_home').addClass('hide_this')
   const html = `
@@ -815,8 +748,71 @@ const directTalk_listener = () => {
     remove_all_divs()
     $('.container').append(html)
   }
+  message_listener()
   homeState.current_page = 'direct_talk'
 }
+
+const message_listener = () => {
+  let email = homeState.user.email;
+  let robot_name = homeState.misty_preferences
+
+  console.log('in here')
+  $('#sendMessBtn').click(() => {
+    console.log('clicked')
+    message = $('#message').val()
+    console.log('about to call newOutbound')
+      newOutbound(email, robot_name)
+
+    console.log(message, robot_name, 'in DTL')
+    console.log(message, 'in DTL #2')
+
+  })
+}
+
+
+
+
+const newOutbound = (
+  email,
+  robot_name
+) => {
+
+  console.log("user email: ", homeState.user.email)
+  console.log("user robot name: ", homeState.misty_preferences
+  );
+
+    if (robot_name.length > 0) {
+      robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+      console.log(robot_name, 1)
+      console.log('in here')
+
+      if (message.length > 0) {
+        console.log('in message length here')
+        let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+        //  $(".chatName").prepend(outName)
+        // $(".chatSubj").prepend(outMessage)
+        $('.chatOut').append(`${outName}`)
+        // output
+        $('#message').val('')
+      }
+    } else if (email) {
+      // use phone number as identifier name if no first or last is available
+      let newArr = []
+      if (message.length > 0) {
+        let outName = `<div class="chatName"><strong> ${email}</strong></div>`
+        let outMessage = `<p class="chatSubj">${message}</p>`
+        $('.chatOut').append(outName, outMessage)
+        // output
+        $('#message').val('')
+      }
+    }
+  return 'dang'
+}
+
+
+///////////////////////////////////////////////////////////
+
+
 
 const verifyUserPermissionsToken = () => {
   // grab user token, see whos logged in
@@ -840,7 +836,6 @@ const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   verifyUserPermissionsToken()
   goHome_listener()
-  message_listener()
 
   /*Edit/View Account*/
   $('.go_to_my_account').on('click', () => {
@@ -892,6 +887,9 @@ const retrievePreferencesSubmitFormData = event => {
   }
   // Missing phone numeber iteration
 }
+
+
+
 
 $(document).ready(() => {
   $('form').submit(function(e) {
