@@ -11,7 +11,7 @@ router.get('/users/token', (req, res, next) => {
   if (!req.headers.cookie.includes("token")) {
     return next({status: 403, message: "You do not have access to this page."})
   }
-  let token = req.headers.cookie.split("token=")[1].split("; io=")[0]
+  let token = req.headers.cookie.split("token=")[1].split(";")[0]
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.status(403).send(false)
@@ -39,7 +39,6 @@ router.post('/users/token', (req, res, next) => {
       }
       user = data
       return bcrypt.compare(password, user.password)
-      console.log('made it');
     })
     .then(() => {
       const claim = {

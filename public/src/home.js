@@ -9,13 +9,14 @@ socket.on('message', function(data) {
 })
 
 class State {
-  constructor(current_page, user, misty_preferences) {
-    this.current_page = current_page,
-    this.user = {}, this.misty_preferences = {}
+  constructor(current_page, user) {
+    this.current_page = current_page
+    this.user = {setup_done: true}
   }
 }
-
-let homeState = new State('home', {})
+let homeState = new State('home')
+let added_number_count = 1
+const add_number = (count) => {
 
 let added_number_count = 1
 const add_number = count => {
@@ -37,67 +38,63 @@ const add_number = count => {
 // Array of all watson voices
 
 // HTML code to add all voices into the selection zone
-const add_all_voices = () => {
-  const voices = [
-    {
-      name: 'es-LA_SofiaVoice'
+const voices = [{
+      "name": "es-LA_SofiaVoice",
     },
     {
-      name: 'pt-BR_IsabelaVoice'
+      "name": "pt-BR_IsabelaVoice",
     },
     {
-      name: 'en-GB_KateVoice'
+      "name": "en-GB_KateVoice",
     },
     {
-      name: 'de-DE_BirgitVoice'
+      "name": "de-DE_BirgitVoice",
     },
     {
-      name: 'en-US_AllisonVoice'
+      "name": "en-US_AllisonVoice",
     },
     {
-      name: 'fr-FR_ReneeVoice'
+      "name": "fr-FR_ReneeVoice",
     },
     {
-      name: 'it-IT_FrancescaVoice'
+      "name": "it-IT_FrancescaVoice",
     },
     {
-      name: 'es-ES_LauraVoice'
+      "name": "es-ES_LauraVoice",
     },
     {
-      name: 'ja-JP_EmiVoice'
+      "name": "ja-JP_EmiVoice",
     },
     {
-      name: 'es-ES_EnriqueVoice'
+      "name": "es-ES_EnriqueVoice",
     },
     {
-      name: 'de-DE_DieterVoice'
+      "name": "de-DE_DieterVoice",
     },
     {
-      name: 'en-US_LisaVoice'
+      "name": "en-US_LisaVoice",
     },
     {
-      name: 'en-US_MichaelVoice'
+      "name": "en-US_MichaelVoice",
     },
     {
-      name: 'es-US_SofiaVoice'
+      "name": "es-US_SofiaVoice",
     }
   ]
+const add_all_voices = () => {
   for (let i in voices) {
-    console.log(voices[i].name)
     let html = `<option value="${i}">${voices[i].name}</option>`
     $(`#choose_voices`).append(html)
   }
   // Materialize listener for new elements
   $('select').material_select()
 }
-const add_all_preset_faces = () => {
-  const eyes = [
-    {
-      name: 'Angry Eyes',
-      settings: {
-        Valence: -1,
-        Arousal: 1,
-        Dominance: 0
+const eyes = [{
+      "name": "Angry Eyes",
+      "settings": {
+        "Valence": -1,
+        "Arousal": 1,
+        "Dominance": 0
       }
     },
     {
@@ -165,8 +162,8 @@ const add_all_preset_faces = () => {
       }
     }
   ]
+const add_all_preset_faces = () => {
   for (let i in eyes) {
-    console.log(eyes[i].name)
     let html = `<option value="${i}">${eyes[i].name}</option>`
     $(`#choose_face_emote`).append(html)
   }
@@ -186,6 +183,9 @@ const goHome_listener = () => {
       remove_all_divs()
       $('.display_home').removeClass('hide_this')
       homeState.current_page = 'home'
+    }
+    else {
+      Materialize.toast("You are home.", 1000)
     }
   })
 }
@@ -324,8 +324,13 @@ const myAccountEdit_listener = () => {
       remove_all_divs()
       $('.container').append(html)
     }
-    homeState.current_page = 'my_account_edit'
-    $('form').submit(function(e) {
+    homeState.current_page = "my_account_edit"
+    $('#cancelButton').on("click", (event) => {
+      event.preventDefault()
+      return myAccount_listener()
+
+    })
+    $('form').submit(function(e){
       e.preventDefault()
       retrieveAccountSubmitFormData()
     })
@@ -333,9 +338,9 @@ const myAccountEdit_listener = () => {
 }
 
 const retrieveAccountSubmitFormData = () => {
-  let password_confirm = $('#confirm_password').val(),
-    password = $('#password').val(),
-    previous_password = $('#previous_password').val()
+  let password_confirm = $("#confirm_password").val(),
+      password  = $("#password").val(),
+      previous_password = $("#previous_password").val()
 
   if (password !== password_confirm) {
     return Materialize.toast('Passwords do not match.', 3000)
@@ -396,51 +401,55 @@ const sendAccountSubmitForm = (data, user_id) => {
 
 /* MISTY_PREFERENCES Functions*/
 const mistyPreferences_listener = () => {
-  $('.go_to_misty_preferences').on('click', () => {
-    $('.display_home').addClass('hide_this')
-    const html = `  <div class="card_container">
-        <div class="profile_card">
-          <h4 class="title_box">Misty Preferences
-            <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
-              <i class="edit_misty_preferences material-icons">edit
-              </i>
-            </a></h4>
-          <table>
-            <tr>
-              <td>Preference Name:</td>
-              <td class="misty_preference_name"></td>
-            </tr>
-            <tr>
-              <td>Robot Name:</td>
-              <td class="misty_robot_name"></td>
-            </tr>
-            <tr>
-              <td>IP Address:</td>
-              <td class="misty_ip_address"></td>
-            </tr>
-            <tr>
-              <td>Port Number:</td>
-              <td class="misty_port_number"></td>
-            </tr>
-            <tr>
-              <td>Authorized Phone Numbers</td>
-              <td class="misty_authorized_numbers"></td>
-            </tr>
-            <tr>
-              <td>Misty Voice:</td>
-              <td class="misty_voice"></td>
-            </tr>
-            <tr>
-              <td>Misty Robot Face</td>
-              <td class="misty_robot_face"></td>
-            </tr>
-            <tr>
-              <td>Quiet Hours</td>
-              <td class="misty_quiet_hours"></td>
-            </tr>
-          </table>
-        </div>
-      </div>
+    $(".display_home").addClass("hide_this")
+    const html = `
+          <div class="card_container">
+            <div class="profile_card">
+              <h4 class="title_box">Misty Preferences
+                <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
+                  <i class="edit_misty_preferences material-icons">edit
+                  </i>
+                </a></h4>
+              <table>
+                <tr>
+                  <td>Preference Name:</td>
+                  <td class="misty_preference_name"></td>
+                </tr>
+                <tr>
+                  <td>Robot Name:</td>
+                  <td class="misty_robot_name"></td>
+                </tr>
+                <tr>
+                  <td>IP Address:</td>
+                  <td class="misty_ip_address"></td>
+                </tr>
+                <tr>
+                  <td>Port Number:</td>
+                  <td class="misty_port_number"></td>
+                </tr>
+                <tr>
+                  <td>Authorized Phone Numbers</td>
+                  <td class="misty_authorized_numbers"></td>
+                </tr>
+                <tr>
+                  <td>Misty Voice:</td>
+                  <td class="misty_voice"></td>
+                </tr>
+                <tr>
+                  <td>Misty Face Name:</td>
+                  <td class="misty_face_name"></td>
+                </tr>
+                <tr>
+                  <td>Misty Robot Face</td>
+                  <td class="misty_robot_face"></td>
+                </tr>
+                <tr>
+                  <td>Quiet Hours</td>
+                  <td class="misty_quiet_hours"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
       `
 
     if (homeState.current_page !== 'misty_preferences_view') {
@@ -452,8 +461,8 @@ const mistyPreferences_listener = () => {
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
     editMistyPreferences_listener()
+    console.log('called. JUST B4');
     populate_misty_preferences(homeState.user.id)
-  })
 }
 const populate_misty_preferences = user_id => {
   var settings = {
@@ -466,11 +475,17 @@ const populate_misty_preferences = user_id => {
     }
   }
 
-  $.ajax(settings).done(function(response) {
-    const target = [
-      {
-        location: 'misty_preference_name',
-        user_info: 'preference_name'
+  $.ajax(settings).done(function(response_array) {
+    let response=response_array[0]
+    console.log("THIS IS RESPONSE",response);
+    if (response === [] || !response || response === undefined){
+      return homeState.user.setup_done = false
+    }
+    homeState.user.preference_id = response.id
+    homeState.user.robot_name = response.robot_name
+    const target = [{
+        location: "misty_preference_name",
+        user_info: "preference_name"
       },
       {
         location: 'misty_robot_name',
@@ -489,8 +504,12 @@ const populate_misty_preferences = user_id => {
         user_info: 'port_number'
       },
       {
-        location: 'misty_voice',
-        user_info: 'misty_voice'
+        location: "misty_voice",
+        user_info: "misty_voice_name"
+      },
+      {
+        location: "misty_face_name",
+        user_info: "misty_face_name"
       },
       {
         location: 'misty_robot_face',
@@ -506,17 +525,21 @@ const populate_misty_preferences = user_id => {
       }
     ]
     for (var i = 0; i < target.length; i++) {
-      if (target[i].location === 'misty_quiet_hours') {
-        const data = `Between ${response[target[i].user_info[0]]} and ${
-          response[target[i].user_info[1]]
-        }`
+      if (target[i].location === "misty_port_number" && response[target[i].user_info] === null){
+        const data = `Disabled`
         $(`.${target[i].location}`).text(data)
-      } else if (target[i].location === 'misty_robot_face') {
-        const data = `Valence: ${
-          response[target[i].user_info[0]]
-        } <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${
-          response[target[i].user_info[2]]
-        }`
+      }
+      else if (target[i].location === "misty_quiet_hours") {
+        if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null){
+          const data = `Disabled`
+          $(`.${target[i].location}`).text(data)
+        }
+        else{
+          const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+          $(`.${target[i].location}`).text(data)
+        }
+      } else if (target[i].location === "misty_robot_face") {
+        const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
         $(`.${target[i].location}`).html(data)
       } else {
         const data = response[target[i]['user_info']]
@@ -525,132 +548,140 @@ const populate_misty_preferences = user_id => {
       // $(`${target[i].location}`).val(response[target[i].user_info])
     }
   })
+  .fail((error_response) => {
+    Materialize.toast("Misty Preferences require setup. Click edit to enter new preference.", 3000)
+    homeState.user.setup_done = false
+  })
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
   $('.edit_misty_preferences').on('click', () => {
     $('.display_home').addClass('hide_this')
     const html = `
-    <div class="card_container">
-      <div class="profile_card white">
+        <div class="card_container">
+          <div class="profile_card white">
 
-        <form id="edit_card_body" onsubmit="return retrievePreferencesSubmitFormData(event);">
-          <h4 class="title_box">Misty Preferences</h4>
-          <!--First Name-->
-          <h5>Preference Name:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
-            </div>
-          </div>
-          <!--End First Name-->
-
-          <!-- Last Name -->
-          <h5>Robot Name:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
-            </div>
-          </div>
-          <!-- End Last Name -->
-
-          <!--user email -->
-          <h5>IP Address:</h5>
-          <div class="row center">
-            <div class="col s9 m9 l9">
-              <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
-            </div>
-          </div>
-          <!-- end of user email  -->
-
-          <!--user email -->
-          <h5>Port Number(if applicable):</h5>
-          <div class="row">
-            <div class="col s9 m9 l9">
-              <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
-            </div>
-          </div>
-          <!-- end of user email  -->
-
-          <!--Authorize numbers input here -->
-          <div id="add_phone_number_location">
-            <h5>Authorized Phone Numbers:</h5>
-            <div class="row center">
-              <div class="col s2 m2 l2">
-                <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+            <form id="edit_card_body">
+              <h4 class="title_box">Misty Preferences</h4>
+              <!--First Name-->
+              <h5>Preference Name:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+                </div>
               </div>
-              <div class="col s7 m7 l7">
-                <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+              <!--End First Name-->
+
+              <!-- Last Name -->
+              <h5>Robot Name:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name">
+                </div>
               </div>
-              <div class="col s2 m2 l2">
-                <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
-                <i class="material-icons">add</i>
-              </a>
+              <!-- End Last Name -->
+
+              <!--user email -->
+              <h5>IP Address:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+                </div>
               </div>
-            </div>
-          </div>
-          <!-- End authorization numbers -->
+              <!-- end of user email  -->
 
-          <!--misty voice settings -->
-          <h5>Misty Voice</h5>
-          <div class="row">
-            <div class="input-field col browser-default s9 m9 l9">
-              <select id="choose_voices">
-                  <option value="" disabled selected>Choose your misty Voice</option>
-                </select>
-            </div>
-          </div>
-          <!-- end of misty voice settings-->
+              <!--user email -->
+              <h5>Port Number(if applicable):</h5>
+              <div class="row">
+                <div class="col s9 m9 l9">
+                  <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+                </div>
+              </div>
+              <!-- end of user email  -->
 
-          <!--misty face settings -->
-          <h5>Misty Robot Preset Faces</h5>
-          <div class="row">
-            <div class="input-field col browser-default s9 m9 l9">
-              <select id="choose_face_emote">
-                  <option value="" disabled selected>Select Misty Preset Face</option>
-                </select>
-            </div>
-          </div>
-          <h5>Misty Robot Custom Face</h5>
-          <div class="row">
-            <div class="input-field col browser-default s9 m9 l9">
-              <p class="small-text col s6 m6 l6">Valence:</p>
-              <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="[-1,1]">
-              <p class="small-text col s6 m6 l6">Arousal:</p>
-              <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="[-1,1]">
-              <p class="small-text col s6 m6 l6">Dominance:</p>
-              <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="[-1,1]">
-            </div>
-          </div>
-          <!-- end of misty face settings-->
+              <!--Authorize numbers input here -->
+              <div id="add_phone_number_location">
+                <h5>Authorized Phone Numbers:</h5>
+                <div class="row center">
+                  <div class="col s2 m2 l2">
+                    <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1">
+                  </div>
+                  <div class="col s7 m7 l7">
+                    <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+                  </div>
+                  <div class="col s2 m2 l2">
+                    <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+                    <i class="material-icons">add</i>
+                  </a>
+                  </div>
+                </div>
+              </div>
+              <!-- End authorization numbers -->
 
-          <!--misty face settings -->
-          <h5>Misty Robot Quiet Hours</h5>
-          <div class="row">
-              <p class="small-text col s6 m6 l6">Start Time:</p>
-              <input type="text" name="start_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
-              <p class="small-text col s6 m6 l6">End Time:</p>
-              <input type="text" name="end_time" placeholder="unselected" class="col s3 m3 l3 timepicker">
+              <!--misty voice settings -->
+              <h5>Misty Voice</h5>
+              <div class="row">
+                <div class="input-field col browser-default s9 m9 l9">
+                  <select id="choose_voices">
+                      <option value="" disabled selected>Choose your misty Voice</option>
+                    </select>
+                </div>
+              </div>
+              <!-- end of misty voice settings-->
+
+              <!--misty face settings -->
+              <h5>Misty Robot Preset Faces</h5>
+              <div class="row">
+                <div class="input-field col browser-default s9 m9 l9">
+                  <select id="choose_face_emote">
+                      <option value="" disabled selected>Select Misty Preset Face</option>
+                    </select>
+                </div>
+              </div>
+              <h5>Misty Robot Custom Face</h5>
+              <div class="row">
+                <div class="input-field col browser-default s9 m9 l9">
+                  <p class="small-text col s6 m6 l6">Valence:</p>
+                  <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="[-1,1]">
+                  <p class="small-text col s6 m6 l6">Arousal:</p>
+                  <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="[-1,1]">
+                  <p class="small-text col s6 m6 l6">Dominance:</p>
+                  <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="[-1,1]">
+                </div>
+              </div>
+              <!-- end of misty face settings-->
+
+              <!--misty face settings -->
+              <h5>Misty Robot Quiet Hours</h5>
+              <div class="row">
+                  <p class="small-text col s6 m6 l6">Start Time:</p>
+                  <input type="text" id="start_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
+                  <p class="small-text col s6 m6 l6">End Time:</p>
+                  <input type="text" id="end_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
+              </div>
+              <!-- end of misty face settings-->
+
+              <!-- Form submit/exit buttons here.  -->
+
+              <div class="row center save_cancel_menu">
+                <button type="submit" class="preference_menu_btn btn waves-effect waves-light" id="saveButton">Save</button>
+                <button id="cancelButton" class="preference_menu_btn btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+              </div>
+            </form>
+
           </div>
-          <!-- end of misty face settings-->
-
-          <!-- Form submit/exit buttons here.  -->
-
-          <div class="row center save_cancel_menu">
-            <button type="submit" class="preference_menu_btn btn waves-effect waves-light" id="saveButton">Save</button>
-            <button id="cancelButton" class="preference_menu_btn btn waves-effect waves-light" type="submit" name="action">Cancel</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
+        </div>
     `
     if (homeState.current_page !== 'misty_preferences_edit') {
       remove_all_divs()
       $(`.container`).append(html)
     }
-    homeState.current_page = 'misty_preferences_edit'
+    homeState.current_page = "misty_preferences_edit"
+    $('#cancelButton').on("click", (event) => {
+      event.preventDefault()
+      return mistyPreferences_listener()
 
+    })
     // listen to the form submission
     $('form').submit(function(e) {
       e.preventDefault()
@@ -674,52 +705,91 @@ const editMistyPreferences_listener = () => {
   })
 }
 const retrieveMistyPreferencesSubmitFormData = () => {
-  let preference_name = $('#preference_name').val(),
-    robot_name = $('#robot_name').val(),
-    ip_address = $('#ip_address').val(),
-    port_number = $('#port_number').val(),
-    phone_number1 = $('#phone_number1').val() + $('#phone_country_code1').val(),
-    ip_address = $('#ip_address').val()
-
+  let preference_name = $("#preference_name").val(),
+      robot_name  = $("#robot_name").val(),
+      ip_address = $("#ip_address").val(),
+      port_number = $("#port_number").val(),
+      phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
+      misty_voice_choice = $("#choose_voices :selected").text(),
+      misty_face_choice = $("#choose_face_emote :selected").text(),
+      misty_face_valence = $("#expression_valence").val(),
+      misty_face_arousal = $("#expression_arousal").val(),
+      misty_face_dominance = $("#expression_dominance").val(),
+      misty_quiet_start = $("#start_time").val(),
+      misty_quiet_end = $("#end_time").val(),
+      data = {
+          "misty_user_preference_id": homeState.user.id,
+          "preference_name": preference_name,
+          "robot_name": robot_name,
+          "ip_address": ip_address,
+          "auth_numbers_string": phone_number1,
+          "misty_voice_name": misty_voice_choice,
+          "misty_face_name": misty_face_choice,
+          "set_emotion_valence": misty_face_valence,
+          "set_emotion_arousal": misty_face_arousal,
+          "set_emotion_dominance": misty_face_dominance,
+          "time_restriction_start": misty_quiet_start,
+          "time_restriction_end": misty_quiet_end
+      }
   /*Iterate through form information. The store inside a JSON object*/
-  let data = new Object()
-  let form_ids = [
-    'email',
-    'first_name',
-    'last_name',
-    'previous_password',
-    'password'
-  ]
-  for (let key in form_ids) {
-    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
-    if (data[form_ids[key]] === '') {
-      delete data[form_ids[key]]
+  for (let i in data) {
+    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] ==="Select Misty Preset Face") {
+      delete data[i]
+    }
+  }
+  if (data.auth_numbers_string.length < 11){
+    delete data.auth_numbers_string
+  }
+  if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
+    return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
+  }
+  if (misty_face_choice) {
+    for (let i in eyes) {
+      if (eyes[i].name === misty_face_choice){
+        data["set_emotion_valence"] = eyes[i].settings.Valence,
+        data["set_emotion_arousal"] = eyes[i].settings.Arousal,
+        data["set_emotion_dominance"] = eyes[i].settings.Dominance
+      }
+    }
+  }
+  // IP ADDRESS REGEX
+  if (data.ip_address) {
+    const re = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+    if(!re.test(data.ip_address)){
+      return Materialize.toast("IP Address in an invalid format.")
     }
   }
   sendMistyPreferencesSubmitForm(data, homeState.user.id)
 }
 const sendMistyPreferencesSubmitForm = (data, user_id) => {
+  let method = {
+    type: "PATCH",
+    url: `/users/${user_id}/misty_preferences/${homeState.user.preference_id}`
+  }
+  if (homeState.user.setup_done === false) {
+    method = {
+      type: "POST",
+      url: `/users/${user_id}/misty_preferences`}
+  }
   var settings = {
-    async: true,
-    crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}`,
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache'
+    "async": true,
+    "crossDomain": true,
+    "url": method.url,
+    "method": `${method.type}`,
+    "headers": {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache"
     },
     processData: false,
     data: JSON.stringify(data)
   }
+  $.ajax(settings).done(function(response) {
+    Materialize.toast(response, 3000)
+    return mistyPreferences_listener()
 
-  $.ajax(settings)
-    .done(function(response) {
-      myAccount_listener()
-      Materialize.toast(response, 3000)
-    })
-    .fail(fail_message => {
-      Materialize.toast(fail_message.responseText, 3000)
-    })
+  }).fail((fail_message) => {
+    Materialize.toast(fail_message.responseText, 3000)
+  })
 }
 // END of misty preferences Functions
 
@@ -768,10 +838,58 @@ const message_listener = () => {
 
   })
 }
+const logout_remove_token = () => {
+        $('.logout').on('click', () => {
+          const options = {
+            dataType: 'json',
+            type: 'DELETE',
+            url: '/users/token'
+          }
+          $.ajax(options)
+            .done(() => {
+              window.location.href = '/index.html'
+            })
+            .fail(() => {
+              Materialize.toast('Unable to log out', 3000)
+            })
+        })
+      }
+const create_listeners = () => {
+  // **** MAIN HOME PAGE LISTENERS ****
 
+  // Token listeners
+  verifyUserPermissionsToken()
+  logout_remove_token()
 
+  // Nav listeners
+  goHome_listener()
+  /*Edit/View Account*/
+  $('.go_to_my_account').on('click', () => {
+    myAccount_listener()
+  })
+  $(".go_to_misty_preferences").on("click", () => {
+    mistyPreferences_listener()
+  })
 
+  /*Edit/View Preferences*/
 
+  // *** END OF MAIN HOME PAGE LISTENERS*
+
+  /*
+    addNumber lets you add multiple numbers to the form.
+  */
+  $('.addNumber').click(() => {
+    added_number_count++
+    $('#add_phone_number_location').append(add_number(added_number_count))
+    $(`.removeNumber${added_number_count}`).on('click', () => {
+      console.log('clicked')
+      $(`.deleteNumberFields${added_number_count}`).remove()
+      added_number_count--
+      console.log(added_number_count)
+    })
+  })
+  // end of addNumber
+}
 const newOutbound = (
   email,
   robot_name
@@ -812,109 +930,13 @@ const newOutbound = (
 
 ///////////////////////////////////////////////////////////
 
-
-
-const verifyUserPermissionsToken = () => {
-  // grab user token, see whos logged in
-  //put into state class for user
-
-  $.get('/users/token')
-    .done(result => {
-      // if (!result) window.location.href = '/index.html'
-      homeState.user.id = result.cookie.user_id
-      homeState.user.email = result.cookie.email
-    })
-    .fail(msg => {
-      Materialize.toast(msg.responseText, 3000)
-      setTimeout(function() {
-        return (window.location.href = '/index.html')
-      }, 1000)
-    })
-}
-
-const create_listeners = () => {
-  // **** MAIN HOME PAGE LISTENERS ****
-  verifyUserPermissionsToken()
-  goHome_listener()
-
-  /*Edit/View Account*/
-  $('.go_to_my_account').on('click', () => {
-    myAccount_listener()
-  })
-
-  /*Edit/View Preferences*/
-  mistyPreferences_listener()
-  $('.go_to_direct_talk').on('click', () => {
-    directTalk_listener()
-  })
-
-  // *** END OF MAIN HOME PAGE LISTENERS*
-
-  /*
-    addNumber lets you add multiple numbers to the form.
-  */
-  $('.addNumber').click(() => {
-    added_number_count++
-    $('#add_phone_number_location').append(add_number(added_number_count))
-    $(`.removeNumber${added_number_count}`).on('click', () => {
-      console.log('clicked')
-      $(`.deleteNumberFields${added_number_count}`).remove()
-      added_number_count--
-      console.log(added_number_count)
-    })
-  })
-  // end of addNumber
-}
-
-const retrievePreferencesSubmitFormData = event => {
-  event.preventDefault()
-
-  /*Iterate through form information. The store inside a JSON object*/
-  let data = new Object()
-  let form_ids = ['email', 'first_name', 'last_name', 'port_number']
-  for (let key in form_ids) {
-    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
-  }
-  // console.log("data", data);
-  data.auth_number_string = ''
-  // console.log(data);
-  for (let i = 1; i <= added_number_count; i++) {
-    let cc = $(`#phone_country_code${i}`).val()
-    console.log(cc)
-    let phone_number = $(`#phone_number${i}`).val()
-    console.log(phone_number)
-    data['auth_number_string'] += cc + phone_number
-  }
-  // Missing phone numeber iteration
-}
-
-
-
-
 $(document).ready(() => {
-  $('form').submit(function(e) {
-    e.preventDefault()
-    retrieveAccountSubmitFormData()
-  })
-  populate_account_preferences()
-  create_listeners()
+  create_listeners();
 
   $('.collapsible').collapsible() // for "about page" collapsible containers
   /*
     Materialize functions
   */
-  $('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function() {} //Function for after opening timepicker
-  })
-  $('select').material_select()
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: 0.5, // Opacity of modal background

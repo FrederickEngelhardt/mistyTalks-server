@@ -46,17 +46,6 @@ router.get('/users/:id', (req, res, next) => {
     })
 })
 
-// GET ALL ACCESS TO MISTY_PREFERENCES (preference_name, robot_name, ip_address, port_number)
-router.get('/misty_preferences', (req, res, next) => {
-  return knex('users')
-    .orderBy('id', 'asc')
-    .then(data => {
-      res.status(200).json(data)
-    })
-    .catch(err => {
-      next(err)
-    })
-})
 
 // GET INDIVIDUAL ITEMS IN MISTY_PREFERENCES TABLE BY ID(preference_name, robot_name, ip_address, port_number)
 router.get('/users/:id/misty_preferences', (req, res, next) => {
@@ -68,12 +57,40 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
     })
   }
   return knex('misty_preferences')
+    .where("misty_user_preference_id", id)
+    .orderBy('id', 'asc')
+    .then(data => {
+      if (!data) {
+        return next({
+          status: 404,
+          message: `Not Found`
+        })
+      }
+      res.status(200).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+  })
+
+router.get('/users/:user_id/misty_preferences/:id', (req, res, next) => {
+  const {
+    user_id,
+    id
+  } = req.params
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
+  }
+  return knex('misty_preferences')
     .where({
-      id
+      misty_user_preference_id: user_id,
+      id: id
     })
     .first()
     .then(data => {
-      console.log(data)
       if (!data) {
         return next({
           status: 404,
@@ -88,7 +105,6 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
 })
 
 // POST Route Posting a new id with info  ...x-www.form-urlencoded
-
 router.post('/users', (req, res, next) => {
   const {
     first_name,
@@ -141,12 +157,10 @@ router.post('/users', (req, res, next) => {
         .insert(dataFields, '*')
         .into('users')
         .then((user) => {
-          console.log("this is the user:", user);
           const claim = {
             user_id: `${user[0].id}`,
             email: `${user[0].email}`
           }
-          console.log(claim);
           const token = jwt.sign(claim, process.env.JWT_KEY, {
             expiresIn: '1 day'
           })
@@ -166,6 +180,49 @@ router.post('/users', (req, res, next) => {
     })
 })
 
+router.post('/users/:id/misty_preferences', (req, res, next) => {
+  const {
+    id
+  } = req.params
+  const {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice_name,
+    misty_face_name,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+  } = req.body
+
+  const dataFields = {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice_name,
+    misty_face_name,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+  }
+  return knex
+    .insert(dataFields, '*')
+    .into('misty_preferences')
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        message: `Preference: ${dataFields.preference_name} has been created!`
+      })
+    })
+})
 /*
   Use this function hash any number of passwords sent through the parameters
 */
@@ -175,12 +232,12 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if (err) {
         console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
-        return
+        return {"status": "Internal Server Error with bcrypt"}
       };
       bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
         if (err) {
           console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
-          return
+          return {"status": "Internal Server Error with bcrypt"}
         };
         // Send hash: requires await async
         return resolve(hash)
@@ -204,7 +261,6 @@ router.patch('/users/:id', async function(req, res, next) {
       message: `Invalid ID`
     })
   }
-  console.log(req.body);
   if (previous_password && password) {
     const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
     if (!re.test(password)) {
@@ -279,34 +335,115 @@ router.patch('/users/:id', async function(req, res, next) {
         }
         return knex('users')
           .update(insert, '*')
-          .where({id})})
-          .then(data => {
-            console.log(data);
-            return res.status(201).send("User has been updated.")
+          .where({
+            id
           })
-          .catch(err => {
+      })
+      .then(data => {
+        return res.status(201).send("User has been updated.")
+      })
+      .catch(err => {
         next(err)
       })
   }
 })
+router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, next) {
+  // This id refers to the id after misty_preferences
+  const {
+    id,
+    user_id
+  } = req.params
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
+    return next({
+      status: 400,
+      message: `Bad request. User ID or Preference ID is invalid.`
+    })
+  }
+  const {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice_name,
+    misty_face_name,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+  } = req.body
+  const dataFields = {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice_name,
+    misty_face_name,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+  }
+  if (Number.isNaN(id)) {
+    return next({
+      status: 400,
+      message: `Invalid ID`
+    })
+  }
+  // Load hash from your password DB.
+  return knex('misty_preferences')
+    .where({
+      misty_user_preference_id: user_id,
+      id: id
+    })
+    .first()
+    .then(preference => {
+      if (!preference) {
+        return next({
+          status: 404,
+          message: `Preference not found`
+        })
+      }
+    }).then(() => {
+      // Update the user if they do match
+      return knex('misty_preferences')
+        .update(dataFields, '*')
+        .where({
+          id
+        })
+    })
+    .then(data => {
+      return res.status(201).send("User has been updated.")
+    })
+    .catch(err => {
+      next(err)
+    })
+})
 
-// //delete set up...not working...update or delete on table users violates foreign key constraint misty_preferences_user_id_foreign on table misty_preferences
-
-// router.delete('/misty_preferences/:id', (req, res, next) => {
-//   const id = parseInt(req.params.id)
-//   if (Number.isNaN(id)) {
-//     return next({ status: 404, message: `Not Found` })
-//   }
-//   return knex('users')
-//     .where({id})
-//     .first()
-//     .del()
-//     .then(data => {
-//       res.status(204).json(data)
-//     })
-//     .catch(err => {
-//       next(err)
-//     })
-// })
+router.delete('/users/:user_id/misty_preferences/:id', (req, res, next) => {
+  // NOTE: parseInt might fail here because of ES6 syntax.
+  const {id, user_id} = parseInt(req.params)
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
+  }
+  return knex('users')
+    .where({
+      id
+    })
+    .first()
+    .del()
+    .then(data => {
+      res.status(204).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+})
 
 module.exports = router

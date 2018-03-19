@@ -21,10 +21,10 @@ let io = socket.listen(server);
 
 // handle incoming connections from clients
 io.sockets.on('connection', function(socket) {
-  console.log("New connection", socket.id);
+  // console.log("New connection", socket.id);
     // once a client has connected, we expect to get a ping from them saying what room they want to join
     socket.on('mistyChannel', function(mistyChannel) {
-        console.log(`User has joined ${mistyChannel}`);
+        // console.log(`User has joined ${mistyChannel}`);
         socket.join(mistyChannel);
     });
 });
@@ -41,11 +41,11 @@ app.use(express.static('public'))
 // ROUTES
 const watsonRoutes = require('./routes/watson')
 const twilioRoutes = require('./routes/twilio')
-const userRoutes = require('./routes/user_routes')
+const userRoutes = require('./routes/users')
 const token = require('./routes/token')
 
 
-// ALLOW CORS
+// ALLOW CORS HEADERS
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
