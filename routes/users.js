@@ -432,9 +432,10 @@ router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, n
     })
 })
 
-router.delete('/users/:id/misty_preferences/:id', (req, res, next) => {
-  const id = parseInt(req.params.id)
-  if (Number.isNaN(id)) {
+router.delete('/users/:user_id/misty_preferences/:id', (req, res, next) => {
+  // NOTE: parseInt might fail here because of ES6 syntax.
+  const {id, user_id} = parseInt(req.params)
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
     return next({
       status: 404,
       message: `Not Found`
