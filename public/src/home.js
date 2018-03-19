@@ -11,7 +11,10 @@ socket.on('message', function(data) {
 class State {
   constructor(current_page, user) {
     this.current_page = current_page
-    this.user = {setup_done: true}
+    this.user = {
+      setup_done: true,
+      disco_misty: false,
+    }
   }
 }
 let homeState = new State('home')
@@ -809,13 +812,56 @@ const logout_remove_token = () => {
             })
         })
       }
+const misty_face_changer = () => {
+  return setInterval(randomizeMisty_face, 500)
+}
+const randomizeMisty_face = () => {
+  let misty_face_valence = Math.random() * 2 -1,
+      misty_face_arousal = Math.random() * 2 -1,
+      misty_face_dominance = Math.random() * 2 -1
+  const settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://192.168.1.129/Api/eyes/change",
+        "method": "POST",
+        "headers": {
+        },
+        "data": JSON.stringify({
+          "Valence": `${misty_face_valence}`,
+          "Arousal": `${misty_face_arousal}`,
+          "Dominance": `${misty_face_dominance}`,
+        })
+      }
+let r = Math.floor(Math.random() * 255),
+    g = Math.floor(Math.random() * 255),
+    b = Math.floor(Math.random() * 255)
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+  const color_settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://192.168.1.129/Api/led/change",
+  "method": "POST",
+  "headers": {
+  },
+  "data": JSON.stringify({
+    "red": `${r}`,
+    "green": `${g}`,
+    "blue": `${b}`
+  })
+}
+$.ajax(color_settings).done(function (response) {
+  console.log(response);
+});
+}
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
 
   // Token listeners
   verifyUserPermissionsToken()
   logout_remove_token()
-
   // Nav listeners
   goHome_listener()
   /*Edit/View Account*/
@@ -848,7 +894,7 @@ const create_listeners = () => {
 
 $(document).ready(() => {
   create_listeners();
-
+  // misty_face_changer()
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions

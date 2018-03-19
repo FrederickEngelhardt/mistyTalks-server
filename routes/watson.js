@@ -170,8 +170,8 @@ router.post('/watson/receive', async function(req, res, next) {
         2. After await completes send back a success response
   TODO: Add error handling for each function that does NOT break server with throw.
 */
-  let voice = 'US_AllisonVoice',
-    text = ''
+  let voice = 'en-US_AllisonVoice',
+      text = ''
 
   const {twilio, twilio_number} = req.body
   if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
