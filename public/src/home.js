@@ -183,7 +183,7 @@ const goHome_listener = () => {
       homeState.current_page = "home"
     }
     else {
-      Materialize.toast("You are home.")
+      Materialize.toast("You are home.", 1000)
     }
   })
 }
