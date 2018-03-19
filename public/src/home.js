@@ -36,50 +36,50 @@ const add_number = (count) => {
 // Array of all watson voices
 
 // HTML code to add all voices into the selection zone
+const voices = [{
+      "name": "es-LA_SofiaVoice",
+    },
+    {
+      "name": "pt-BR_IsabelaVoice",
+    },
+    {
+      "name": "en-GB_KateVoice",
+    },
+    {
+      "name": "de-DE_BirgitVoice",
+    },
+    {
+      "name": "en-US_AllisonVoice",
+    },
+    {
+      "name": "fr-FR_ReneeVoice",
+    },
+    {
+      "name": "it-IT_FrancescaVoice",
+    },
+    {
+      "name": "es-ES_LauraVoice",
+    },
+    {
+      "name": "ja-JP_EmiVoice",
+    },
+    {
+      "name": "es-ES_EnriqueVoice",
+    },
+    {
+      "name": "de-DE_DieterVoice",
+    },
+    {
+      "name": "en-US_LisaVoice",
+    },
+    {
+      "name": "en-US_MichaelVoice",
+    },
+    {
+      "name": "es-US_SofiaVoice",
+    }
+  ]
 const add_all_voices = () => {
-  const voices = [{
-    "name": "es-LA_SofiaVoice",
-  },
-  {
-    "name": "pt-BR_IsabelaVoice",
-  },
-  {
-    "name": "en-GB_KateVoice",
-  },
-  {
-    "name": "de-DE_BirgitVoice",
-  },
-  {
-    "name": "en-US_AllisonVoice",
-  },
-  {
-    "name": "fr-FR_ReneeVoice",
-  },
-  {
-    "name": "it-IT_FrancescaVoice",
-  },
-  {
-    "name": "es-ES_LauraVoice",
-  },
-  {
-    "name": "ja-JP_EmiVoice",
-  },
-  {
-    "name": "es-ES_EnriqueVoice",
-  },
-  {
-    "name": "de-DE_DieterVoice",
-  },
-  {
-    "name": "en-US_LisaVoice",
-  },
-  {
-    "name": "en-US_MichaelVoice",
-  },
-  {
-    "name": "es-US_SofiaVoice",
-  }
-]
   for (let i in voices) {
     console.log(voices[i].name);
     let html = `<option value="${i}">${voices[i].name}</option>`
@@ -88,8 +88,7 @@ const add_all_voices = () => {
   // Materialize listener for new elements
   $('select').material_select();
 }
-const add_all_preset_faces = () => {
-  const eyes = [{
+const eyes = [{
       "name": "Angry Eyes",
       "settings": {
         "Valence": -1,
@@ -162,6 +161,7 @@ const add_all_preset_faces = () => {
       }
     }
   ]
+const add_all_preset_faces = () => {
   for (let i in eyes) {
     console.log(eyes[i].name);
     let html = `<option value="${i}">${eyes[i].name}</option>`
@@ -651,12 +651,15 @@ const editMistyPreferences_listener = () => {
 }
 const retrieveMistyPreferencesSubmitFormData = () => {
   let preference_name = $("#preference_name").val(),
-  robot_name  = $("#robot_name").val(),
-  ip_address = $("#ip_address").val(),
-  port_number = $("#port_number").val(),
-  phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
-  ip_address = $("#ip_address").val()
+      robot_name  = $("#robot_name").val(),
+      ip_address = $("#ip_address").val(),
+      port_number = $("#port_number").val(),
+      phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
+      misty_voice_choice = $("#choose_voices :selected").text(),
+      misty_face_choice = $("#choose_face_emote :selected").text();
 
+
+console.log("THIS IS THE CHOICE", misty_voice_choice, misty_face_choice);
   /*Iterate through form information. The store inside a JSON object*/
   let data = new Object()
   let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]

@@ -289,6 +289,53 @@ router.patch('/users/:id', async function(req, res, next) {
       })
   }
 })
+router.patch('/users/:id', async function(req, res, next) {
+  const id = parseInt(req.params.id)
+  const {
+    email,
+    first_name,
+    last_name,
+    previous_password,
+    password
+  } = req.body
+  if (Number.isNaN(id)) {
+    return next({
+      status: 400,
+      message: `Invalid ID`
+    })
+  }
+  console.log(req.body);
+    // Load hash from your password DB.
+    return knex('users')
+      .where({
+        id
+      })
+      .first()
+      .then(user => {
+        if (!user) {
+          return next({
+            status: 404,
+            message: `User not found`
+          })
+        }
+      }).then(() => {
+        // Update the user if they do match
+        const insert = {
+          email,
+          first_name,
+          last_name
+        }
+        return knex('users')
+          .update(insert, '*')
+          .where({id})})
+          .then(data => {
+            console.log(data);
+            return res.status(201).send("User has been updated.")
+          })
+          .catch(err => {
+        next(err)
+      })
+})
 
 // //delete set up...not working...update or delete on table users violates foreign key constraint misty_preferences_user_id_foreign on table misty_preferences
 
