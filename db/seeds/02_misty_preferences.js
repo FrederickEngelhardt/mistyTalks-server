@@ -33,8 +33,8 @@ exports.seed = function(knex, Promise) {
           set_emotion_valence: 0,
           set_emotion_arousal: 1,
           set_emotion_dominance: 0,
-          time_restriction_start: '14:26:16',
-          time_restriction_end: '14:26:16'
+          time_restriction_start: null,
+          time_restriction_end: null
         },
         {
           id: 3,

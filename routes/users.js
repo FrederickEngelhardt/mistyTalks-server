@@ -101,6 +101,7 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
   }
   return knex('misty_preferences')
     .where("misty_user_preference_id", id)
+    .orderBy('id', 'asc')
     .then(data => {
       console.log(data)
       if (!data) {

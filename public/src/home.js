@@ -81,7 +81,6 @@ const voices = [{
   ]
 const add_all_voices = () => {
   for (let i in voices) {
-    console.log(voices[i].name);
     let html = `<option value="${i}">${voices[i].name}</option>`
     $(`#choose_voices`).append(html)
   }
@@ -163,7 +162,6 @@ const eyes = [{
   ]
 const add_all_preset_faces = () => {
   for (let i in eyes) {
-    console.log(eyes[i].name);
     let html = `<option value="${i}">${eyes[i].name}</option>`
     $(`#choose_face_emote`).append(html)
   }
@@ -322,6 +320,11 @@ const myAccountEdit_listener = () => {
       $(".container").append(html)
     }
     homeState.current_page = "my_account_edit"
+    $('#cancelButton').on("click", (event) => {
+      event.preventDefault()
+      return myAccount_listener()
+
+    })
     $('form').submit(function(e){
       e.preventDefault()
       retrieveAccountSubmitFormData()
@@ -382,51 +385,55 @@ const sendAccountSubmitForm = (data, user_id) => {
 
 /* MISTY_PREFERENCES Functions*/
 const mistyPreferences_listener = () => {
-  $(".go_to_misty_preferences").on("click", () => {
     $(".display_home").addClass("hide_this")
-    const html = `  <div class="card_container">
-        <div class="profile_card">
-          <h4 class="title_box">Misty Preferences
-            <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
-              <i class="edit_misty_preferences material-icons">edit
-              </i>
-            </a></h4>
-          <table>
-            <tr>
-              <td>Preference Name:</td>
-              <td class="misty_preference_name"></td>
-            </tr>
-            <tr>
-              <td>Robot Name:</td>
-              <td class="misty_robot_name"></td>
-            </tr>
-            <tr>
-              <td>IP Address:</td>
-              <td class="misty_ip_address"></td>
-            </tr>
-            <tr>
-              <td>Port Number:</td>
-              <td class="misty_port_number"></td>
-            </tr>
-            <tr>
-              <td>Authorized Phone Numbers</td>
-              <td class="misty_authorized_numbers"></td>
-            </tr>
-            <tr>
-              <td>Misty Voice:</td>
-              <td class="misty_voice"></td>
-            </tr>
-            <tr>
-              <td>Misty Robot Face</td>
-              <td class="misty_robot_face"></td>
-            </tr>
-            <tr>
-              <td>Quiet Hours</td>
-              <td class="misty_quiet_hours"></td>
-            </tr>
-          </table>
-        </div>
-      </div>
+    const html = `
+          <div class="card_container">
+            <div class="profile_card">
+              <h4 class="title_box">Misty Preferences
+                <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
+                  <i class="edit_misty_preferences material-icons">edit
+                  </i>
+                </a></h4>
+              <table>
+                <tr>
+                  <td>Preference Name:</td>
+                  <td class="misty_preference_name"></td>
+                </tr>
+                <tr>
+                  <td>Robot Name:</td>
+                  <td class="misty_robot_name"></td>
+                </tr>
+                <tr>
+                  <td>IP Address:</td>
+                  <td class="misty_ip_address"></td>
+                </tr>
+                <tr>
+                  <td>Port Number:</td>
+                  <td class="misty_port_number"></td>
+                </tr>
+                <tr>
+                  <td>Authorized Phone Numbers</td>
+                  <td class="misty_authorized_numbers"></td>
+                </tr>
+                <tr>
+                  <td>Misty Voice:</td>
+                  <td class="misty_voice"></td>
+                </tr>
+                <tr>
+                  <td>Misty Face Name:</td>
+                  <td class="misty_face_name"></td>
+                </tr>
+                <tr>
+                  <td>Misty Robot Face</td>
+                  <td class="misty_robot_face"></td>
+                </tr>
+                <tr>
+                  <td>Quiet Hours</td>
+                  <td class="misty_quiet_hours"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
       `
 
     if (homeState.current_page !== "misty_preferences_view") {
@@ -439,8 +446,6 @@ const mistyPreferences_listener = () => {
     */
     editMistyPreferences_listener()
     populate_misty_preferences(homeState.user.id)
-
-  })
 }
 const populate_misty_preferences = (user_id) => {
   var settings = {
@@ -453,7 +458,9 @@ const populate_misty_preferences = (user_id) => {
     }
   }
 
-  $.ajax(settings).done(function(response) {
+  $.ajax(settings).done(function(response_array) {
+    let response=response_array[0]
+    homeState.user.preference_id = response.misty_user_preference_id
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
@@ -476,7 +483,11 @@ const populate_misty_preferences = (user_id) => {
       },
       {
         location: "misty_voice",
-        user_info: "misty_voice"
+        user_info: "misty_voice_name"
+      },
+      {
+        location: "misty_face_name",
+        user_info: "misty_face_name"
       },
       {
         location: "misty_robot_face",
@@ -488,7 +499,11 @@ const populate_misty_preferences = (user_id) => {
       }
     ]
     for (var i = 0; i < target.length; i++) {
-      if (target[i].location === "misty_quiet_hours") {
+      if (target[i].location === "misty_port_number" && response[target[i].user_info] === null){
+        const data = `Disabled`
+        $(`.${target[i].location}`).text(data)
+      }
+      else if (target[i].location === "misty_quiet_hours") {
         if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null){
           const data = `Disabled`
           $(`.${target[i].location}`).text(data)
@@ -632,7 +647,11 @@ const editMistyPreferences_listener = () => {
       $(`.container`).append(html)
     }
     homeState.current_page = "misty_preferences_edit"
+    $('#cancelButton').on("click", (event) => {
+      event.preventDefault()
+      return mistyPreferences_listener()
 
+    })
     // listen to the form submission
     $('form').submit(function(e){
       e.preventDefault()
@@ -748,8 +767,6 @@ const verifyUserPermissionsToken = () => {
   })
 }
 
-
-
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   verifyUserPermissionsToken()
@@ -759,9 +776,11 @@ const create_listeners = () => {
   $(".go_to_my_account").on("click", () => {
     myAccount_listener()
   })
+  $(".go_to_misty_preferences").on("click", () => {
+    mistyPreferences_listener()
+  })
 
   /*Edit/View Preferences*/
-  mistyPreferences_listener()
 
   // *** END OF MAIN HOME PAGE LISTENERS*
 
