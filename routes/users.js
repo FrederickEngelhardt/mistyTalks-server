@@ -171,7 +171,7 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     id
   } = req.params
   const {
-    misty_preference_id,
+    misty_user_preference_id,
     preference_name,
     robot_name,
     ip_address,
@@ -334,14 +334,38 @@ router.patch('/users/:id', async function(req, res, next) {
   }
 })
 router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) {
-  const id = parseInt(req.params.id)
+  // This id refers to the id after misty_preferences
   const {
-    email,
-    first_name,
-    last_name,
-    previous_password,
-    password
-  } = req.body
+    id
+  } = req.params
+  const {
+    misty_user_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice,
+    misty_face,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+} = req.body
+const dataFields = {
+  misty_preference_id,
+  preference_name,
+  robot_name,
+  ip_address,
+  auth_numbers_string,
+  misty_voice,
+  misty_face,
+  set_emotion_valence,
+  set_emotion_arousal,
+  set_emotion_dominance,
+  time_restriction_start,
+  time_restriction_end
+}
   if (Number.isNaN(id)) {
     return next({
       status: 400,
@@ -350,27 +374,22 @@ router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) 
   }
   console.log(req.body);
     // Load hash from your password DB.
-    return knex('users')
+    return knex('misty_preferences')
       .where({
         id
       })
       .first()
-      .then(user => {
-        if (!user) {
+      .then(preference => {
+        if (!preference) {
           return next({
             status: 404,
-            message: `User not found`
+            message: `Preference not found`
           })
         }
       }).then(() => {
         // Update the user if they do match
-        const insert = {
-          email,
-          first_name,
-          last_name
-        }
-        return knex('users')
-          .update(insert, '*')
+        return knex('misty_preferences')
+          .update(dataFields, '*')
           .where({id})})
           .then(data => {
             console.log(data);

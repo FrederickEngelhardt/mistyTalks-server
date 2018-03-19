@@ -2,8 +2,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('misty_preferences', table => {
     table.increments()
-    table.integer('misty_preference_id')
-    table.foreign('misty_preference_id').references('users.id')
+    table.integer('misty_user_preference_id')
+    table.foreign('misty_user_preference_id').references('users.id')
     table.string('preference_name').notNullable()
     table.string('robot_name').defaultsTo(null)
     table.string('auth_numbers_string').notNullable()
