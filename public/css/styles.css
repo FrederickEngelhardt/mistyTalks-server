@@ -97,15 +97,17 @@ main.container {
   padding: 20px;
 }
 
+/* ALL BUTTONS */
 .button-text {
   position: relative;
-  top: 5px;
+  top: 20px;
+  font-size: 22px;
   color: white;
 }
 .btn {
   background-color: #6700ED;
-  height: 50px;
-  width: 200px;
+  height: 80px;
+  width: 300px;
   border-radius: 35px;
 }
 .home-button {
@@ -117,63 +119,25 @@ main.container {
   position: relative;
   top: 10%;
 }
-
-
-/* Beginning of home.html*/
+#saveButton {
+  margin-top: 10px;
+  line-height: 25px;
+  padding-top: 5px;
+  font-size: 22px;
+  background-color: #6700ED;
+}
+#cancelButton {
+  margin-top: 10px;
+  line-height: 25px;
+  padding-top: 5px;
+  font-size: 22px;
+  background-color: red;
+}
+/* END OF ALL BUTTONS */
 nav {
   background-color: #6700ED;
   padding-left: 0%;
   padding-right: 5%;
-}
-.nav-align {
-  padding-top: 0px;
-}
-.text {
-  font-size: 200%;
-  color: #6700ED;
-}
-label {
-  color: white;
-}
-.profBody {
-  font-size: 20px;
-}
-.card_container {
-  padding: 5%;
-}
-.profile_card {
-  margin: auto;
-  max-width: 700px;
-  background: white;
-  padding: 25px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-td {
-  font-size: 20px;
-}
-#edit_card_body {
-  color: black;
-  font-size: 20px;
-}
-.title_box, input {
-  color: black;
-}
-input::placeholder {
-  color: grey;
-}
-#saveButton {
-  margin-top: 50px;
-  line-height: 25px;
-  padding-top: 5px;
-  font-size: 20px;
-  background-color: green;
-}
-#cancelButton {
-  margin-top: 50px;
-  line-height: 25px;
-  padding-top: 5px;
-  font-size: 20px;
-  background-color: red;
 }
 
 
@@ -221,6 +185,47 @@ input.login-input-text {
 
 
 /*****start home*****/
+
+.nav-align {
+  padding-top: 0px;
+}
+.text {
+  font-size: 200%;
+  color: #6700ED;
+}
+label {
+  color: white;
+}
+.profBody {
+  font-size: 20px;
+}
+.card_container {
+  padding: 5%;
+}
+.profile_card {
+  margin: auto;
+  max-width: 700px;
+  background: white;
+  padding: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+td {
+  font-size: 20px;
+}
+#edit_card_body {
+  color: black;
+  font-size: 20px;
+}
+.title_box, input {
+  color: black;
+}
+input::placeholder {
+  color: grey;
+}
+.save_cancel_menu {
+  position: relative;
+  top: -25px;
+}
 
 .form_input {
   position: relative;
@@ -329,12 +334,6 @@ p.small-text {
   background-color: #6700ED;
   color: white
 }
-
-
-
-/* .about_text{
-  background-color: brown
-} */
 
 /*spaces between tabs */
 .collapsible{

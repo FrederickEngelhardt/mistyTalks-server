@@ -38,7 +38,7 @@
         <h5>Robot Name:</h5>
         <div class="row center">
           <div class="col s9 m9 l9">
-            <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name" required>
+            <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name">
           </div>
         </div>
         <!-- End Last Name -->
@@ -66,7 +66,7 @@
           <h5>Authorized Phone Numbers:</h5>
           <div class="row center">
             <div class="col s2 m2 l2">
-              <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1" required>
+              <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1">
             </div>
             <div class="col s7 m7 l7">
               <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
@@ -92,7 +92,15 @@
         <!-- end of misty voice settings-->
 
         <!--misty face settings -->
-        <h5>Misty Robot Face</h5>
+        <h5>Misty Robot Preset Faces</h5>
+        <div class="row">
+          <div class="input-field col browser-default s9 m9 l9">
+            <select id="choose_face_emote">
+                <option value="" disabled selected>Select Misty Preset Face</option>
+              </select>
+          </div>
+        </div>
+        <h5>Misty Robot Custom Face</h5>
         <div class="row">
           <div class="input-field col browser-default s9 m9 l9">
             <p class="small-text col s6 m6 l6">Valence:</p>
@@ -117,9 +125,9 @@
 
         <!-- Form submit/exit buttons here.  -->
 
-        <div class="row center">
-          <button type="submit" class="btn waves-effect waves-light" id="saveButton">Save</button>
-          <button id="cancelButton" class="btn waves-effect waves-light" type="submit" name="action">Cancel</button>
+        <div class="row center save_cancel_menu">
+          <button type="submit" class="preference_menu_btn btn waves-effect waves-light" id="saveButton">Save</button>
+          <button id="cancelButton" class="preference_menu_btn btn waves-effect waves-light" type="submit" name="action">Cancel</button>
         </div>
       </form>
 
