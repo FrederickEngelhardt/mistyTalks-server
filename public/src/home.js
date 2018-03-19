@@ -15,7 +15,6 @@ class State {
   }
 }
 let homeState = new State('home')
-console.log(homeState);
 let added_number_count = 1
 const add_number = (count) => {
 
