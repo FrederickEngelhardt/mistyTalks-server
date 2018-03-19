@@ -204,7 +204,7 @@ label {
 }
 .profile_card {
   margin: auto;
-  max-width: 700px;
+  max-width: 600px;
   background: white;
   padding: 25px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
