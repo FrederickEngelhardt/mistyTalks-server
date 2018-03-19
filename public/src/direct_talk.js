@@ -2,7 +2,8 @@
 // test data
 let first_name = ""
 let last_name = ""
-let phone_number = "+123456789"
+let phone_number = ""
+let robot_name = "misty"
 
 // let userSender= document.getElementById('handle');
 let btn = document.getElementById('send');
@@ -10,24 +11,24 @@ let output = document.getElementById('output');
 let feedback = document.getElementById('feedback');
 
 
-const newOutbound = (first_name, last_name, phone_number, message) => {
-  console.log(`first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is : ${message}`)
+const newOutbound = (first_name, last_name, phone_number, message, robot_name) => {
+  console.log(`first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is : ${message}`, "robot_name:", robot_name)
   // use first and last name entered if available
-console.log(first_name.length, last_name.length);
+console.log(robot_name.length);
 
-  if(first_name.length > 0 || last_name.length > 0){
-    first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
-    last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
+  if(robot_name.length > 0){
+    robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+    console.log(robot_name, 1)
+    // first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
+    // last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
    console.log("in here");
 
    if(message.length > 0){
-
-     let outName = `<div class="chatName"><strong> ${first_name} ${last_name}</strong></div>`
-     let outMessage = `<p class="chatSubj">${message}</p>`
-
-     $(".chatName").prepend(outName)
-     $(".chatSubj").prepend(outMessage)
-     // $(".chatMsgs").prepend(outName, outMessage)
+     console.log("in message length here");
+     let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+    //  $(".chatName").prepend(outName)
+    // $(".chatSubj").prepend(outMessage)
+     $(".chatOut").append(`${outName}`)
      // output
      $("#message").val('')
   }
@@ -61,8 +62,8 @@ return "dang"
 const direct_talks_listeners = () => {
 $("#sendMessBtn").click((event) => {
   message = $("#message").val()
-  newOutbound(first_name, last_name, phone_number, message);
-  console.log(message, "in DTL")
+  newOutbound(first_name, last_name, phone_number, message, robot_name);
+  console.log(message, robot_name, "in DTL")
   event.preventDefault()
   console.log(message, "in DTL #2")
   // works
