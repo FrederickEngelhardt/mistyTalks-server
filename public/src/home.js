@@ -449,6 +449,7 @@ const mistyPreferences_listener = () => {
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
     editMistyPreferences_listener()
+    console.log('called. JUST B4');
     populate_misty_preferences(homeState.user.id)
 }
 const populate_misty_preferences = (user_id) => {
@@ -464,7 +465,12 @@ const populate_misty_preferences = (user_id) => {
 
   $.ajax(settings).done(function(response_array) {
     let response=response_array[0]
-    homeState.user.preference_id = response.misty_user_preference_id
+    console.log("THIS IS RESPONSE",response);
+    if (response === [] || !response || response === undefined){
+      return homeState.user.setup_done = false
+    }
+    homeState.user.preference_id = response.id
+    homeState.user.robot_name = response.robot_name
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
@@ -711,7 +717,12 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
-    if (data[i] === '') delete data[i]
+    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] ==="Select Misty Preset Face") {
+      delete data[i]
+    }
+  }
+  if (data.auth_numbers_string.length < 11){
+    delete data.auth_numbers_string
   }
   if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
@@ -757,8 +768,8 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
     "data": JSON.stringify(data)
   }
   $.ajax(settings).done(function(response) {
-    myAccount_listener()
     Materialize.toast(response, 3000)
+    return mistyPreferences_listener()
 
   }).fail((fail_message) => {
     Materialize.toast(fail_message.responseText, 3000)
