@@ -23,8 +23,8 @@ exports.seed = function(knex, Promise) {
         {
           id: 2,
           misty_user_preference_id: 1,
-          preference_name: 'work',
-          robot_name: 'jane',
+          preference_name: 'Work',
+          robot_name: 'Jane',
           auth_numbers_string: '123456770',
           ip_address: '192.168.1.129',
           port_number: null,
@@ -39,8 +39,8 @@ exports.seed = function(knex, Promise) {
         {
           id: 3,
           misty_user_preference_id: 1,
-          preference_name: 'den',
-          robot_name: 'june',
+          preference_name: 'Den',
+          robot_name: 'June',
           auth_numbers_string: '123456700',
           ip_address: '10.0.10.210',
           port_number: null,

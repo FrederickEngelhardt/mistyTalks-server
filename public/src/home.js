@@ -766,12 +766,31 @@ const verifyUserPermissionsToken = () => {
 
   })
 }
-
+const logout_remove_token = () => {
+        $('.logout').on('click', () => {
+          const options = {
+            dataType: 'json',
+            type: 'DELETE',
+            url: '/users/token'
+          }
+          $.ajax(options)
+            .done(() => {
+              window.location.href = '/index.html'
+            })
+            .fail(() => {
+              Materialize.toast('Unable to log out', 3000)
+            })
+        })
+      }
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
-  verifyUserPermissionsToken()
-  goHome_listener()
 
+  // Token listeners
+  verifyUserPermissionsToken()
+  logout_remove_token()
+
+  // Nav listeners
+  goHome_listener()
   /*Edit/View Account*/
   $(".go_to_my_account").on("click", () => {
     myAccount_listener()
@@ -825,6 +844,7 @@ const retrievePreferencesSubmitFormData = (event) => {
 
 
 $(document).ready(() => {
+
 $('form').submit(function(e){
   e.preventDefault()
   retrieveAccountSubmitFormData()

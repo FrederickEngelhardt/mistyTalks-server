@@ -7,11 +7,12 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 
 router.get('/users/token', (req, res, next) => {
+  console.log(req.headers);
 // removes the token= from the string
   if (!req.headers.cookie.includes("token")) {
     return next({status: 403, message: "You do not have access to this page."})
   }
-  let token = req.headers.cookie.split("token=")[1].split("; io=")[0]
+  let token = req.headers.cookie.split("token=")[1].split(";")[0]
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.status(403).send(false)
@@ -62,6 +63,7 @@ router.post('/users/token', (req, res, next) => {
 })
 
 router.delete('/users/token', (req, res, next) => {
+  console.log('route called');
   res.clearCookie('token')
   res.end()
 })
