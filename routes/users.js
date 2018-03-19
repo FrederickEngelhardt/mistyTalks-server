@@ -47,7 +47,7 @@ router.get('/users/:id', (req, res, next) => {
 })
 
 // GET ALL ACCESS TO MISTY_PREFERENCES (preference_name, robot_name, ip_address, port_number)
-router.get('/misty_preferences', (req, res, next) => {
+router.get('users/:id/misty_preferences', (req, res, next) => {
   return knex('users')
     .orderBy('id', 'asc')
     .then(data => {
@@ -166,6 +166,51 @@ router.post('/users', (req, res, next) => {
     })
 })
 
+router.post('/users/:id/misty_preferences', (req, res, next) => {
+  console.log(req.params, req.body);
+  const {
+    id
+  } = req.params
+  const {
+    misty_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice,
+    misty_face,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+} = req.body
+
+  const dataFields = {
+    misty_preference_id,
+    preference_name,
+    robot_name,
+    ip_address,
+    auth_numbers_string,
+    misty_voice,
+    misty_face,
+    set_emotion_valence,
+    set_emotion_arousal,
+    set_emotion_dominance,
+    time_restriction_start,
+    time_restriction_end
+}
+  console.log(dataFields);
+  return knex
+    .insert(dataFields, '*')
+    .into('misty_preferences')
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        message: `User: ${dataFields} has been created!`
+      })
+    })
+})
 /*
   Use this function hash any number of passwords sent through the parameters
 */
@@ -289,7 +334,7 @@ router.patch('/users/:id', async function(req, res, next) {
       })
   }
 })
-router.patch('/users/:id', async function(req, res, next) {
+router.patch('/users/:id/misty_preferences/:id', async function(req, res, next) {
   const id = parseInt(req.params.id)
   const {
     email,
@@ -337,23 +382,21 @@ router.patch('/users/:id', async function(req, res, next) {
       })
 })
 
-// //delete set up...not working...update or delete on table users violates foreign key constraint misty_preferences_user_id_foreign on table misty_preferences
-
-// router.delete('/misty_preferences/:id', (req, res, next) => {
-//   const id = parseInt(req.params.id)
-//   if (Number.isNaN(id)) {
-//     return next({ status: 404, message: `Not Found` })
-//   }
-//   return knex('users')
-//     .where({id})
-//     .first()
-//     .del()
-//     .then(data => {
-//       res.status(204).json(data)
-//     })
-//     .catch(err => {
-//       next(err)
-//     })
-// })
+router.delete('/users/:id/misty_preferences/:id', (req, res, next) => {
+  const id = parseInt(req.params.id)
+  if (Number.isNaN(id)) {
+    return next({ status: 404, message: `Not Found` })
+  }
+  return knex('users')
+    .where({id})
+    .first()
+    .del()
+    .then(data => {
+      res.status(204).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+})
 
 module.exports = router
