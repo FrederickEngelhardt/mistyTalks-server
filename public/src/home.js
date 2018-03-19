@@ -17,9 +17,6 @@ class State {
 let homeState = new State('home')
 let added_number_count = 1
 const add_number = (count) => {
-
-let added_number_count = 1
-const add_number = count => {
   return `<div class="deleteNumberFields${count} row center">
             <div class="col s2 m2 l2">
               <input type="tel" id="phone_country_code${count}" name="country_code" value="+1" placeholder="country" required>
@@ -793,7 +790,7 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
 }
 // END of misty preferences Functions
 
-//////////////////////////////////////////////////////////////
+
 
 const directTalk_listener = () => {
   $('.display_home').addClass('hide_this')
@@ -838,6 +835,26 @@ const message_listener = () => {
 
   })
 }
+
+const verifyUserPermissionsToken = () => {
+
+  // grab user token, see whos logged in
+  //put into state class for user
+
+  $.get('/users/token').done((result) => {
+    // if (!result) window.location.href = '/index.html'
+    homeState.user.id = result.cookie.user_id
+    homeState.user.email = result.cookie.email
+  }).fail((msg) => {
+    Materialize.toast(msg.responseText, 3000);
+    setTimeout(function() {
+      return window.location.href = '/index.html'
+    }, 1000)
+
+  })
+}
+
+
 const logout_remove_token = () => {
         $('.logout').on('click', () => {
           const options = {
@@ -870,6 +887,9 @@ const create_listeners = () => {
   $(".go_to_misty_preferences").on("click", () => {
     mistyPreferences_listener()
   })
+  $(".go_to_direct_talk").on("click", () => {
+    directTalk_listener()
+  })
 
   /*Edit/View Preferences*/
 
@@ -896,7 +916,7 @@ const newOutbound = (
 ) => {
 
   console.log("user email: ", homeState.user.email)
-  console.log("user robot name: ", homeState.misty_preferences
+  console.log("user robot name: ", homeState.user.misty_preferences.robot_name
   );
 
     if (robot_name.length > 0) {
@@ -913,7 +933,8 @@ const newOutbound = (
         // output
         $('#message').val('')
       }
-    } else if (email) {
+    }
+    else if (email) {
       // use phone number as identifier name if no first or last is available
       let newArr = []
       if (message.length > 0) {
@@ -928,7 +949,6 @@ const newOutbound = (
 }
 
 
-///////////////////////////////////////////////////////////
 
 $(document).ready(() => {
   create_listeners();
