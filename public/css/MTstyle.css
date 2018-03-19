@@ -37,17 +37,21 @@
 	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
-	margin-bottom: 10px;
+
+
+
 }
 
-
 .chatOut .chatName {
-	width: 60px;
-	height: 60px;
+  width: 60px;
+	height: 30px;
 	background: #ccc;
 	border-radius: 10% / 50%;
   align-self: center;
-  justify-content: space-around;
+  font: bold sans-serif;
+  color: #798eaf;
+  padding: 7px 10px 7px 10px;
+
 }
 
 .chatOut .chatSubj {
@@ -62,6 +66,7 @@
 /* chat subject colored block */
 .chatOut .chatSubj {
 	background: #6700ED;
+  margin-bottom: 20px;
 	/* order: -1; */
   /* may not need -1 */
 }

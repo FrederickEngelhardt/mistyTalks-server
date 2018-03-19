@@ -9,12 +9,17 @@ socket.on('message', function(data) {
 });
 
 class State {
-  constructor(current_page, user) {
+  constructor(current_page, user, misty_preferences) {
     this.current_page = current_page
-    this.user = {}
+    this.user = {},
+    this.misty_preferences = {}
   }
 }
+
 let homeState = new State('home', {})
+
+
+
 let added_number_count = 1
 const add_number = (count) => {
 
@@ -692,6 +697,110 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
 }
 // END of misty preferences Functions
 
+
+
+ const directTalk_listener = () => {
+    $(".display_home").addClass("hide_this")
+    const html = `
+        <div class="card_container">
+          <div class="chatcont" >
+            <center><h5 class="title_box">Misty Direct Talk</h5></center>
+            <center>
+            <div class="chatMsgs">
+              <!-- additional assets coming from direct_talk.js -->
+              <div class="chatOut">
+              </div>
+            </div>
+            <div class="inputSubForm">
+              <textarea id="message" placeholder= "Message"></textarea>
+              <button class="btn waves-effect waves-light" id="sendMessBtn">Send</button>
+            </div>
+          </div>
+        </div>
+        `
+    if (homeState.current_page !== "direct_talk") {
+      remove_all_divs()
+      $(".container").append(html)
+    }
+    homeState.current_page = "direct_talk"
+
+
+
+}
+
+//////////////////////////////////////////////////////////////
+
+// test data
+let first_name = 'leroy',
+  last_name = 'jenkins',
+  phone_number = '+12345678',
+  robot_name = 'mistuy'
+
+const newOutbound = (
+  first_name,
+  last_name,
+  phone_number,
+  message,
+  robot_name
+) => {
+  console.log(
+    `first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is: ${message}`,
+    'robot_name:',
+    robot_name
+  )
+//
+//   if (robot_name.length > 0) {
+//     robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+//     console.log(robot_name, 1)
+//     console.log('in here')
+//
+//     if (message.length > 0) {
+//       console.log('in message length here')
+//       let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+//       //  $(".chatName").prepend(outName)
+//       // $(".chatSubj").prepend(outMessage)
+//       $('.chatOut').append(`${outName}`)
+//       // output
+//       $('#message').val('')
+//     }
+//   } else if (phone_number) {
+//     // use phone number as identifier name if no first or last is available
+//     let newArr = []
+//     newArr = phone_number.split('')
+//     console.log(phone_number, newArr)
+//     newArr.shift()
+//     phone_number = newArr.join('')
+//     if (message.length > 0) {
+//       let outName = `<div class="chatName"><strong> ${phone_number}</strong></div>`
+//       let outMessage = `<p class="chatSubj">${message}</p>`
+//       $('.chatOut').append(outName, outMessage)
+//       // output
+//       $('#message').val('')
+//     }
+//   }
+  return 'dang'
+}
+
+const message_listener = () => {
+  console.log('in here');
+  $('#sendMessBtn').click(event => {
+    console.log('clicked');
+    message = $('#message').val()
+    console.log("about to call newOutbound");
+    newOutbound(first_name, last_name, phone_number, message, robot_name)
+    console.log(message, robot_name, 'in DTL')
+    event.preventDefault()
+    console.log(message, 'in DTL #2')
+    // works
+  })
+}
+
+
+
+///////////////////////////////////////////////////////////
+
+
+
 const verifyUserPermissionsToken = () => {
 
   // grab user token, see whos logged in
@@ -716,6 +825,7 @@ const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   verifyUserPermissionsToken()
   goHome_listener()
+  message_listener()
 
   /*Edit/View Account*/
   $(".go_to_my_account").on("click", () => {
@@ -724,6 +834,9 @@ const create_listeners = () => {
 
   /*Edit/View Preferences*/
   mistyPreferences_listener()
+  $(".go_to_direct_talk").on("click", () => {
+    directTalk_listener()
+  })
 
   // *** END OF MAIN HOME PAGE LISTENERS*
 
@@ -774,6 +887,7 @@ $('form').submit(function(e){
 })
   populate_account_preferences()
   create_listeners();
+
 
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
