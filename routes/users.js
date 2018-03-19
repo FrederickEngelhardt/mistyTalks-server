@@ -46,20 +46,34 @@ router.get('/users/:id', (req, res, next) => {
     })
 })
 
-// GET ALL ACCESS TO MISTY_PREFERENCES (preference_name, robot_name, ip_address, port_number)
-router.get('users/:id/misty_preferences', (req, res, next) => {
-  console.log();
-  return knex('users')
+
+// GET INDIVIDUAL ITEMS IN MISTY_PREFERENCES TABLE BY ID(preference_name, robot_name, ip_address, port_number)
+router.get('/users/:id/misty_preferences', (req, res, next) => {
+  const id = parseInt(req.params.id)
+  if (Number.isNaN(id)) {
+    return next({
+      status: 404,
+      message: `Not Found`
+    })
+  }
+  return knex('misty_preferences')
+    .where("misty_user_preference_id", id)
     .orderBy('id', 'asc')
     .then(data => {
+      console.log(data)
+      if (!data) {
+        return next({
+          status: 404,
+          message: `Not Found`
+        })
+      }
       res.status(200).json(data)
     })
     .catch(err => {
       next(err)
     })
-})
+  })
 
-// GET INDIVIDUAL ITEMS IN MISTY_PREFERENCES TABLE BY ID(preference_name, robot_name, ip_address, port_number)
 router.get('/users/:user_id/misty_preferences/:id', (req, res, next) => {
   const {
     user_id,
@@ -91,33 +105,8 @@ router.get('/users/:user_id/misty_preferences/:id', (req, res, next) => {
       next(err)
     })
 })
-router.get('/users/:id/misty_preferences', (req, res, next) => {
-  const id = parseInt(req.params.id)
-  if (Number.isNaN(id)) {
-    return next({
-      status: 404,
-      message: `Not Found`
-    })
-  }
-  return knex('misty_preferences')
-    .where("misty_user_preference_id", id)
-    .orderBy('id', 'asc')
-    .then(data => {
-      console.log(data)
-      if (!data) {
-        return next({
-          status: 404,
-          message: `Not Found`
-        })
-      }
-      res.status(200).json(data)
-    })
-    .catch(err => {
-      next(err)
-    })
-})
-// POST Route Posting a new id with info  ...x-www.form-urlencoded
 
+// POST Route Posting a new id with info  ...x-www.form-urlencoded
 router.post('/users', (req, res, next) => {
   const {
     first_name,
