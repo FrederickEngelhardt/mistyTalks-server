@@ -1,0 +1,103 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: tahoma, sans-serif;
+	box-sizing: border-box;
+}
+
+.chatcont {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	padding: 25px;
+	margin: 20px auto;
+	box-shadow: 0 3px #ccc;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+.chatMsgs {
+	padding: 10px;
+	width: 100%;
+	height: 450px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.chatMsgs::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chatMsgs::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.chatOut {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	margin-bottom: 10px;
+}
+
+
+.chatOut .chatName {
+	width: 60px;
+	height: 60px;
+	background: #ccc;
+	border-radius: 10% / 50%;
+  align-self: center;
+  justify-content: space-around;
+}
+
+.chatOut .chatSubj {
+	width: 80%;
+	padding: 15px;
+	margin: 5px 10px 0;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 20px;
+}
+
+/* chat subject colored block */
+.chatOut .chatSubj {
+	background: #6700ED;
+	/* order: -1; */
+  /* may not need -1 */
+}
+
+.inputSubForm {
+	margin-top: 20px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.inputSubForm textarea {
+
+  background-color: #6700ED
+	width: 75%;
+	height: 50px;
+	border: 2px solid #eee;
+	border-radius: 3px;
+	resize: none;
+	padding: 10px;
+	font-size: 18px;
+	color: #333;
+}
+
+#message{
+  border: 2px solid grey;
+}
+
+
+#sendMessBtn {
+	background: #6700ED;
+	padding: 5px 10px;
+	font-size: 30px;
+	color: #fff;
+	border: none;
+	margin: 0 10px;
+	border-radius: 3px;
+	box-shadow: 0 3px 0 #0eb2c1;
+	cursor: pointer;
+}

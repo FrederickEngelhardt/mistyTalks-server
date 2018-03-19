@@ -13,15 +13,24 @@ let feedback = document.getElementById('feedback');
 const newOutbound = (first_name, last_name, phone_number, message) => {
   console.log(`first_name: ${first_name}, last_name: ${last_name}, phone_number: ${phone_number}, message is : ${message}`)
   // use first and last name entered if available
+console.log(first_name.length, last_name.length);
+
   if(first_name.length > 0 || last_name.length > 0){
     first_name = first_name.charAt(0).toUpperCase() + first_name.slice(1)
     last_name = last_name.charAt(0).toUpperCase() + last_name.slice(1)
+   console.log("in here");
 
-        let outMessage = `<p><strong> ${first_name} ${last_name}: </strong> ${message}</p>`
+   if(message.length > 0){
 
-    $("#chat-window").prepend(outMessage)
-    // output
-    $("#message").val('')
+     let outName = `<div class="chatName"><strong> ${first_name} ${last_name}</strong></div>`
+     let outMessage = `<p class="chatSubj">${message}</p>`
+
+     $(".chatName").prepend(outName)
+     $(".chatSubj").prepend(outMessage)
+     // $(".chatMsgs").prepend(outName, outMessage)
+     // output
+     $("#message").val('')
+  }
   }
 
 // use phone number as identifier name if no first or last is available
@@ -31,12 +40,13 @@ const newOutbound = (first_name, last_name, phone_number, message) => {
     console.log(phone_number, newArr)
     newArr.shift()
     phone_number = newArr.join('')
-    let outMessage = `<p><strong> ${phone_number}: </strong> ${message}</p>`
-
-$("#chat-window").prepend(outMessage)
-
+    if(message.length > 0){
+    let outName = `<div class="chatName"><strong> ${phone_number}</strong></div>`
+    let outMessage = `<p class="chatSubj">${message}</p>`
+$(".chatOut").append(outName, outMessage)
 // output
 $("#message").val('')
+}
 }
 
 // return "wow"
@@ -49,16 +59,19 @@ return "dang"
 
 
 const direct_talks_listeners = () => {
-$("#sendBtn").click(() => {
+$("#sendMessBtn").click((event) => {
   message = $("#message").val()
   newOutbound(first_name, last_name, phone_number, message);
+  console.log(message, "in DTL")
+  event.preventDefault()
+  console.log(message, "in DTL #2")
   // works
 })
 
 // works
-$("#clearBtn").click(() => {
-  $("#message").val('')
-})
+// $("#clearBtn").click(() => {
+//   $("#message").val('')
+// })
 }
 
 $(document).ready(() => {
