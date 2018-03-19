@@ -822,55 +822,13 @@ const create_listeners = () => {
   // end of addNumber
 }
 
-
-const retrievePreferencesSubmitFormData = (event) => {
-  event.preventDefault()
-
-  /*Iterate through form information. The store inside a JSON object*/
-  let data = new Object()
-  let form_ids = ["email", "first_name", "last_name", "port_number"]
-  for (let key in form_ids) {
-    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
-  }
-  // console.log("data", data);
-  data.auth_number_string = ''
-  // console.log(data);
-  for (let i = 1; i <= added_number_count; i++) {
-    let cc = $(`#phone_country_code${i}`).val()
-    console.log(cc);
-    let phone_number = $(`#phone_number${i}`).val()
-    console.log(phone_number);
-    data['auth_number_string'] += cc + phone_number
-  }
-  // Missing phone numeber iteration
-}
-
-
 $(document).ready(() => {
-
-$('form').submit(function(e){
-  e.preventDefault()
-  retrieveAccountSubmitFormData()
-})
-  populate_account_preferences()
   create_listeners();
 
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions
   */
-  $('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function() {} //Function for after opening timepicker
-  });
-  $('select').material_select();
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background

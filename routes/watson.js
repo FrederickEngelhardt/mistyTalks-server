@@ -173,10 +173,13 @@ router.post('/watson/receive', async function(req, res, next) {
 console.log(req.body.voice);
   let voice = 'US_AllisonVoice',
     text = ''
-  if (req.body.text) text = req.body.text
-  else if (!req.body.text) res.status(400).send("No text was sent. Bad request")
 
+  const {twilio, twilio_number} = req.body
+  if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
+  if (req.body.text) text = req.body.text
   if (req.body.voice) voice = req.body.voice
+  else if (!req.body.text) next({ status: 400, message: `No text sent.` })
+
   const write_file = await writeFile(req.body.text, voice)
   const read_file = await read()
   const write_audio_misty = await writeAudioMisty(read_file)
