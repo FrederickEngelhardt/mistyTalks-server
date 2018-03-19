@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 
 router.get('/users/token', (req, res, next) => {
-  console.log(req.headers);
 // removes the token= from the string
   if (!req.headers.cookie.includes("token")) {
     return next({status: 403, message: "You do not have access to this page."})
@@ -40,7 +39,6 @@ router.post('/users/token', (req, res, next) => {
       }
       user = data
       return bcrypt.compare(password, user.password)
-      console.log('made it');
     })
     .then(() => {
       const claim = {
@@ -63,7 +61,6 @@ router.post('/users/token', (req, res, next) => {
 })
 
 router.delete('/users/token', (req, res, next) => {
-  console.log('route called');
   res.clearCookie('token')
   res.end()
 })

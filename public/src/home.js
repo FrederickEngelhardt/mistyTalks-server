@@ -11,10 +11,11 @@ socket.on('message', function(data) {
 class State {
   constructor(current_page, user) {
     this.current_page = current_page
-    this.user = {}
+    this.user = {setup_done: true}
   }
 }
-let homeState = new State('home', {})
+let homeState = new State('home')
+console.log(homeState);
 let added_number_count = 1
 const add_number = (count) => {
 
@@ -181,6 +182,9 @@ const goHome_listener = () => {
       remove_all_divs()
       $(".display_home").removeClass("hide_this")
       homeState.current_page = "home"
+    }
+    else {
+      Materialize.toast("You are home.", 1000)
     }
   })
 }
@@ -445,6 +449,7 @@ const mistyPreferences_listener = () => {
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
     editMistyPreferences_listener()
+    console.log('called. JUST B4');
     populate_misty_preferences(homeState.user.id)
 }
 const populate_misty_preferences = (user_id) => {
@@ -460,7 +465,12 @@ const populate_misty_preferences = (user_id) => {
 
   $.ajax(settings).done(function(response_array) {
     let response=response_array[0]
-    homeState.user.preference_id = response.misty_user_preference_id
+    console.log("THIS IS RESPONSE",response);
+    if (response === [] || !response || response === undefined){
+      return homeState.user.setup_done = false
+    }
+    homeState.user.preference_id = response.id
+    homeState.user.robot_name = response.robot_name
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
@@ -521,7 +531,11 @@ const populate_misty_preferences = (user_id) => {
       }
       // $(`${target[i].location}`).val(response[target[i].user_info])
     }
-  });
+  })
+  .fail((error_response) => {
+    Materialize.toast("Misty Preferences require setup. Click edit to enter new preference.", 3000)
+    homeState.user.setup_done = false
+  })
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
@@ -531,7 +545,7 @@ const editMistyPreferences_listener = () => {
         <div class="card_container">
           <div class="profile_card white">
 
-            <form id="edit_card_body" onsubmit="return retrievePreferencesSubmitFormData(event);">
+            <form id="edit_card_body">
               <h4 class="title_box">Misty Preferences</h4>
               <!--First Name-->
               <h5>Preference Name:</h5>
@@ -703,14 +717,19 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
-    if (data[i] === '') delete data[i]
+    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] ==="Select Misty Preset Face") {
+      delete data[i]
+    }
+  }
+  if (data.auth_numbers_string.length < 11){
+    delete data.auth_numbers_string
   }
   if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
   }
-  if (misty_face_name) {
+  if (misty_face_choice) {
     for (let i in eyes) {
-      if (eyes[i].name === misty_face_name){
+      if (eyes[i].name === misty_face_choice){
         data["set_emotion_valence"] = eyes[i].settings.Valence,
         data["set_emotion_arousal"] = eyes[i].settings.Arousal,
         data["set_emotion_dominance"] = eyes[i].settings.Dominance
@@ -727,11 +746,20 @@ const retrieveMistyPreferencesSubmitFormData = () => {
   sendMistyPreferencesSubmitForm(data, homeState.user.id)
 }
 const sendMistyPreferencesSubmitForm = (data, user_id) => {
+  let method = {
+    type: "PATCH",
+    url: `/users/${user_id}/misty_preferences/${homeState.user.preference_id}`
+  }
+  if (homeState.user.setup_done === false) {
+    method = {
+      type: "POST",
+      url: `/users/${user_id}/misty_preferences`}
+  }
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": `http://localhost:3000/users/${user_id}`,
-    "method": "PATCH",
+    "url": method.url,
+    "method": `${method.type}`,
     "headers": {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache"
@@ -740,8 +768,8 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
     "data": JSON.stringify(data)
   }
   $.ajax(settings).done(function(response) {
-    myAccount_listener()
     Materialize.toast(response, 3000)
+    return mistyPreferences_listener()
 
   }).fail((fail_message) => {
     Materialize.toast(fail_message.responseText, 3000)
@@ -819,55 +847,13 @@ const create_listeners = () => {
   // end of addNumber
 }
 
-
-const retrievePreferencesSubmitFormData = (event) => {
-  event.preventDefault()
-
-  /*Iterate through form information. The store inside a JSON object*/
-  let data = new Object()
-  let form_ids = ["email", "first_name", "last_name", "port_number"]
-  for (let key in form_ids) {
-    data[form_ids[key]] = $(`#${form_ids[key]}`).val()
-  }
-  // console.log("data", data);
-  data.auth_number_string = ''
-  // console.log(data);
-  for (let i = 1; i <= added_number_count; i++) {
-    let cc = $(`#phone_country_code${i}`).val()
-    console.log(cc);
-    let phone_number = $(`#phone_number${i}`).val()
-    console.log(phone_number);
-    data['auth_number_string'] += cc + phone_number
-  }
-  // Missing phone numeber iteration
-}
-
-
 $(document).ready(() => {
-
-$('form').submit(function(e){
-  e.preventDefault()
-  retrieveAccountSubmitFormData()
-})
-  populate_account_preferences()
   create_listeners();
 
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions
   */
-  $('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function() {} //Function for after opening timepicker
-  });
-  $('select').material_select();
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
