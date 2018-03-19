@@ -360,6 +360,12 @@ router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, n
     id,
     user_id
   } = req.params
+  if (Number.isNaN(id) || Number.isNaN(user_id)) {
+    return next({
+      status: 400,
+      message: `Bad request. User ID or Preference ID is invalid.`
+    })
+  }
   const {
     misty_user_preference_id,
     preference_name,
