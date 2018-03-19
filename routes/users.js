@@ -167,7 +167,6 @@ router.post('/users', (req, res, next) => {
 })
 
 router.post('/users/:id/misty_preferences', (req, res, next) => {
-  console.log(req.params, req.body);
   const {
     id
   } = req.params
