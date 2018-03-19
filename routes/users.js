@@ -60,7 +60,6 @@ router.get('/users/:id/misty_preferences', (req, res, next) => {
     .where("misty_user_preference_id", id)
     .orderBy('id', 'asc')
     .then(data => {
-      console.log(data)
       if (!data) {
         return next({
           status: 404,
@@ -92,7 +91,6 @@ router.get('/users/:user_id/misty_preferences/:id', (req, res, next) => {
     })
     .first()
     .then(data => {
-      console.log(data)
       if (!data) {
         return next({
           status: 404,
@@ -159,12 +157,10 @@ router.post('/users', (req, res, next) => {
         .insert(dataFields, '*')
         .into('users')
         .then((user) => {
-          console.log("this is the user:", user);
           const claim = {
             user_id: `${user[0].id}`,
             email: `${user[0].email}`
           }
-          console.log(claim);
           const token = jwt.sign(claim, process.env.JWT_KEY, {
             expiresIn: '1 day'
           })
@@ -217,7 +213,6 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     time_restriction_start,
     time_restriction_end
   }
-  console.log(dataFields);
   return knex
     .insert(dataFields, '*')
     .into('misty_preferences')
@@ -237,12 +232,12 @@ const bcrypt_hash_password = (myPlaintextPassword) => {
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if (err) {
         console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
-        return
+        return {"status": "Internal Server Error with bcrypt"}
       };
       bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
         if (err) {
           console.log("SERVER ERROR: Bcrypt password hash failed", `Input was: ${myPlaintextPassword}.`)
-          return
+          return {"status": "Internal Server Error with bcrypt"}
         };
         // Send hash: requires await async
         return resolve(hash)
@@ -266,7 +261,6 @@ router.patch('/users/:id', async function(req, res, next) {
       message: `Invalid ID`
     })
   }
-  console.log(req.body);
   if (previous_password && password) {
     const re = /^[A-Za-z\d$@$!%*#?&]{8,}$/
     if (!re.test(password)) {
@@ -346,7 +340,6 @@ router.patch('/users/:id', async function(req, res, next) {
           })
       })
       .then(data => {
-        console.log(data);
         return res.status(201).send("User has been updated.")
       })
       .catch(err => {
@@ -400,7 +393,6 @@ router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, n
       message: `Invalid ID`
     })
   }
-  console.log(req.body);
   // Load hash from your password DB.
   return knex('misty_preferences')
     .where({
@@ -424,7 +416,6 @@ router.patch('/users/:user_id/misty_preferences/:id', async function(req, res, n
         })
     })
     .then(data => {
-      console.log(data);
       return res.status(201).send("User has been updated.")
     })
     .catch(err => {

@@ -21,10 +21,10 @@ let io = socket.listen(server);
 
 // handle incoming connections from clients
 io.sockets.on('connection', function(socket) {
-  console.log("New connection", socket.id);
+  // console.log("New connection", socket.id);
     // once a client has connected, we expect to get a ping from them saying what room they want to join
     socket.on('mistyChannel', function(mistyChannel) {
-        console.log(`User has joined ${mistyChannel}`);
+        // console.log(`User has joined ${mistyChannel}`);
         socket.join(mistyChannel);
     });
 });

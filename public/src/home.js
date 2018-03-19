@@ -11,10 +11,11 @@ socket.on('message', function(data) {
 class State {
   constructor(current_page, user) {
     this.current_page = current_page
-    this.user = {}
+    this.user = {setup_done: true}
   }
 }
-let homeState = new State('home', {})
+let homeState = new State('home')
+console.log(homeState);
 let added_number_count = 1
 const add_number = (count) => {
 
@@ -524,7 +525,11 @@ const populate_misty_preferences = (user_id) => {
       }
       // $(`${target[i].location}`).val(response[target[i].user_info])
     }
-  });
+  })
+  .fail((error_response) => {
+    Materialize.toast("Misty Preferences require setup. Click edit to enter new preference.", 3000)
+    homeState.user.setup_done = false
+  })
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
@@ -534,7 +539,7 @@ const editMistyPreferences_listener = () => {
         <div class="card_container">
           <div class="profile_card white">
 
-            <form id="edit_card_body" onsubmit="return retrievePreferencesSubmitFormData(event);">
+            <form id="edit_card_body">
               <h4 class="title_box">Misty Preferences</h4>
               <!--First Name-->
               <h5>Preference Name:</h5>
@@ -711,9 +716,9 @@ const retrieveMistyPreferencesSubmitFormData = () => {
   if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
   }
-  if (misty_face_name) {
+  if (misty_face_choice) {
     for (let i in eyes) {
-      if (eyes[i].name === misty_face_name){
+      if (eyes[i].name === misty_face_choice){
         data["set_emotion_valence"] = eyes[i].settings.Valence,
         data["set_emotion_arousal"] = eyes[i].settings.Arousal,
         data["set_emotion_dominance"] = eyes[i].settings.Dominance
@@ -730,11 +735,20 @@ const retrieveMistyPreferencesSubmitFormData = () => {
   sendMistyPreferencesSubmitForm(data, homeState.user.id)
 }
 const sendMistyPreferencesSubmitForm = (data, user_id) => {
+  let method = {
+    type: "PATCH",
+    url: `/users/${user_id}/misty_preferences/${homeState.user.preference_id}`
+  }
+  if (homeState.user.setup_done === false) {
+    method = {
+      type: "POST",
+      url: `/users/${user_id}/misty_preferences`}
+  }
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": `http://localhost:3000/users/${user_id}`,
-    "method": "PATCH",
+    "url": method.url,
+    "method": `${method.type}`,
     "headers": {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache"
