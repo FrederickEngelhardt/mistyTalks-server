@@ -182,6 +182,9 @@ const goHome_listener = () => {
       $(".display_home").removeClass("hide_this")
       homeState.current_page = "home"
     }
+    else {
+      Materialize.toast("You are home.")
+    }
   })
 }
 
