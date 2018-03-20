@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:3000/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>MistyTalks</title>
+  <script src="./MistyTalks_files/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./MistyTalks_files/materialize.css">
+  <script src="./MistyTalks_files/socket.io.js"></script>
+  <script src="./MistyTalks_files/materialize.min.js"></script>
+  <!--Import Google Icon Font-->
+  <link href="./MistyTalks_files/icon" rel="stylesheet">
+  <link href="./MistyTalks_files/css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="./MistyTalks_files/materialize.min.css" media="screen,projection">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="./MistyTalks_files/materialize.min.css" media="screen,projection">
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./MistyTalks_files/signup.js" charset="utf-8"></script>
+  <script src="./MistyTalks_files/index.js"></script>
+  <link rel="stylesheet" href="./MistyTalks_files/styles.css">
+  <!-- FAVICON -->
+  <link rel="apple-touch-icon" sizes="57x57" href="http://localhost:3000/images/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="http://localhost:3000/images/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="http://localhost:3000/images/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:3000/images/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="http://localhost:3000/images/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="http://localhost:3000/images/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="http://localhost:3000/images/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="http://localhost:3000/images/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:3000/images/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="http://localhost:3000/images/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:3000/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="http://localhost:3000/images/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:3000/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="http://localhost:3000/images/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- END FAVICON  -->
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a class="button-collapse show-on-large"><img src="./MistyTalks_files/mistyTalks_logo.png" class="icon_size"></a>
+        <a class="go_to_home appName waves-effect waves-orange">Misty Talks</a>
+      </div>
+    </nav>
+  </div>
+  <main class="center">
+    <div class="row">
+    </div>
+    <div class="container login_buttons_controller">
+      <div class="row">
+        <a href="http://localhost:3000/#login-modal" id="open_login" class="waves-effect waves-light btn modal-trigger">
+          <h5 class="login-button">Login</h5>
+        </a>
+      </div>
+      <div class="row">
+        <a href="http://localhost:3000/#signup-modal" id="open_signup" class="waves-effect waves-light btn modal-trigger">
+          <h5 class="login-button">Sign Up</h5>
+        </a>
+      </div>
+    </div>
+
+  </main>
+  <div id="login-modal" class="modal" style="z-index: 1003;">
+   <div class="modal-content">
+     <!-- profile information is inserted in here -->
+     <div id="profile_card" class="row center">
+       <div class="col s12 m12 l12">
+         <div class="row">
+         </div>
+         <div id="login-menu">
+           <div><h1 class="modal-font left">Login</h1></div><div id="show_avatar_image"></div><table>
+             <thead>
+               
+               
+           </thead>
+             <tbody class="profBody">
+               <tr>
+                 <td class="modal-font">Email</td>
+                 <td id="email"><input class="email-login-input-text" type="text" name="" value=""></td>
+               </tr>
+               <tr>
+                 <td class="modal-font">Password</td>
+                 <td id="password"><input class="password-login-input-text" type="text" name="" value=""></td>
+               </tr>
+             </tbody>
+           </table>
+           <div class="row center">
+             <a href="http://localhost:3000/home.html" id="login-btn" class="btn waves-effect waves-light" type="submit" name="action">Login</a>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div id="signup-modal" class="modal" style="z-index: 1005;">
+  <div class="modal-content">
+    <!-- profile information is inserted in here -->
+    <div id="profile_card" class="row center">
+      <div class="col s12 m12 l12">
+        <div class="row">
+        </div>
+        <div id="signup-menu">
+          <div><h3 class="modal-font left">Create Account</h3></div><div id="show_avatar_image"></div><table>
+            <thead>
+              
+              
+          </thead>
+            <tbody class="profBody">
+              <tr>
+                <td class="modal-font">Email</td>
+                <td id="email"><input class="email-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font">Password</td>
+                <td id="password"><input class="password-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font">Re-enter password</td>
+                <td id="password_confirm"><input class="password_confirm-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row center">
+            <button id="signup-btn" class="btn waves-effect waves-light" type="submit" name="action">Create Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="hiddendiv common"></div><iframe class="searchbar7171034043157787" src="./MistyTalks_files/saved_resource.html" scrolling="no" style="border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; display: none; position: fixed; z-index: 2147483646; top: 0px; bottom: auto; left: 0px; right: auto; height: 36px; width: 100%;"></iframe><bdi class="searchbar7171034043157787" style="border: 1px solid rgb(176, 176, 176); margin: 0px; padding: 2px; outline: 0px; vertical-align: baseline; display: none; position: fixed; height: auto; width: auto; z-index: 2147483647; background: none rgb(255, 255, 255); max-height: none; max-width: none; min-height: 0px;"><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 0); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi><bdi style="display: block; border: 0px; margin: 0px; padding: 0px; outline: 0px; vertical-align: baseline; position: static; height: auto; width: auto; z-index: 2147483647; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: sans-serif; text-align: left; color: rgb(0, 0, 255); background: none rgb(255, 255, 255); cursor: default; max-height: none; max-width: none; min-height: 0px; min-width: 0px; letter-spacing: normal; text-decoration: none; text-indent: 0px; text-transform: none; word-spacing: normal; word-wrap: normal; white-space: pre;"></bdi></bdi><iframe class="searchbar7171034043157787" src="./MistyTalks_files/saved_resource(1).html" scrolling="no" style="border: 0px; margin: -186px 0px 0px -202px; padding: 0px; outline: 0px; vertical-align: baseline; display: none; position: fixed; top: 50%; left: 50%; z-index: 2147483645; border-radius: 5px;"></iframe></body><style>@media print{.searchbar7171034043157787{display:none!important;}}</style></html>
