@@ -82,7 +82,7 @@ function writeAudioMisty(byteStreamArray, filename) {
   // error handling
   if (!filename) filename = 'textResponse.wav'
   if (!byteStreamArray) console.log('ByteStreamArray not sent')
-
+  console.log(byteStreamArray, filename);
   return new Promise((resolve, reject) => {
     const unirest = require("unirest");
 
@@ -182,8 +182,11 @@ router.post('/watson/receive', async function(req, res, next) {
   console.log("THIS IS VOICE",voice);
 
   const write_file = await writeFile(req.body.text, voice)
+  console.log('passed writeFile');
   const read_file = await read()
+  console.log('passed_readfile');
   const write_audio_misty = await writeAudioMisty(read_file)
+  console.log('passed write_audio_misty');
   const play_audio = await playAudio()
   return res.status(200).json({
     status: "success",
