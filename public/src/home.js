@@ -2,13 +2,13 @@
   NOTE: State class will store all State values used in dynamic html/dom manipulations. State also stores user preferences and any database related calls. State is not saved in local storage.
 */
 class State {
-  constructor(current_page, user, misty_preferences) {
+  constructor(current_page, user, misty_user_preferences) {
     this.current_page = current_page,
       this.user = {
         setup_done: true,
         disco_misty: false
       },
-      this.misty_preferences = {}
+      this.misty_user_preferences = {}
   }
 }
 let homeState = new State('home')
@@ -476,7 +476,7 @@ const populate_misty_preferences = user_id => {
       }
       console.log();
       homeState.user.preference_id = response.id
-      homeState.misty_preferences.robot_name = response.robot_name
+      homeState.misty_user_preferences.robot_name = response.robot_name
       const target = [{
           location: "misty_preference_name",
           user_info: "preference_name"
@@ -756,7 +756,7 @@ const retrieveMistyPreferencesSubmitFormData = () => {
 const sendMistyPreferencesSubmitForm = (data, user_id) => {
   let method = {
     type: "PATCH",
-    url: `/users/${user_id}/misty_preferences/${homeState.user.preference_id}`
+    url: `/users/${user_id}/misty_preferences/${homeState.misty_user_preferences.misty_user_preference_id}`
   }
   if (homeState.user.setup_done === false) {
     method = {
@@ -820,7 +820,7 @@ const message_listener = () => {
 
   $('#sendMessBtn').click(() => {
     let email = homeState.user.email;
-    let robot_name = homeState.misty_preferences.robot_name
+    let robot_name = homeState.misty_user_preferences.robot_name
     console.log('clicked')
     message = $('#message').val()
     sendTextToWatson(message)
@@ -987,8 +987,8 @@ const open_user_information_socket = () => {
     socket.emit('/users/:id/misty_preferences', homeState.user.id)
     socket.emit('/users/:id', homeState.user.id)
     socket.on('/users/:id/misty_user_preferences/response', (response) => {
-      console.log(response);
       homeState.misty_user_preferences = response[0]
+      console.log(response[0]);
     })
     socket.on('/users/:id/response', (response) => {
       homeState.user = response
