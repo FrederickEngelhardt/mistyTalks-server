@@ -245,10 +245,10 @@ input.login-input-text {
   height: 60px;
   margin: auto;
 }
-/* .login_buttons_controller {
+.login_buttons_controller {
   position: relative;
-  top: 50%;
-} */
+  top: 200px;
+}
 
 #open_signup{
   background-color: #6700ED;
