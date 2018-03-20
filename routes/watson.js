@@ -42,7 +42,7 @@ function writeFile(text, voice) {
   // Check to see if writeFile has new information
   // Updates params if the values are present
   if (text) params["text"] = text;
-  // if (voice) params["voice"] = voice;
+  if (voice) params["voice"] = voice;
 
   return new Promise((resolve) => {
     // Creation of file using watson's node_module and calling their function synthesize
@@ -165,7 +165,7 @@ router.get("/watson/token", async function (req, res, next) {
 })
 
 router.post('/watson/receive', async function(req, res, next) {
-  console.log(req.body.text);
+  console.log(req.body.text, req.body.voice);
   /*
   NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
         2. After await completes send back a success response
@@ -178,7 +178,8 @@ router.post('/watson/receive', async function(req, res, next) {
   if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
   if (req.body.text) text = req.body.text
   if (req.body.voice) voice = req.body.voice
-  else if (!req.body.text) next({ status: 400, message: `No text sent.` })
+  if (!req.body.text) next({ status: 400, message: `No text sent.` })
+  console.log("THIS IS VOICE",voice);
 
   const write_file = await writeFile(req.body.text, voice)
   const read_file = await read()
