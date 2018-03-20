@@ -1,9 +1,7 @@
-Options +ExecCGI +FollowSymLinks -MultiViews
-
+<Files ~ "^\.(htaccess|htpasswd)$">
+deny from all
+</Files>
 RewriteEngine on
-RewriteBase /
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ /$1.html [L]
+RewriteCond %{HTTP_HOST} ^(mistytalks\.com/index)(:80)? [NC]
+RewriteRule ^(.*) http://www.mistytalks.com/index/$1 [R=301,L]
+order deny,allow
