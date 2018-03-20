@@ -12,7 +12,7 @@ $('#login-btn').on('click', (event) => {
      data: JSON.stringify({ email, password }),
      dataType: 'json',
      type: 'POST',
-     url: 'users/token'
+     url: '/users/token'
    };
    $.ajax(options)
      .done(() => {

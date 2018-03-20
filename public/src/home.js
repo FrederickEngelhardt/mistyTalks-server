@@ -1,4 +1,4 @@
-let socket = io('http://localhost:3000')
+let socket = io('')
 let mistyChannel = 'email@email.com'
 socket.on('connect', function() {
   console.log('new connection', mistyChannel)
@@ -232,7 +232,7 @@ const populate_account_preferences = user_id => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}`,
+    url: `/users/${user_id}`,
     method: 'GET',
     headers: {
       'Cache-Control': 'no-cache'
@@ -376,7 +376,7 @@ const sendAccountSubmitForm = (data, user_id) => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}`,
+    url: `/users/${user_id}`,
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -466,7 +466,7 @@ const populate_misty_preferences = user_id => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}/misty_preferences`,
+    url: `/users/${user_id}/misty_preferences`,
     method: 'GET',
     headers: {
       'Cache-Control': 'no-cache'

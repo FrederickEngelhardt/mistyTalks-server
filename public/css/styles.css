@@ -27,9 +27,15 @@ body {
   background-size: cover;
   background-repeat:;
 }
+
+.center{
+
+}
+
 .title {
   padding: 50px;
 }
+
 #slogan {
   position: relative;
   top: -20px;
@@ -85,11 +91,52 @@ main {
 
 }
 
+.appName {
+  font-weight: bold;
+
+}
+
+.login-modal{
+
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #F5F5F5;
+}
+
+.modal-overlay{
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content/Box */
+  .modal-content {
+
+      background-color: #F5F5F5;
+      margin: 1% auto;
+      padding-top: 1px;
+      padding-right: 1px;
+      padding-bottom: 1px;
+      padding-left: 1px;
+      width: 80%; /* Could be more or less, depending on screen size */
+
+}
+
+
+} */
 
 h1.navigation {
   position: relative;
   top: -8px;
-  /*padding-top: 40px;*/
   font-size: 80px;
 }
 .container {
@@ -104,7 +151,6 @@ main.container {
   right: 20px;
   height: 100px;
   margin-top: -70px;
-  /*background: black;*/
   color: white;
   padding: 20px;
 }
@@ -155,15 +201,21 @@ nav {
 
 /*****index/login page*****/
 .modal {
-  background: #f0e0ff; /*slightly darker white purple*/
+
+  background: #F5F5F5; /*slightly darker white purple*/ */
   max-height: 85% !important;
 }
 .modal.modal-fixed-footer {
   height: 85% !important;
 }
+
 .modal-font {
   color: #6700ED;
+  font-weight: bold;
+  padding: 10px;
 }
+
+
 @media only screen and (min-width: 500px) {
   td.modal-font {
     font-size: 25px;
@@ -186,12 +238,27 @@ input.login-input-text {
 
 }
 #login-btn {
+  padding-top: 12px;
+  font-size: 20px;
+  background-color: #6700ED;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  width: 180px;
+  height: 60px;
+  border-top: 15px;
+}
+
+#signup-btn {
   line-height: 25px;
   margin-top: 25px;
   font-size: 20px;
   background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  width: 180px;
+  height: 60px;
+  margin: auto;
 }
+
+
 #open_signup{
   background-color: #6700ED;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
@@ -252,22 +319,7 @@ input::placeholder {
 p.small-text {
   font-size: 16px;
 }
-#loginScreenButton {
-  line-height: 28px;
-  height: 60px;
-  font-size: 20px;
-  font-weight: 300;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-#browse_instructors {
-  line-height: 28px;
-  height: 60px;
-  font-size: 20px;
-  font-weight: 300;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
+
 #create_lesson {
   line-height: 28px;
   height: 60px;
@@ -276,14 +328,7 @@ p.small-text {
   background-color: #FAAD00;
   box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-#browse_lessons {
-  padding: 11px;
-  height: 60px;
-  font-size: 20px;
-  font-weight: 300;
-  background-color: #FAAD00;
-  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
+
 #account_preferences {
   line-height: 28px;
   height: 60px;
@@ -347,7 +392,7 @@ p.small-text {
 
 /*****About Page*****/
 #aboutModal{
-  background-color: #6700ED;
+  /* background-color: #6700ED; */
   color: white
 }
 
