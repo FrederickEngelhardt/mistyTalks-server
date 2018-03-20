@@ -42,7 +42,7 @@ function writeFile(text, voice) {
   // Check to see if writeFile has new information
   // Updates params if the values are present
   if (text) params["text"] = text;
-  if (voice) params["voice"] = voice;
+  // if (voice) params["voice"] = voice;
 
   return new Promise((resolve) => {
     // Creation of file using watson's node_module and calling their function synthesize
@@ -165,6 +165,7 @@ router.get("/watson/token", async function (req, res, next) {
 })
 
 router.post('/watson/receive', async function(req, res, next) {
+  console.log(req.body.text);
   /*
   NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
         2. After await completes send back a success response
