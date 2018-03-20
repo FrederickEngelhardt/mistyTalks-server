@@ -6,11 +6,12 @@
 }
 
 .chatcont {
+	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: auto;
 	background: #fff;
-	padding: 25px;
-	margin: 20px auto;
+	/* padding: 25px; */
+	/* margin: 20px auto; */
 	box-shadow: 0 3px #ccc;
   font-style: normal;
   font-family: sans-serif;

@@ -277,7 +277,8 @@ label {
   font-size: 20px;
 }
 .card_container {
-  padding: 5%;
+  padding-top: 10px;
+  /* padding: ; */
 }
 .profile_card {
   margin: auto;
