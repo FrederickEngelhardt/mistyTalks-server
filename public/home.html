@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Send stuff to robot</title>
+  <title>MistyTalks: Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -73,6 +73,13 @@
 
       <div class="row home-menu center">
         <div class="center col s12 m12 l12">
+          <a id="button_about" class="home-button waves-effect waves-light btn modal-trigger" type="submit" href="#aboutModal" name="action">
+          <text class="button-text">About</text></a>
+
+        </div>
+      </div>
+      <div class="row home-menu center">
+        <div class="center col s12 m12 l12">
           <a class="go_to_my_account home-button btn waves-effect waves-light modal-trigger" type="submit" name="action">
           <text class="button-text">My Account</text></a>
         </div>
@@ -87,13 +94,6 @@
         <div class="center col s12 m12 l12">
           <a class="go_to_direct_talk home-button btn waves-effect waves" type="submit" name="action">
           <text class="button-text">Direct Talk</text></a>
-        </div>
-      </div>
-      <div class="row home-menu center">
-        <div class="center col s12 m12 l12">
-          <a id="button_about" class="home-button waves-effect waves-light btn modal-trigger" type="submit" href="#aboutModal" name="action">
-          <text class="button-text">About</text></a>
-
         </div>
       </div>
     </div>

@@ -821,13 +821,13 @@ const directTalk_listener = () => {
 }
 
 const message_listener = () => {
-  let email = homeState.user.email;
-  let robot_name = homeState.misty_preferences.robot_name
 
-  console.log('in here')
   $('#sendMessBtn').click(() => {
+    let email = homeState.user.email;
+    let robot_name = homeState.misty_preferences.robot_name
     console.log('clicked')
     message = $('#message').val()
+    sendTextToWatson(message)
     console.log('about to call newOutbound')
       newOutbound(email, robot_name)
 
@@ -835,6 +835,62 @@ const message_listener = () => {
     console.log(message, 'in DTL #2')
 
   })
+}
+const sendTextToWatson = (text, voice) => {
+  if (!voice) voice = "en-GB_KateVoice"
+  console.log(text);
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "/watson/receive",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "processData": false,
+  "data": JSON.stringify({
+    "text": `${text}`,
+    "voice": `${voice}`,
+  })
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  });
+}
+const newOutbound = (email,robot_name) => {
+  if (!robot_name){
+    robot_name = "rex";
+  }
+  console.log("user email: ", homeState.user.email)
+  console.log("user robot name: ", robot_name);
+
+    if (robot_name.length > 0) {
+      robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+      console.log(robot_name, 1)
+      console.log('in here')
+
+      if (message.length > 0) {
+        console.log('in message length here')
+        let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+        //  $(".chatName").prepend(outName)
+        // $(".chatSubj").prepend(outMessage)
+        $('.chatOut').append(`${outName}`)
+        // output
+        $('#message').val('')
+      }
+    }
+    else if (email) {
+      // use phone number as identifier name if no first or last is available
+      let newArr = []
+      if (message.length > 0) {
+        let outName = `<div class="chatName"><strong> ${email}</strong></div>`
+        let outMessage = `<p class="chatSubj">${message}</p>`
+        $('.chatOut').append(outName, outMessage)
+        // output
+        $('#message').val('')
+      }
+    }
 }
 
 const verifyUserPermissionsToken = () => {
@@ -876,45 +932,43 @@ const misty_face_changer = () => {
   return setInterval(randomizeMisty_face, 500)
 }
 const randomizeMisty_face = () => {
-  let misty_face_valence = Math.random() * 2 -1,
-      misty_face_arousal = Math.random() * 2 -1,
-      misty_face_dominance = Math.random() * 2 -1
+  let misty_face_valence = Math.random() * 2 - 1,
+    misty_face_arousal = Math.random() * 2 - 1,
+    misty_face_dominance = Math.random() * 2 - 1
   const settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "http://192.168.1.129/Api/eyes/change",
-        "method": "POST",
-        "headers": {
-        },
-        "data": JSON.stringify({
-          "Valence": `${misty_face_valence}`,
-          "Arousal": `${misty_face_arousal}`,
-          "Dominance": `${misty_face_dominance}`,
-        })
-      }
-let r = Math.floor(Math.random() * 255),
+    "async": true,
+    "crossDomain": true,
+    "url": "http://192.168.1.129/Api/eyes/change",
+    "method": "POST",
+    "headers": {},
+    "data": JSON.stringify({
+      "Valence": `${misty_face_valence}`,
+      "Arousal": `${misty_face_arousal}`,
+      "Dominance": `${misty_face_dominance}`,
+    })
+  }
+  let r = Math.floor(Math.random() * 255),
     g = Math.floor(Math.random() * 255),
     b = Math.floor(Math.random() * 255)
 
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-      });
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+  });
   const color_settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://192.168.1.129/Api/led/change",
-  "method": "POST",
-  "headers": {
-  },
-  "data": JSON.stringify({
-    "red": `${r}`,
-    "green": `${g}`,
-    "blue": `${b}`
-  })
-}
-$.ajax(color_settings).done(function (response) {
-  console.log(response);
-});
+    "async": true,
+    "crossDomain": true,
+    "url": "http://192.168.1.129/Api/led/change",
+    "method": "POST",
+    "headers": {},
+    "data": JSON.stringify({
+      "red": `${r}`,
+      "green": `${g}`,
+      "blue": `${b}`
+    })
+  }
+  $.ajax(color_settings).done(function(response) {
+    console.log(response);
+  });
 }
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
@@ -955,64 +1009,6 @@ const create_listeners = () => {
   })
   // end of addNumber
 }
-const newOutbound = (email,robot_name) => {
-  if (!robot_name){
-    robot_name = "rex";
-  }
-  console.log("user email: ", homeState.user.email)
-  console.log("user robot name: ", robot_name);
-
-    if (robot_name.length > 0) {
-      robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
-      console.log(robot_name, 1)
-      console.log('in here')
-
-      if (message.length > 0) {
-        console.log('in message length here')
-        let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
-        //  $(".chatName").prepend(outName)
-        // $(".chatSubj").prepend(outMessage)
-        $('.chatOut').append(`${outName}`)
-        // output
-        $('#message').val('')
-      }
-    }
-    else if (email) {
-      // use phone number as identifier name if no first or last is available
-      let newArr = []
-      if (message.length > 0) {
-        let outName = `<div class="chatName"><strong> ${email}</strong></div>`
-        let outMessage = `<p class="chatSubj">${message}</p>`
-        $('.chatOut').append(outName, outMessage)
-        // output
-        $('#message').val('')
-      }
-    }
-  return 'dang'
-}
-
-// const populateHomeStateObject= () => {
-//   var settings = {
-//     async: true,
-//     crossDomain: true,
-//     url: `http://localhost:3000/users/${homeState.user.id}/misty_preferences`,
-//     method: 'GET',
-//     headers: {
-//       'Cache-Control': 'no-cache'
-//     }
-//   }
-//
-//   $.ajax(settings).done(function(response_array) {
-//     let response=response_array[0]
-//     if (response === [] || !response || response === undefined){
-//       return homeState.user.setup_done = false
-//     }
-//     for(let i in response){
-//
-//       console.log(homeState.misty_preferences[response[i]])
-//     }
-//   })
-// }
 
 $(document).ready(() => {
   create_listeners();
