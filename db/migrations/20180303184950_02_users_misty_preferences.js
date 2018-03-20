@@ -6,8 +6,6 @@ exports.up = function(knex, Promise) {
     table.foreign('user_id').references("users.id")
     table.integer('misty_preference_id').notNullable()
     table.foreign('misty_preference_id').references('misty_preferences.id')
-    // .onDelete('CASCADE');
-    // .onDelete('CASCADE');
   })
 };
 
