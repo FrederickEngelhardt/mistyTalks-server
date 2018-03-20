@@ -3,18 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <title>MistyTalks</title>
+  <title>Send stuff to robot</title>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
@@ -23,40 +18,28 @@
   <script src="./src/signup.js" charset="utf-8"></script>
   <script src="./src/index.js"></script>
   <link rel="stylesheet" href="./css/styles.css">
-  <!-- FAVICON -->
-  <link rel="apple-touch-icon" sizes="57x57" href="./images/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="./images/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="./images/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="./images/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="./images/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="./images/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="./images/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="./images/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="./images/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="./images/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
-  <link rel="manifest" href="./images/favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  <!-- END FAVICON  -->
 </head>
-
 <body>
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
-        <a class="button-collapse show-on-large"><img src="./images/mistyTalks_logo.png" class="icon_size"></a>
-        <a class="go_to_home appName waves-effect waves-orange">Misty Talks</a>
+        <a class="go_to_home appName waves-effect waves-orange">&nbsp Misty Talks</a></li>
       </div>
     </nav>
   </div>
   <main class="center">
     <div class="row">
+      <div class="text">
+        <h1 class="appName" style="font-size:40px;">Misty</h1>
+        <!-- <img src="./images/misty_symbol_black.png" alt=""> -->
+        <h1 class="appName" style="font-size:40px;">Talks</h1>
+      </div>
+      <div class="row">
+      </div>
     </div>
-    <div class="container login_buttons_controller">
+    <div class="row">
+    </div>
+    <div class="container">
       <div class="row">
         <a href="#login-modal" id="open_login" class="waves-effect waves-light btn modal-trigger">
           <h5 class="login-button">Login</h5>
@@ -71,75 +54,73 @@
 
   </main>
   <div id="login-modal" class="modal">
-    <div class="modal-content">
-      <!-- profile information is inserted in here -->
-      <div id="profile_card" class="row center">
-        <div class="col s12 m12 l12">
-          <div class="row">
-          </div>
-          <div id="login-menu">
-            <table>
-              <thead>
-                <div>
-                  <h1 class="modal-font left">Login</h1></div>
-                <div id="show_avatar_image"></div>
-              </thead>
-              <tbody class="profBody">
-                <tr>
-                  <td class="modal-font">Email</td>
-                  <td id="email"><input class="email-login-input-text" type="text" name="" value=""></td>
-                </tr>
-                <tr>
-                  <td class="modal-font">Password</td>
-                  <td id="password"><input class="password-login-input-text" type="text" name="" value=""></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="row center">
-              <a href="home.html" id="login-btn" class="btn waves-effect waves-light" type="submit" name="action">Login</a>
-            </div>
+   <div class="modal-content">
+     <!-- profile information is inserted in here -->
+     <div id="profile_card" class="row center">
+       <div class="col s12 m12 l12">
+         <div class="row">
+         </div>
+         <div id="login-menu">
+           <table>
+             <thead>
+               <div><h1 class="modal-font left">Login</h1></div>
+               <div id="show_avatar_image"></div>
+           </thead>
+             <tbody class="profBody">
+               <tr>
+                 <td class="modal-font">Email</td>
+                 <td id="email"><input class="email-login-input-text" type="text" name="" value=""></td>
+               </tr>
+               <tr>
+                 <td class="modal-font">Password</td>
+                 <td id="password"><input class="password-login-input-text" type="text" name="" value=""></td>
+               </tr>
+             </tbody>
+           </table>
+           <div class="row center">
+             <a href="home.html"id="login-btn" class="btn waves-effect waves-light" type="submit" name="action">Login</a>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div id="signup-modal" class="modal">
+  <div class="modal-content">
+    <!-- profile information is inserted in here -->
+    <div id="profile_card" class="row center">
+      <div class="col s12 m12 l12">
+        <div class="row">
+        </div>
+        <div id="signup-menu">
+          <table>
+            <thead>
+              <div><h3 class="modal-font left">Create Account</h3></div>
+              <div id="show_avatar_image"></div>
+          </thead>
+            <tbody class="profBody">
+              <tr>
+                <td class="modal-font">Email</td>
+                <td id="email"><input class="email-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font" >Password</td>
+                <td id="password"><input class="password-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+              <tr>
+                <td class="modal-font">Re-enter password</td>
+                <td id="password_confirm"><input class="password_confirm-signup-input-text" type="text" name="" value=""></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row center">
+            <button id="signup-btn" class="btn waves-effect waves-light" type="submit" name="action">Create Account</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="signup-modal" class="modal">
-    <div class="modal-content">
-      <!-- profile information is inserted in here -->
-      <div id="profile_card" class="row center">
-        <div class="col s12 m12 l12">
-          <div class="row">
-          </div>
-          <div id="signup-menu">
-            <table>
-              <thead>
-                <div>
-                  <h3 class="modal-font left">Create Account</h3></div>
-                <div id="show_avatar_image"></div>
-              </thead>
-              <tbody class="profBody">
-                <tr>
-                  <td class="modal-font">Email</td>
-                  <td id="email"><input class="email-signup-input-text" type="text" name="" value=""></td>
-                </tr>
-                <tr>
-                  <td class="modal-font">Password</td>
-                  <td id="password"><input class="password-signup-input-text" type="text" name="" value=""></td>
-                </tr>
-                <tr>
-                  <td class="modal-font">Re-enter password</td>
-                  <td id="password_confirm"><input class="password_confirm-signup-input-text" type="text" name="" value=""></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="row center">
-              <button id="signup-btn" class="btn waves-effect waves-light" type="submit" name="action">Create Account</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 </body>
 
 </html>

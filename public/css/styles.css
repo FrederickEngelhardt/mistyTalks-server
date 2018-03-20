@@ -108,7 +108,7 @@ main {
 
   /* Modal Content/Box */
   .modal-content {
-
+      color: black;
       background-color: #F5F5F5;
       margin: 1% auto;
       padding-top: 1px;
@@ -389,19 +389,25 @@ p.small-text {
   color: white
 }
 
+.about_text{
+  font-weight: 400;
+  color: black;
+}
+
+
 /*spaces between tabs */
 .collapsible{
-  background-color: #43484f
+  background-color: white;
 }
 
 /*header of tabs */
 .collapsible-header{
-  opacity: 0.75;
- background-color: 		#43484f
+  /* opacity: 0.75; */
+ background-color: 	#6700ED;
 }
 
 .collapsible-body{
-  background-color: #6700ED
+  background-color: white;
 }
 
 .modal-footer{
