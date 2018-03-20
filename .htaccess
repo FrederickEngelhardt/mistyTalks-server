@@ -1,7 +1,0 @@
-<Files ~ "^\.(htaccess|htpasswd)$">
-deny from all
-</Files>
-RewriteEngine on
-RewriteCond %{HTTP_HOST} ^(mistytalks\.com/index)(:80)? [NC]
-RewriteRule ^(.*) http://www.mistytalks.com/index/$1 [R=301,L]
-order deny,allow
