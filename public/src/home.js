@@ -479,6 +479,7 @@ const populate_misty_preferences = user_id => {
     if (response === [] || !response || response === undefined){
       return homeState.user.setup_done = false
     }
+    console.log();
     homeState.user.preference_id = response.id
     homeState.misty_preferences.robot_name = response.robot_name
     const target = [{
@@ -861,7 +862,7 @@ $.ajax(settings).done(function (response) {
 }
 const newOutbound = (email,robot_name) => {
   if (!robot_name){
-    robot_name = "rex";
+    robot_name = "Robot";
   }
   console.log("user email: ", homeState.user.email)
   console.log("user robot name: ", robot_name);
