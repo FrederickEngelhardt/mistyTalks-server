@@ -1,4 +1,4 @@
-let socket = io('http://localhost:3000')
+let socket = io('')
 let mistyChannel = 'email@email.com'
 socket.on('connect', function() {
   console.log('new connection', mistyChannel)
@@ -11,7 +11,7 @@ socket.on('message', function(data) {
 class State {
   constructor(current_page, user, misty_preferences) {
     this.current_page = current_page,
-    this.user = {setup_done: true},
+    this.user = {setup_done: true, disco_misty: false},
     this.misty_preferences = {}
   }
 }
@@ -232,7 +232,7 @@ const populate_account_preferences = user_id => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}`,
+    url: `/users/${user_id}`,
     method: 'GET',
     headers: {
       'Cache-Control': 'no-cache'
@@ -376,7 +376,7 @@ const sendAccountSubmitForm = (data, user_id) => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}`,
+    url: `/users/${user_id}`,
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -466,7 +466,7 @@ const populate_misty_preferences = user_id => {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3000/users/${user_id}/misty_preferences`,
+    url: `/users/${user_id}/misty_preferences`,
     method: 'GET',
     headers: {
       'Cache-Control': 'no-cache'
@@ -872,6 +872,50 @@ const logout_remove_token = () => {
             })
         })
       }
+const misty_face_changer = () => {
+  return setInterval(randomizeMisty_face, 500)
+}
+const randomizeMisty_face = () => {
+  let misty_face_valence = Math.random() * 2 -1,
+      misty_face_arousal = Math.random() * 2 -1,
+      misty_face_dominance = Math.random() * 2 -1
+  const settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://192.168.1.129/Api/eyes/change",
+        "method": "POST",
+        "headers": {
+        },
+        "data": JSON.stringify({
+          "Valence": `${misty_face_valence}`,
+          "Arousal": `${misty_face_arousal}`,
+          "Dominance": `${misty_face_dominance}`,
+        })
+      }
+let r = Math.floor(Math.random() * 255),
+    g = Math.floor(Math.random() * 255),
+    b = Math.floor(Math.random() * 255)
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+  const color_settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://192.168.1.129/Api/led/change",
+  "method": "POST",
+  "headers": {
+  },
+  "data": JSON.stringify({
+    "red": `${r}`,
+    "green": `${g}`,
+    "blue": `${b}`
+  })
+}
+$.ajax(color_settings).done(function (response) {
+  console.log(response);
+});
+}
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   // Token listeners
@@ -951,7 +995,7 @@ const newOutbound = (email,robot_name) => {
 //   var settings = {
 //     async: true,
 //     crossDomain: true,
-//     url: `http://localhost:3000/users/${homeState.user.id}/misty_preferences`,
+//     url: `/users/${homeState.user.id}/misty_preferences`,
 //     method: 'GET',
 //     headers: {
 //       'Cache-Control': 'no-cache'
@@ -972,8 +1016,8 @@ const newOutbound = (email,robot_name) => {
 
 $(document).ready(() => {
   create_listeners();
-
-  $('.collapsible').collapsible() // for "about page" collapsible containers
+  // misty_face_changer()
+  $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions
   */
