@@ -556,119 +556,119 @@ const editMistyPreferences_listener = () => {
   $('.edit_misty_preferences').on('click', () => {
     $('.display_home').addClass('hide_this')
     const html = `
-        <div class="card_container">
-          <div class="profile_card white">
+      <div class="card_container">
+        <div class="profile_card white">
 
-            <form id="edit_card_body">
-              <h4 class="title_box">Misty Preferences</h4>
-              <!--First Name-->
-              <h5>Preference Name:</h5>
+          <form id="edit_card_body">
+            <h4 class="title_box">Misty Preferences</h4>
+            <!--First Name-->
+            <h5>Preference Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+              </div>
+            </div>
+            <!--End First Name-->
+
+            <!-- Last Name -->
+            <h5>Robot Name:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name">
+              </div>
+            </div>
+            <!-- End Last Name -->
+
+            <!--user email -->
+            <h5>IP Address:</h5>
+            <div class="row center">
+              <div class="col s9 m9 l9">
+                <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+              </div>
+            </div>
+            <!-- end of user email  -->
+
+            <!--user email -->
+            <h5>Port Number:</h5>
+            <div class="row">
+              <div class="col s9 m9 l9">
+                <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
+              </div>
+            </div>
+            <!-- end of user email  -->
+
+            <!--Authorize numbers input here -->
+            <div id="add_phone_number_location">
+              <h5>Authorized Phone Numbers:</h5>
               <div class="row center">
-                <div class="col s9 m9 l9">
-                  <input type="text" id="preference_name" name="preference_name" value="" placeholder="Preference Name" required>
+                <div class="col s2 m2 l2">
+                  <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1">
+                </div>
+                <div class="col s7 m7 l7">
+                  <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
+                </div>
+                <div class="col s2 m2 l2">
+                  <!-- <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
+                  <i class="material-icons">add</i>
+                </a> -->
                 </div>
               </div>
-              <!--End First Name-->
+            </div>
+            <!-- End authorization numbers -->
 
-              <!-- Last Name -->
-              <h5>Robot Name:</h5>
-              <div class="row center">
-                <div class="col s9 m9 l9">
-                  <input type="text" id="robot_name" name="robot_name" value="" placeholder="Robot Name">
-                </div>
+            <!--misty voice settings -->
+            <h5>Misty Voice</h5>
+            <div class="row">
+              <div class="input-field col browser-default s9 m9 l9">
+                <select id="choose_voices">
+                    <option value="" disabled selected>Choose your misty Voice</option>
+                  </select>
               </div>
-              <!-- End Last Name -->
+            </div>
+            <!-- end of misty voice settings-->
 
-              <!--user email -->
-              <h5>IP Address:</h5>
-              <div class="row center">
-                <div class="col s9 m9 l9">
-                  <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
-                </div>
+            <!--misty face settings -->
+            <h5>Misty Robot Preset Faces</h5>
+            <div class="row">
+              <div class="input-field col browser-default s9 m9 l9">
+                <select id="choose_face_emote">
+                    <option value="" disabled selected>Select Misty Preset Face</option>
+                  </select>
               </div>
-              <!-- end of user email  -->
-
-              <!--user email -->
-              <h5>Port Number(if applicable):</h5>
-              <div class="row">
-                <div class="col s9 m9 l9">
-                  <input type="text" id="port_number" name="port_number" placeholder="Only add if assigned.">
-                </div>
+            </div>
+            <h5>Misty Robot Custom Face</h5>
+            <div class="row">
+              <div class="input-field col browser-default s9 m9 l9">
+                <p class="small-text col s6 m6 l6">Valence:</p>
+                <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="[-1,1]">
+                <p class="small-text col s6 m6 l6">Arousal:</p>
+                <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="[-1,1]">
+                <p class="small-text col s6 m6 l6">Dominance:</p>
+                <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="[-1,1]">
               </div>
-              <!-- end of user email  -->
+            </div>
+            <!-- end of misty face settings-->
 
-              <!--Authorize numbers input here -->
-              <div id="add_phone_number_location">
-                <h5>Authorized Phone Numbers:</h5>
-                <div class="row center">
-                  <div class="col s2 m2 l2">
-                    <input type="tel" id="phone_country_code1" name="country_code" value="+1" placeholder="+1">
-                  </div>
-                  <div class="col s7 m7 l7">
-                    <input type="tel" id="phone_number1" name="phone" value="" placeholder="XXX-XXX-XXXX">
-                  </div>
-                  <div class="col s2 m2 l2">
-                    <a style="background-color:  green" class="addNumber modal-trigger btn-floating btn-small waves-effect waves-light">
-                    <i class="material-icons">add</i>
-                  </a>
-                  </div>
-                </div>
-              </div>
-              <!-- End authorization numbers -->
+            <!--misty face settings -->
+            <h5>Misty Robot Quiet Hours</h5>
+            <div class="row">
+                <p class="small-text col s6 m6 l6">Start Time:</p>
+                <input type="text" id="start_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
+                <p class="small-text col s6 m6 l6">End Time:</p>
+                <input type="text" id="end_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
+            </div>
+            <!-- end of misty face settings-->
 
-              <!--misty voice settings -->
-              <h5>Misty Voice</h5>
-              <div class="row">
-                <div class="input-field col browser-default s9 m9 l9">
-                  <select id="choose_voices">
-                      <option value="" disabled selected>Choose your misty Voice</option>
-                    </select>
-                </div>
-              </div>
-              <!-- end of misty voice settings-->
+            <!-- Form submit/exit buttons here.  -->
 
-              <!--misty face settings -->
-              <h5>Misty Robot Preset Faces</h5>
-              <div class="row">
-                <div class="input-field col browser-default s9 m9 l9">
-                  <select id="choose_face_emote">
-                      <option value="" disabled selected>Select Misty Preset Face</option>
-                    </select>
-                </div>
-              </div>
-              <h5>Misty Robot Custom Face</h5>
-              <div class="row">
-                <div class="input-field col browser-default s9 m9 l9">
-                  <p class="small-text col s6 m6 l6">Valence:</p>
-                  <input class="col s3 m3 l3" type="text" id="expression_valence" name="expression_valence" placeholder="[-1,1]">
-                  <p class="small-text col s6 m6 l6">Arousal:</p>
-                  <input class="col s3 m3 l3" type="text" id="expression_arousal" name="expression_arousal" placeholder="[-1,1]">
-                  <p class="small-text col s6 m6 l6">Dominance:</p>
-                  <input class="col s4 m3 l3" type="text" id="expression_dominance" name="expression_dominance" placeholder="[-1,1]">
-                </div>
-              </div>
-              <!-- end of misty face settings-->
+            <div class="row center save_cancel_menu">
+              <button type="submit" class="preference_menu_btn btn waves-effect waves-light" id="saveButton">Save</button>
+              <button id="cancelButton" class="preference_menu_btn btn waves-effect waves-light" name="action">Cancel</button>
+            </div>
+          </form>
 
-              <!--misty face settings -->
-              <h5>Misty Robot Quiet Hours</h5>
-              <div class="row">
-                  <p class="small-text col s6 m6 l6">Start Time:</p>
-                  <input type="text" id="start_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
-                  <p class="small-text col s6 m6 l6">End Time:</p>
-                  <input type="text" id="end_time" placeholder="Disabled" class="col s3 m3 l3 timepicker">
-              </div>
-              <!-- end of misty face settings-->
-
-              <!-- Form submit/exit buttons here.  -->
-
-              <div class="row center save_cancel_menu">
-                <button type="submit" class="preference_menu_btn btn waves-effect waves-light" id="saveButton">Save</button>
-                <button id="cancelButton" class="preference_menu_btn btn waves-effect waves-light" type="submit" name="action">Cancel</button>
-              </div>
-            </form>
-
-          </div>
         </div>
+      </div>
     `
     if (homeState.current_page !== 'misty_preferences_edit') {
       remove_all_divs()
@@ -930,9 +930,22 @@ const logout_remove_token = () => {
         })
       }
 const misty_face_changer = () => {
-  return setInterval(randomizeMisty_face, 500)
+  $('.surprise_me_toggle').on("click", () => {
+    const repeatRandomize =     setInterval(randomizeMistyFaceAndLights, 1000)
+    if (homeState.user.disco_misty === false) {
+      $('.surprise_me_toggle').addClass('red')
+      homeState.user.disco_misty = true
+      repeatRandomize
+    }
+    else {
+      $('.surprise_me_toggle').removeClass('red')
+      homeState.user.disco_misty = false;
+      clearInterval(repeatRandomize)
+    }
+  })
 }
-const randomizeMisty_face = () => {
+const randomizeMistyFaceAndLights = () => {
+  // REQUIRES misty_face_changer to be called
   let misty_face_valence = Math.random() * 2 - 1,
     misty_face_arousal = Math.random() * 2 - 1,
     misty_face_dominance = Math.random() * 2 - 1
@@ -987,6 +1000,9 @@ const create_listeners = () => {
   $(".go_to_misty_preferences").on("click", () => {
     mistyPreferences_listener()
   })
+  // Go to DISCO Misty on click
+  misty_face_changer()
+
   $(".go_to_direct_talk").on("click", () => {
     directTalk_listener()
   })
@@ -1013,7 +1029,6 @@ const create_listeners = () => {
 
 $(document).ready(() => {
   create_listeners();
-  // misty_face_changer()
   $('.collapsible').collapsible(); // for "about page" collapsible containers
   /*
     Materialize functions

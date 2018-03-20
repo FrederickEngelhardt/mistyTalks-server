@@ -13,13 +13,11 @@ html {
 }
 
 body {
-  background-color: #EEEEEE;
+  /* background-color: #EEEEEE; */
   -webkit-font-smoothing: antialiased;
   font-size: x-small;
   color: #666666;
-  /* background: url("../images/Misty_side.jpeg") */
-  /* background: #FFFEFD; /*Off White */ */
-  background: #f6eaff /*very light  purple */
+  background: url("../images/hexagon_bg.png")
   no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
