@@ -19,12 +19,13 @@ let server = app.listen(port, function() {
 // Socket SETUP on the server awaiting to be called...
 let io = socket.listen(server);
 
-// handle incoming connections from clients
+
+// Listens for user connection and reads their id.
+
 io.sockets.on('connection', function(socket) {
-  // console.log("New connection", socket.id);
-    // once a client has connected, we expect to get a ping from them saying what room they want to join
-    socket.on('user_id', function(data) {
-      const id = data
+
+    // Replaces GET route for misty_user_preferences
+    socket.on('/users/:id/misty_preferences', function(id) {
       if (Number.isNaN(id)) {
         return console.log({
           status: 404,
@@ -32,7 +33,7 @@ io.sockets.on('connection', function(socket) {
         })
       }
       return knex('misty_preferences')
-        .where("misty_user_preference_id", id)
+        .where('misty_user_preference_id', id)
         .orderBy('id', 'asc')
         .then(data => {
           if (!data) {
@@ -41,11 +42,37 @@ io.sockets.on('connection', function(socket) {
               message: `Not Found`
             })
           }
-          socket.emit("misty_user_preferences", data)
+          socket.emit('/users/:id/misty_user_preferences/response', data)
         })
         .catch(err => {
           console.log(error);
         })
+      })
+      socket.on('/users/:id', (id) => {
+        if (Number.isNaN(id)) {
+          return console.log({
+            status: 404,
+            message: `Not Found`
+          })
+        }
+        return knex('users')
+          .where({
+            id
+          })
+          .first()
+          .then(data => {
+            if (!data) {
+              return console.log({
+                status: 404,
+                message: `Not Found`
+              })
+            }
+            delete data.password
+            socket.emit('/users/:id/response', data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
 });
 

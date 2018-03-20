@@ -4,8 +4,11 @@
 class State {
   constructor(current_page, user, misty_preferences) {
     this.current_page = current_page,
-    this.user = {setup_done: true, disco_misty: false},
-    this.misty_preferences = {}
+      this.user = {
+        setup_done: true,
+        disco_misty: false
+      },
+      this.misty_preferences = {}
   }
 }
 let homeState = new State('home')
@@ -30,48 +33,48 @@ const add_number = (count) => {
 
 // HTML code to add all voices into the selection zone
 const voices = [{
-      "name": "es-LA_SofiaVoice",
-    },
-    {
-      "name": "pt-BR_IsabelaVoice",
-    },
-    {
-      "name": "en-GB_KateVoice",
-    },
-    {
-      "name": "de-DE_BirgitVoice",
-    },
-    {
-      "name": "en-US_AllisonVoice",
-    },
-    {
-      "name": "fr-FR_ReneeVoice",
-    },
-    {
-      "name": "it-IT_FrancescaVoice",
-    },
-    {
-      "name": "es-ES_LauraVoice",
-    },
-    {
-      "name": "ja-JP_EmiVoice",
-    },
-    {
-      "name": "es-ES_EnriqueVoice",
-    },
-    {
-      "name": "de-DE_DieterVoice",
-    },
-    {
-      "name": "en-US_LisaVoice",
-    },
-    {
-      "name": "en-US_MichaelVoice",
-    },
-    {
-      "name": "es-US_SofiaVoice",
-    }
-  ]
+    "name": "es-LA_SofiaVoice",
+  },
+  {
+    "name": "pt-BR_IsabelaVoice",
+  },
+  {
+    "name": "en-GB_KateVoice",
+  },
+  {
+    "name": "de-DE_BirgitVoice",
+  },
+  {
+    "name": "en-US_AllisonVoice",
+  },
+  {
+    "name": "fr-FR_ReneeVoice",
+  },
+  {
+    "name": "it-IT_FrancescaVoice",
+  },
+  {
+    "name": "es-ES_LauraVoice",
+  },
+  {
+    "name": "ja-JP_EmiVoice",
+  },
+  {
+    "name": "es-ES_EnriqueVoice",
+  },
+  {
+    "name": "de-DE_DieterVoice",
+  },
+  {
+    "name": "en-US_LisaVoice",
+  },
+  {
+    "name": "en-US_MichaelVoice",
+  },
+  {
+    "name": "es-US_SofiaVoice",
+  }
+]
 const add_all_voices = () => {
   for (let i in voices) {
     let html = `<option value="${i}">${voices[i].name}</option>`
@@ -81,78 +84,78 @@ const add_all_voices = () => {
   $('select').material_select()
 }
 const eyes = [{
-      "name": "Angry Eyes",
-      "settings": {
-        "Valence": -1,
-        "Arousal": 1,
-        "Dominance": 0
-      }
-    },
-    {
-      name: 'Concerned Eyes',
-      settings: {
-        Valence: 0,
-        Arousal: 1,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Confused Eyes',
-      settings: {
-        Valence: 1,
-        Arousal: 0,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Content Eyes',
-      settings: {
-        Valence: 0,
-        Arousal: 0,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Groggy Eyes',
-      settings: {
-        Valence: 0,
-        Arousal: -1,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Happy Eyes',
-      settings: {
-        Valence: 1,
-        Arousal: 1,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Loving Eyes',
-      settings: {
-        Valence: 1,
-        Arousal: 1,
-        Dominance: 1
-      }
-    },
-    {
-      name: 'Sad Eyes',
-      settings: {
-        Valence: -1,
-        Arousal: -1,
-        Dominance: 0
-      }
-    },
-    {
-      name: 'Unamused Eyes',
-      settings: {
-        Valence: 1,
-        Arousal: -1,
-        Dominance: 0
-      }
+    "name": "Angry Eyes",
+    "settings": {
+      "Valence": -1,
+      "Arousal": 1,
+      "Dominance": 0
     }
-  ]
+  },
+  {
+    name: 'Concerned Eyes',
+    settings: {
+      Valence: 0,
+      Arousal: 1,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Confused Eyes',
+    settings: {
+      Valence: 1,
+      Arousal: 0,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Content Eyes',
+    settings: {
+      Valence: 0,
+      Arousal: 0,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Groggy Eyes',
+    settings: {
+      Valence: 0,
+      Arousal: -1,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Happy Eyes',
+    settings: {
+      Valence: 1,
+      Arousal: 1,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Loving Eyes',
+    settings: {
+      Valence: 1,
+      Arousal: 1,
+      Dominance: 1
+    }
+  },
+  {
+    name: 'Sad Eyes',
+    settings: {
+      Valence: -1,
+      Arousal: -1,
+      Dominance: 0
+    }
+  },
+  {
+    name: 'Unamused Eyes',
+    settings: {
+      Valence: 1,
+      Arousal: -1,
+      Dominance: 0
+    }
+  }
+]
 const add_all_preset_faces = () => {
   for (let i in eyes) {
     let html = `<option value="${i}">${eyes[i].name}</option>`
@@ -174,8 +177,7 @@ const goHome_listener = () => {
       remove_all_divs()
       $('.display_home').removeClass('hide_this')
       homeState.current_page = 'home'
-    }
-    else {
+    } else {
       Materialize.toast("You are home.", 1000)
     }
   })
@@ -221,38 +223,38 @@ const myAccount_listener = () => {
   myAccountEdit_listener()
   populate_account_preferences(homeState.user.id)
 }
-const populate_account_preferences = user_id => {
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: `/users/${user_id}`,
-    method: 'GET',
-    headers: {
-      'Cache-Control': 'no-cache'
+const populate_account_preferences = (user_id) => {
+  // var settings = {
+  //   async: true,
+  //   crossDomain: true,
+  //   url: `/users/${user_id}`,
+  //   method: 'GET',
+  //   headers: {
+  //     'Cache-Control': 'no-cache'
+  //   }
+  // }
+  //
+  // $.ajax(settings).done(function(response) {
+  let response = homeState.user
+  const target = [{
+      location: 'account_email_preferences',
+      user_info: 'email'
+    },
+    {
+      location: 'account_first_name_preferences',
+      user_info: 'first_name'
+    },
+    {
+      location: 'account_last_name_preferences',
+      user_info: 'last_name'
     }
+  ]
+  for (var i = 0; i < target.length; i++) {
+    const data = response[target[i]['user_info']]
+    $(`.${target[i].location}`).text(data)
+    // $(`${target[i].location}`).val(response[target[i].user_info])
   }
-
-  $.ajax(settings).done(function(response) {
-    const target = [
-      {
-        location: 'account_email_preferences',
-        user_info: 'email'
-      },
-      {
-        location: 'account_first_name_preferences',
-        user_info: 'first_name'
-      },
-      {
-        location: 'account_last_name_preferences',
-        user_info: 'last_name'
-      }
-    ]
-    for (var i = 0; i < target.length; i++) {
-      const data = response[target[i]['user_info']]
-      $(`.${target[i].location}`).text(data)
-      // $(`${target[i].location}`).val(response[target[i].user_info])
-    }
-  })
+  // })
 }
 
 const myAccountEdit_listener = () => {
@@ -321,7 +323,7 @@ const myAccountEdit_listener = () => {
       return myAccount_listener()
 
     })
-    $('form').submit(function(e){
+    $('form').submit(function(e) {
       e.preventDefault()
       retrieveAccountSubmitFormData()
     })
@@ -330,8 +332,8 @@ const myAccountEdit_listener = () => {
 
 const retrieveAccountSubmitFormData = () => {
   let password_confirm = $("#confirm_password").val(),
-      password  = $("#password").val(),
-      previous_password = $("#previous_password").val()
+    password = $("#password").val(),
+    previous_password = $("#previous_password").val()
 
   if (password !== password_confirm) {
     return Materialize.toast('Passwords do not match.', 3000)
@@ -392,8 +394,8 @@ const sendAccountSubmitForm = (data, user_id) => {
 
 /* MISTY_PREFERENCES Functions*/
 const mistyPreferences_listener = () => {
-    $(".display_home").addClass("hide_this")
-    const html = `
+  $(".display_home").addClass("hide_this")
+  const html = `
           <div class="card_container">
             <div class="profile_card">
               <h4 class="title_box">Misty Preferences
@@ -443,17 +445,17 @@ const mistyPreferences_listener = () => {
           </div>
       `
 
-    if (homeState.current_page !== 'misty_preferences_view') {
-      remove_all_divs()
-      $('.container').append(html)
-    }
-    homeState.current_page = 'misty_preferences_view'
-    /*
-      Must call this listner b/c classes inside listner do not exist outside of this scope
-    */
-    editMistyPreferences_listener()
-    console.log('called. JUST B4');
-    populate_misty_preferences(homeState.user.id)
+  if (homeState.current_page !== 'misty_preferences_view') {
+    remove_all_divs()
+    $('.container').append(html)
+  }
+  homeState.current_page = 'misty_preferences_view'
+  /*
+    Must call this listner b/c classes inside listner do not exist outside of this scope
+  */
+  editMistyPreferences_listener()
+  console.log('called. JUST B4');
+  populate_misty_preferences(homeState.user.id)
 }
 const populate_misty_preferences = user_id => {
   var settings = {
@@ -467,83 +469,81 @@ const populate_misty_preferences = user_id => {
   }
 
   $.ajax(settings).done(function(response_array) {
-    let response=response_array[0]
-    console.log("THIS IS RESPONSE",response);
-    if (response === [] || !response || response === undefined){
-      return homeState.user.setup_done = false
-    }
-    console.log();
-    homeState.user.preference_id = response.id
-    homeState.misty_preferences.robot_name = response.robot_name
-    const target = [{
-        location: "misty_preference_name",
-        user_info: "preference_name"
-      },
-      {
-        location: 'misty_robot_name',
-        user_info: 'robot_name'
-      },
-      {
-        location: 'misty_authorized_numbers',
-        user_info: 'auth_numbers_string'
-      },
-      {
-        location: 'misty_ip_address',
-        user_info: 'ip_address'
-      },
-      {
-        location: 'misty_port_number',
-        user_info: 'port_number'
-      },
-      {
-        location: "misty_voice",
-        user_info: "misty_voice_name"
-      },
-      {
-        location: "misty_face_name",
-        user_info: "misty_face_name"
-      },
-      {
-        location: 'misty_robot_face',
-        user_info: [
-          'set_emotion_valence',
-          'set_emotion_arousal',
-          'set_emotion_dominance'
-        ]
-      },
-      {
-        location: 'misty_quiet_hours',
-        user_info: ['time_restriction_start', 'time_restriction_end']
+      let response = response_array[0]
+      console.log("THIS IS RESPONSE", response);
+      if (response === [] || !response || response === undefined) {
+        return homeState.user.setup_done = false
       }
-    ]
-    for (var i = 0; i < target.length; i++) {
-      if (target[i].location === "misty_port_number" && response[target[i].user_info] === null){
-        const data = `Disabled`
-        $(`.${target[i].location}`).text(data)
-      }
-      else if (target[i].location === "misty_quiet_hours") {
-        if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null){
+      console.log();
+      homeState.user.preference_id = response.id
+      homeState.misty_preferences.robot_name = response.robot_name
+      const target = [{
+          location: "misty_preference_name",
+          user_info: "preference_name"
+        },
+        {
+          location: 'misty_robot_name',
+          user_info: 'robot_name'
+        },
+        {
+          location: 'misty_authorized_numbers',
+          user_info: 'auth_numbers_string'
+        },
+        {
+          location: 'misty_ip_address',
+          user_info: 'ip_address'
+        },
+        {
+          location: 'misty_port_number',
+          user_info: 'port_number'
+        },
+        {
+          location: "misty_voice",
+          user_info: "misty_voice_name"
+        },
+        {
+          location: "misty_face_name",
+          user_info: "misty_face_name"
+        },
+        {
+          location: 'misty_robot_face',
+          user_info: [
+            'set_emotion_valence',
+            'set_emotion_arousal',
+            'set_emotion_dominance'
+          ]
+        },
+        {
+          location: 'misty_quiet_hours',
+          user_info: ['time_restriction_start', 'time_restriction_end']
+        }
+      ]
+      for (var i = 0; i < target.length; i++) {
+        if (target[i].location === "misty_port_number" && response[target[i].user_info] === null) {
           const data = `Disabled`
           $(`.${target[i].location}`).text(data)
-        }
-        else{
-          const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+        } else if (target[i].location === "misty_quiet_hours") {
+          if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null) {
+            const data = `Disabled`
+            $(`.${target[i].location}`).text(data)
+          } else {
+            const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
+            $(`.${target[i].location}`).text(data)
+          }
+        } else if (target[i].location === "misty_robot_face") {
+          const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
+          $(`.${target[i].location}`).html(data)
+        } else {
+          const data = response[target[i]['user_info']]
           $(`.${target[i].location}`).text(data)
         }
-      } else if (target[i].location === "misty_robot_face") {
-        const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
-        $(`.${target[i].location}`).html(data)
-      } else {
-        const data = response[target[i]['user_info']]
-        $(`.${target[i].location}`).text(data)
+        // $(`${target[i].location}`).val(response[target[i].user_info])
       }
-      // $(`${target[i].location}`).val(response[target[i].user_info])
-    }
-  })
-  .fail((error_response) => {
-    Materialize.toast("Misty Preferences require setup. Click edit to enter new preference.", 3000)
-    homeState.user.setup_done = false
-  })
+    })
+    .fail((error_response) => {
+      Materialize.toast("Misty Preferences require setup. Click edit to enter new preference.", 3000)
+      homeState.user.setup_done = false
+    })
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
@@ -698,56 +698,56 @@ const editMistyPreferences_listener = () => {
 }
 const retrieveMistyPreferencesSubmitFormData = () => {
   let preference_name = $("#preference_name").val(),
-      robot_name  = $("#robot_name").val(),
-      ip_address = $("#ip_address").val(),
-      port_number = $("#port_number").val(),
-      phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
-      misty_voice_choice = $("#choose_voices :selected").text(),
-      misty_face_choice = $("#choose_face_emote :selected").text(),
-      misty_face_valence = $("#expression_valence").val(),
-      misty_face_arousal = $("#expression_arousal").val(),
-      misty_face_dominance = $("#expression_dominance").val(),
-      misty_quiet_start = $("#start_time").val(),
-      misty_quiet_end = $("#end_time").val(),
-      data = {
-          "misty_user_preference_id": homeState.user.id,
-          "preference_name": preference_name,
-          "robot_name": robot_name,
-          "ip_address": ip_address,
-          "auth_numbers_string": phone_number1,
-          "misty_voice_name": misty_voice_choice,
-          "misty_face_name": misty_face_choice,
-          "set_emotion_valence": misty_face_valence,
-          "set_emotion_arousal": misty_face_arousal,
-          "set_emotion_dominance": misty_face_dominance,
-          "time_restriction_start": misty_quiet_start,
-          "time_restriction_end": misty_quiet_end
-      }
+    robot_name = $("#robot_name").val(),
+    ip_address = $("#ip_address").val(),
+    port_number = $("#port_number").val(),
+    phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
+    misty_voice_choice = $("#choose_voices :selected").text(),
+    misty_face_choice = $("#choose_face_emote :selected").text(),
+    misty_face_valence = $("#expression_valence").val(),
+    misty_face_arousal = $("#expression_arousal").val(),
+    misty_face_dominance = $("#expression_dominance").val(),
+    misty_quiet_start = $("#start_time").val(),
+    misty_quiet_end = $("#end_time").val(),
+    data = {
+      "misty_user_preference_id": homeState.user.id,
+      "preference_name": preference_name,
+      "robot_name": robot_name,
+      "ip_address": ip_address,
+      "auth_numbers_string": phone_number1,
+      "misty_voice_name": misty_voice_choice,
+      "misty_face_name": misty_face_choice,
+      "set_emotion_valence": misty_face_valence,
+      "set_emotion_arousal": misty_face_arousal,
+      "set_emotion_dominance": misty_face_dominance,
+      "time_restriction_start": misty_quiet_start,
+      "time_restriction_end": misty_quiet_end
+    }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
-    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] ==="Select Misty Preset Face") {
+    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] === "Select Misty Preset Face") {
       delete data[i]
     }
   }
-  if (data.auth_numbers_string.length < 11){
+  if (data.auth_numbers_string.length < 11) {
     delete data.auth_numbers_string
   }
-  if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance){
+  if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance) {
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
   }
   if (misty_face_choice) {
     for (let i in eyes) {
-      if (eyes[i].name === misty_face_choice){
+      if (eyes[i].name === misty_face_choice) {
         data["set_emotion_valence"] = eyes[i].settings.Valence,
-        data["set_emotion_arousal"] = eyes[i].settings.Arousal,
-        data["set_emotion_dominance"] = eyes[i].settings.Dominance
+          data["set_emotion_arousal"] = eyes[i].settings.Arousal,
+          data["set_emotion_dominance"] = eyes[i].settings.Dominance
       }
     }
   }
   // IP ADDRESS REGEX
   if (data.ip_address) {
     const re = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-    if(!re.test(data.ip_address)){
+    if (!re.test(data.ip_address)) {
       return Materialize.toast("IP Address in an invalid format.")
     }
   }
@@ -761,7 +761,8 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
   if (homeState.user.setup_done === false) {
     method = {
       type: "POST",
-      url: `/users/${user_id}/misty_preferences`}
+      url: `/users/${user_id}/misty_preferences`
+    }
   }
   var settings = {
     "async": true,
@@ -824,7 +825,7 @@ const message_listener = () => {
     message = $('#message').val()
     sendTextToWatson(message)
     console.log('about to call newOutbound')
-      newOutbound(email, robot_name)
+    newOutbound(email, robot_name)
 
     console.log(message, robot_name, 'in DTL')
     console.log(message, 'in DTL #2')
@@ -835,57 +836,56 @@ const sendTextToWatson = (text, voice) => {
   if (!voice) voice = "en-GB_KateVoice"
   console.log(text);
   var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/watson/receive",
-  "method": "POST",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "processData": false,
-  "data": JSON.stringify({
-    "text": `${text}`,
-    "voice": `${voice}`,
-  })
-}
+    "async": true,
+    "crossDomain": true,
+    "url": "/watson/receive",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "processData": false,
+    "data": JSON.stringify({
+      "text": `${text}`,
+      "voice": `${voice}`,
+    })
+  }
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
+  $.ajax(settings).done(function(response) {
+    console.log(response);
   });
 }
-const newOutbound = (email,robot_name) => {
-  if (!robot_name){
+const newOutbound = (email, robot_name) => {
+  if (!robot_name) {
     robot_name = "Robot";
   }
   console.log("user email: ", homeState.user.email)
   console.log("user robot name: ", robot_name);
 
-    if (robot_name.length > 0) {
-      robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
-      console.log(robot_name, 1)
-      console.log('in here')
+  if (robot_name.length > 0) {
+    robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+    console.log(robot_name, 1)
+    console.log('in here')
 
-      if (message.length > 0) {
-        console.log('in message length here')
-        let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
-        //  $(".chatName").prepend(outName)
-        // $(".chatSubj").prepend(outMessage)
-        $('.chatOut').append(`${outName}`)
-        // output
-        $('#message').val('')
-      }
+    if (message.length > 0) {
+      console.log('in message length here')
+      let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+      //  $(".chatName").prepend(outName)
+      // $(".chatSubj").prepend(outMessage)
+      $('.chatOut').append(`${outName}`)
+      // output
+      $('#message').val('')
     }
-    else if (email) {
-      // use phone number as identifier name if no first or last is available
-      let newArr = []
-      if (message.length > 0) {
-        let outName = `<div class="chatName"><strong> ${email}</strong></div>`
-        let outMessage = `<p class="chatSubj">${message}</p>`
-        $('.chatOut').append(outName, outMessage)
-        // output
-        $('#message').val('')
-      }
+  } else if (email) {
+    // use phone number as identifier name if no first or last is available
+    let newArr = []
+    if (message.length > 0) {
+      let outName = `<div class="chatName"><strong> ${email}</strong></div>`
+      let outMessage = `<p class="chatSubj">${message}</p>`
+      $('.chatOut').append(outName, outMessage)
+      // output
+      $('#message').val('')
     }
+  }
 }
 
 const verifyUserPermissionsToken = () => {
@@ -908,30 +908,29 @@ const verifyUserPermissionsToken = () => {
 
 
 const logout_remove_token = () => {
-        $('.logout').on('click', () => {
-          const options = {
-            dataType: 'json',
-            type: 'DELETE',
-            url: '/users/token'
-          }
-          $.ajax(options)
-            .done(() => {
-              window.location.href = '/index.html'
-            })
-            .fail(() => {
-              Materialize.toast('Unable to log out', 3000)
-            })
-        })
-      }
+  $('.logout').on('click', () => {
+    const options = {
+      dataType: 'json',
+      type: 'DELETE',
+      url: '/users/token'
+    }
+    $.ajax(options)
+      .done(() => {
+        window.location.href = '/index.html'
+      })
+      .fail(() => {
+        Materialize.toast('Unable to log out', 3000)
+      })
+  })
+}
 const misty_face_changer = () => {
   $('.surprise_me_toggle').on("click", () => {
-    const repeatRandomize =     setInterval(randomizeMistyFaceAndLights, 1000)
+    const repeatRandomize = setInterval(randomizeMistyFaceAndLights, 1000)
     if (homeState.user.disco_misty === false) {
       $('.surprise_me_toggle').addClass('red')
       homeState.user.disco_misty = true
       repeatRandomize
-    }
-    else {
+    } else {
       $('.surprise_me_toggle').removeClass('red')
       homeState.user.disco_misty = false;
       clearInterval(repeatRandomize)
@@ -983,12 +982,18 @@ const randomizeMistyFaceAndLights = () => {
 const open_user_information_socket = () => {
   let socket = io('')
   let mistyChannel = homeState.user.email
-  socket.on('connect', function() {
+  socket.on('connect', () => {
     console.log('new connection', mistyChannel)
-    socket.emit('user_id', homeState.user.id)
-  })
-  socket.on("misty_user_preferences", function(response){
-    console.log(response);
+    socket.emit('/users/:id/misty_preferences', homeState.user.id)
+    socket.emit('/users/:id', homeState.user.id)
+    socket.on('/users/:id/misty_user_preferences/response', (response) => {
+      console.log(response);
+      homeState.misty_user_preferences = response[0]
+    })
+    socket.on('/users/:id/response', (response) => {
+      homeState.user = response
+      console.log(response);
+    })
   })
   // socket.on('message', function(data) {
   //   console.log('Incoming message:', data)

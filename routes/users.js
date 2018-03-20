@@ -11,6 +11,9 @@ router.get('/users', (req, res, next) => {
   return knex('users')
     .orderBy('id', 'asc')
     .then(data => {
+      for (let i = 0; i < array.length; i++) {
+        delete data[i].password
+      }
       res.status(200).json(data)
     })
     .catch(err => {
@@ -39,6 +42,7 @@ router.get('/users/:id', (req, res, next) => {
           message: `Not Found`
         })
       }
+      delete data.password
       res.status(200).json(data)
     })
     .catch(err => {
