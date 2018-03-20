@@ -9,9 +9,10 @@ socket.on('message', function(data) {
 })
 
 class State {
-  constructor(current_page, user) {
-    this.current_page = current_page
-    this.user = {setup_done: true}
+  constructor(current_page, user, misty_preferences) {
+    this.current_page = current_page,
+    this.user = {setup_done: true},
+    this.misty_preferences = {}
   }
 }
 let homeState = new State('home')
@@ -479,7 +480,7 @@ const populate_misty_preferences = user_id => {
       return homeState.user.setup_done = false
     }
     homeState.user.preference_id = response.id
-    homeState.user.robot_name = response.robot_name
+    homeState.misty_preferences.robot_name = response.robot_name
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
@@ -821,7 +822,7 @@ const directTalk_listener = () => {
 
 const message_listener = () => {
   let email = homeState.user.email;
-  let robot_name = homeState.misty_preferences
+  let robot_name = homeState.misty_preferences.robot_name
 
   console.log('in here')
   $('#sendMessBtn').click(() => {
@@ -873,11 +874,11 @@ const logout_remove_token = () => {
       }
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
-
   // Token listeners
   verifyUserPermissionsToken()
   logout_remove_token()
 
+  // populateHomeStateObject()
   // Nav listeners
   goHome_listener()
   /*Edit/View Account*/
@@ -910,14 +911,12 @@ const create_listeners = () => {
   })
   // end of addNumber
 }
-const newOutbound = (
-  email,
-  robot_name
-) => {
-
+const newOutbound = (email,robot_name) => {
+  if (!robot_name){
+    robot_name = "rex";
+  }
   console.log("user email: ", homeState.user.email)
-  console.log("user robot name: ", homeState.user.misty_preferences.robot_name
-  );
+  console.log("user robot name: ", robot_name);
 
     if (robot_name.length > 0) {
       robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
@@ -948,7 +947,28 @@ const newOutbound = (
   return 'dang'
 }
 
-
+// const populateHomeStateObject= () => {
+//   var settings = {
+//     async: true,
+//     crossDomain: true,
+//     url: `http://localhost:3000/users/${homeState.user.id}/misty_preferences`,
+//     method: 'GET',
+//     headers: {
+//       'Cache-Control': 'no-cache'
+//     }
+//   }
+//
+//   $.ajax(settings).done(function(response_array) {
+//     let response=response_array[0]
+//     if (response === [] || !response || response === undefined){
+//       return homeState.user.setup_done = false
+//     }
+//     for(let i in response){
+//
+//       console.log(homeState.misty_preferences[response[i]])
+//     }
+//   })
+// }
 
 $(document).ready(() => {
   create_listeners();
