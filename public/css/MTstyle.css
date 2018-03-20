@@ -6,9 +6,13 @@
 }
 
 .chatcont {
-	position: absolute;
-	width: 100%;
-	height: auto;
+	position: relative;
+	margin: 0 auto;
+	width: 90%;
+	padding-right: 30px;
+	padding-left: 30px;
+	/* max-width: 600px; */
+	height: 90vh;
 	background: #fff;
 	/* padding: 25px; */
 	/* margin: 20px auto; */
@@ -93,8 +97,12 @@
   border: 2px solid grey;
 }
 
-
+.chat_text_button {
+	font-size: 80%;
+}
 #sendMessBtn {
+	width: 100px;
+	height: 50px;
 	background: #6700ED;
 	padding: 5px 10px;
 	font-size: 30px;

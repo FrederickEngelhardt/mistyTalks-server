@@ -807,7 +807,8 @@ const directTalk_listener = () => {
             </div>
             <div class="inputSubForm">
               <textarea id="message" placeholder= "Message"></textarea>
-              <button class="btn waves-effect waves-light" id="sendMessBtn">Send</button>
+              <button class="btn waves-effect waves-light" id="sendMessBtn">
+              <div class="chat_text_button">Send</div></button>
             </div>
           </div>
         </div>

@@ -277,6 +277,9 @@ label {
   font-size: 20px;
 }
 .card_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-top: 10px;
   /* padding: ; */
 }
