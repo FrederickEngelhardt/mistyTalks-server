@@ -1008,7 +1008,7 @@ const create_listeners = () => {
 
   // populateHomeStateObject()
   // Nav listeners
-  setTimeout(open_user_information_socket, 4000)
+  setTimeout(open_user_information_socket, 2000)
   goHome_listener()
   /*Edit/View Account*/
   $('.go_to_my_account').on('click', () => {
