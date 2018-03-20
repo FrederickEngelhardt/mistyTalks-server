@@ -1,13 +1,6 @@
-let socket = io('')
-let mistyChannel = 'email@email.com'
-socket.on('connect', function() {
-  console.log('new connection', mistyChannel)
-  socket.emit('mistyChannel', mistyChannel)
-})
-socket.on('message', function(data) {
-  console.log('Incoming message:', data)
-})
-
+/*
+  NOTE: State class will store all State values used in dynamic html/dom manipulations. State also stores user preferences and any database related calls. State is not saved in local storage.
+*/
 class State {
   constructor(current_page, user, misty_preferences) {
     this.current_page = current_page,
@@ -985,6 +978,23 @@ const randomizeMistyFaceAndLights = () => {
     console.log(response);
   });
 }
+
+
+const open_user_information_socket = () => {
+  let socket = io('')
+  let mistyChannel = homeState.user.email
+  socket.on('connect', function() {
+    console.log('new connection', mistyChannel)
+    socket.emit('user_id', homeState.user.id)
+  })
+  socket.on("misty_user_preferences", function(response){
+    console.log(response);
+  })
+  // socket.on('message', function(data) {
+  //   console.log('Incoming message:', data)
+  // })
+}
+
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
   // Token listeners
@@ -993,6 +1003,7 @@ const create_listeners = () => {
 
   // populateHomeStateObject()
   // Nav listeners
+  setTimeout(open_user_information_socket, 4000)
   goHome_listener()
   /*Edit/View Account*/
   $('.go_to_my_account').on('click', () => {

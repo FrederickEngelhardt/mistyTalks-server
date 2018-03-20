@@ -4,7 +4,7 @@ const socket = require("socket.io");
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const app = express();
-const knex = require('knex')
+const knex = require('./knex')
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -23,10 +23,30 @@ let io = socket.listen(server);
 io.sockets.on('connection', function(socket) {
   // console.log("New connection", socket.id);
     // once a client has connected, we expect to get a ping from them saying what room they want to join
-    socket.on('mistyChannel', function(mistyChannel) {
-        // console.log(`User has joined ${mistyChannel}`);
-        socket.join(mistyChannel);
-    });
+    socket.on('user_id', function(data) {
+      const id = data
+      if (Number.isNaN(id)) {
+        return console.log({
+          status: 404,
+          message: `Not Found`
+        })
+      }
+      return knex('misty_preferences')
+        .where("misty_user_preference_id", id)
+        .orderBy('id', 'asc')
+        .then(data => {
+          if (!data) {
+            return console.log({
+              status: 404,
+              message: `Not Found`
+            })
+          }
+          socket.emit("misty_user_preferences", data)
+        })
+        .catch(err => {
+          console.log(error);
+        })
+      })
 });
 
 // now, it's easy to send a message to just the clients in a given room
