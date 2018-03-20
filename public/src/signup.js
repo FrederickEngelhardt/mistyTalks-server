@@ -29,7 +29,7 @@ const createAccount = (data='') => {
            headers:{
            },
            type: "POST",
-           url: "http://localhost:3000/users",
+           url: "/users",
            dataType: "json",
            success: function (msg) {
              console.log("got here");
