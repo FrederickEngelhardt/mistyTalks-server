@@ -1,27 +1,24 @@
-let socket = io('http://localhost:3000');
-let mistyChannel = "email@email.com"
-socket.on('connect', function () {
-  console.log("new connection", mistyChannel);
+let socket = io('http://localhost:3000')
+let mistyChannel = 'email@email.com'
+socket.on('connect', function() {
+  console.log('new connection', mistyChannel)
   socket.emit('mistyChannel', mistyChannel)
-});
+})
 socket.on('message', function(data) {
-   console.log('Incoming message:', data);
-});
+  console.log('Incoming message:', data)
+})
 
 class State {
-  constructor(current_page, user) {
-    this.current_page = current_page
-    this.user = {
-      setup_done: true,
-      disco_misty: false,
-    }
+  constructor(current_page, user, misty_preferences) {
+    this.current_page = current_page,
+    this.user = {setup_done: true, disco_misty: false},
+    this.misty_preferences = {}
   }
 }
 let homeState = new State('home')
 let added_number_count = 1
 const add_number = (count) => {
-
-  return (`<div class="deleteNumberFields${count} row center">
+  return `<div class="deleteNumberFields${count} row center">
             <div class="col s2 m2 l2">
               <input type="tel" id="phone_country_code${count}" name="country_code" value="+1" placeholder="country" required>
             </div>
@@ -33,7 +30,7 @@ const add_number = (count) => {
               <i class="material-icons">remove</i>
             </a>
             </div>
-          </div>`)
+          </div>`
 }
 
 // Array of all watson voices
@@ -88,7 +85,7 @@ const add_all_voices = () => {
     $(`#choose_voices`).append(html)
   }
   // Materialize listener for new elements
-  $('select').material_select();
+  $('select').material_select()
 }
 const eyes = [{
       "name": "Angry Eyes",
@@ -99,67 +96,67 @@ const eyes = [{
       }
     },
     {
-      "name": "Concerned Eyes",
-      "settings": {
-        "Valence": 0,
-        "Arousal": 1,
-        "Dominance": 0
+      name: 'Concerned Eyes',
+      settings: {
+        Valence: 0,
+        Arousal: 1,
+        Dominance: 0
       }
     },
     {
-      "name": "Confused Eyes",
-      "settings": {
-        "Valence": 1,
-        "Arousal": 0,
-        "Dominance": 0
+      name: 'Confused Eyes',
+      settings: {
+        Valence: 1,
+        Arousal: 0,
+        Dominance: 0
       }
     },
     {
-      "name": "Content Eyes",
-      "settings": {
-        "Valence": 0,
-        "Arousal": 0,
-        "Dominance": 0
+      name: 'Content Eyes',
+      settings: {
+        Valence: 0,
+        Arousal: 0,
+        Dominance: 0
       }
     },
     {
-      "name": "Groggy Eyes",
-      "settings": {
-        "Valence": 0,
-        "Arousal": -1,
-        "Dominance": 0
+      name: 'Groggy Eyes',
+      settings: {
+        Valence: 0,
+        Arousal: -1,
+        Dominance: 0
       }
     },
     {
-      "name": "Happy Eyes",
-      "settings": {
-        "Valence": 1,
-        "Arousal": 1,
-        "Dominance": 0
+      name: 'Happy Eyes',
+      settings: {
+        Valence: 1,
+        Arousal: 1,
+        Dominance: 0
       }
     },
     {
-      "name": "Loving Eyes",
-      "settings": {
-        "Valence": 1,
-        "Arousal": 1,
-        "Dominance": 1
+      name: 'Loving Eyes',
+      settings: {
+        Valence: 1,
+        Arousal: 1,
+        Dominance: 1
       }
     },
     {
-      "name": "Sad Eyes",
-      "settings": {
-        "Valence": -1,
-        "Arousal": -1,
-        "Dominance": 0
+      name: 'Sad Eyes',
+      settings: {
+        Valence: -1,
+        Arousal: -1,
+        Dominance: 0
       }
     },
     {
-      "name": "Unamused Eyes",
-      "settings": {
-        "Valence": 1,
-        "Arousal": -1,
-        "Dominance": 0
+      name: 'Unamused Eyes',
+      settings: {
+        Valence: 1,
+        Arousal: -1,
+        Dominance: 0
       }
     }
   ]
@@ -168,7 +165,7 @@ const add_all_preset_faces = () => {
     let html = `<option value="${i}">${eyes[i].name}</option>`
     $(`#choose_face_emote`).append(html)
   }
-  $('select').material_select();
+  $('select').material_select()
 }
 /*
     We use this variable to count the number of added phones in an array
@@ -179,11 +176,11 @@ const remove_all_divs = () => {
 }
 
 const goHome_listener = () => {
-  $(".go_to_home").on("click", () => {
-    if (homeState.current_page !== "home") {
+  $('.go_to_home').on('click', () => {
+    if (homeState.current_page !== 'home') {
       remove_all_divs()
-      $(".display_home").removeClass("hide_this")
-      homeState.current_page = "home"
+      $('.display_home').removeClass('hide_this')
+      homeState.current_page = 'home'
     }
     else {
       Materialize.toast("You are home.", 1000)
@@ -193,8 +190,8 @@ const goHome_listener = () => {
 
 /* Account function*/
 const myAccount_listener = () => {
-    $(".display_home").addClass("hide_this")
-    const html = `
+  $('.display_home').addClass('hide_this')
+  const html = `
         <div class="card_container">
           <div class="profile_card">
             <h4 class="title_box">Account Information
@@ -219,42 +216,42 @@ const myAccount_listener = () => {
           </div>
         </div>
         `
-    if (homeState.current_page !== "my_account_view") {
-      remove_all_divs()
-      $(".container").append(html)
-    }
-    homeState.current_page = "my_account_view"
+  if (homeState.current_page !== 'my_account_view') {
+    remove_all_divs()
+    $('.container').append(html)
+  }
+  homeState.current_page = 'my_account_view'
 
-    /*
+  /*
       NOTE: Need to call this listener here b/c class does not exist outside this scope.
     */
-    myAccountEdit_listener()
-    populate_account_preferences(homeState.user.id)
-
+  myAccountEdit_listener()
+  populate_account_preferences(homeState.user.id)
 }
-const populate_account_preferences = (user_id) => {
+const populate_account_preferences = user_id => {
   var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": `http://localhost:3000/users/${user_id}`,
-    "method": "GET",
-    "headers": {
-      "Cache-Control": "no-cache"
+    async: true,
+    crossDomain: true,
+    url: `http://localhost:3000/users/${user_id}`,
+    method: 'GET',
+    headers: {
+      'Cache-Control': 'no-cache'
     }
   }
 
   $.ajax(settings).done(function(response) {
-    const target = [{
-        location: "account_email_preferences",
-        user_info: "email"
+    const target = [
+      {
+        location: 'account_email_preferences',
+        user_info: 'email'
       },
       {
-        location: "account_first_name_preferences",
-        user_info: "first_name"
+        location: 'account_first_name_preferences',
+        user_info: 'first_name'
       },
       {
-        location: "account_last_name_preferences",
-        user_info: "last_name"
+        location: 'account_last_name_preferences',
+        user_info: 'last_name'
       }
     ]
     for (var i = 0; i < target.length; i++) {
@@ -262,12 +259,12 @@ const populate_account_preferences = (user_id) => {
       $(`.${target[i].location}`).text(data)
       // $(`${target[i].location}`).val(response[target[i].user_info])
     }
-  });
+  })
 }
 
 const myAccountEdit_listener = () => {
   // NOTE function requires myAccount to run.
-  $(".my_account_edit").on("click", () => {
+  $('.my_account_edit').on('click', () => {
     const html = `
         <div class="card_container">
           <div class="profile_card">
@@ -321,9 +318,9 @@ const myAccountEdit_listener = () => {
           </div>
         </div>
       `
-    if (homeState.current_page !== "my_account_edit") {
+    if (homeState.current_page !== 'my_account_edit') {
       remove_all_divs()
-      $(".container").append(html)
+      $('.container').append(html)
     }
     homeState.current_page = "my_account_edit"
     $('#cancelButton').on("click", (event) => {
@@ -346,17 +343,27 @@ const retrieveAccountSubmitFormData = () => {
   if (password !== password_confirm) {
     return Materialize.toast('Passwords do not match.', 3000)
   }
-  if (password.length > 0 && password.length < 8 || password_confirm.length > 0 && password_confirm.length < 8 || previous_password.length > 0 && previous_password.length < 8) {
+  if (
+    (password.length > 0 && password.length < 8) ||
+    (password_confirm.length > 0 && password_confirm.length < 8) ||
+    (previous_password.length > 0 && previous_password.length < 8)
+  ) {
     return Materialize.toast('Passwords need to be at least 8 digits.', 3000)
   }
-  if (password){
+  if (password) {
     if (previous_password.length === 0) {
       return Materialize.toast('Please enter previous passoword.', 3000)
     }
   }
   /*Iterate through form information. The store inside a JSON object*/
   let data = new Object()
-  let form_ids = ["email", "first_name", "last_name", "previous_password", "password"]
+  let form_ids = [
+    'email',
+    'first_name',
+    'last_name',
+    'previous_password',
+    'password'
+  ]
   for (let key in form_ids) {
     data[form_ids[key]] = $(`#${form_ids[key]}`).val()
     if (data[form_ids[key]] === '') {
@@ -367,25 +374,26 @@ const retrieveAccountSubmitFormData = () => {
 }
 const sendAccountSubmitForm = (data, user_id) => {
   var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": `http://localhost:3000/users/${user_id}`,
-    "method": "PATCH",
-    "headers": {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache"
+    async: true,
+    crossDomain: true,
+    url: `http://localhost:3000/users/${user_id}`,
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache'
     },
-    "processData": false,
-    "data": JSON.stringify(data)
+    processData: false,
+    data: JSON.stringify(data)
   }
 
-  $.ajax(settings).done(function(response) {
-    myAccount_listener()
-    Materialize.toast(response, 3000)
-
-  }).fail((fail_message) => {
-    Materialize.toast(fail_message.responseText, 3000)
-  })
+  $.ajax(settings)
+    .done(function(response) {
+      myAccount_listener()
+      Materialize.toast(response, 3000)
+    })
+    .fail(fail_message => {
+      Materialize.toast(fail_message.responseText, 3000)
+    })
 }
 // END of account functions
 
@@ -442,11 +450,11 @@ const mistyPreferences_listener = () => {
           </div>
       `
 
-    if (homeState.current_page !== "misty_preferences_view") {
+    if (homeState.current_page !== 'misty_preferences_view') {
       remove_all_divs()
-      $(".container").append(html)
+      $('.container').append(html)
     }
-    homeState.current_page = "misty_preferences_view"
+    homeState.current_page = 'misty_preferences_view'
     /*
       Must call this listner b/c classes inside listner do not exist outside of this scope
     */
@@ -454,14 +462,14 @@ const mistyPreferences_listener = () => {
     console.log('called. JUST B4');
     populate_misty_preferences(homeState.user.id)
 }
-const populate_misty_preferences = (user_id) => {
+const populate_misty_preferences = user_id => {
   var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": `http://localhost:3000/users/${user_id}/misty_preferences`,
-    "method": "GET",
-    "headers": {
-      "Cache-Control": "no-cache"
+    async: true,
+    crossDomain: true,
+    url: `http://localhost:3000/users/${user_id}/misty_preferences`,
+    method: 'GET',
+    headers: {
+      'Cache-Control': 'no-cache'
     }
   }
 
@@ -472,26 +480,26 @@ const populate_misty_preferences = (user_id) => {
       return homeState.user.setup_done = false
     }
     homeState.user.preference_id = response.id
-    homeState.user.robot_name = response.robot_name
+    homeState.misty_preferences.robot_name = response.robot_name
     const target = [{
         location: "misty_preference_name",
         user_info: "preference_name"
       },
       {
-        location: "misty_robot_name",
-        user_info: "robot_name"
+        location: 'misty_robot_name',
+        user_info: 'robot_name'
       },
       {
-        location: "misty_authorized_numbers",
-        user_info: "auth_numbers_string"
+        location: 'misty_authorized_numbers',
+        user_info: 'auth_numbers_string'
       },
       {
-        location: "misty_ip_address",
-        user_info: "ip_address"
+        location: 'misty_ip_address',
+        user_info: 'ip_address'
       },
       {
-        location: "misty_port_number",
-        user_info: "port_number"
+        location: 'misty_port_number',
+        user_info: 'port_number'
       },
       {
         location: "misty_voice",
@@ -502,12 +510,16 @@ const populate_misty_preferences = (user_id) => {
         user_info: "misty_face_name"
       },
       {
-        location: "misty_robot_face",
-        user_info: ["set_emotion_valence", "set_emotion_arousal", "set_emotion_dominance"]
+        location: 'misty_robot_face',
+        user_info: [
+          'set_emotion_valence',
+          'set_emotion_arousal',
+          'set_emotion_dominance'
+        ]
       },
       {
-        location: "misty_quiet_hours",
-        user_info: ["time_restriction_start", "time_restriction_end"]
+        location: 'misty_quiet_hours',
+        user_info: ['time_restriction_start', 'time_restriction_end']
       }
     ]
     for (var i = 0; i < target.length; i++) {
@@ -541,8 +553,8 @@ const populate_misty_preferences = (user_id) => {
 }
 const editMistyPreferences_listener = () => {
   // NOTE function requires mistyPreferences_listener to run.
-  $('.edit_misty_preferences').on("click", () => {
-    $(".display_home").addClass("hide_this")
+  $('.edit_misty_preferences').on('click', () => {
+    $('.display_home').addClass('hide_this')
     const html = `
         <div class="card_container">
           <div class="profile_card white">
@@ -658,7 +670,7 @@ const editMistyPreferences_listener = () => {
           </div>
         </div>
     `
-    if (homeState.current_page !== "misty_preferences_edit") {
+    if (homeState.current_page !== 'misty_preferences_edit') {
       remove_all_divs()
       $(`.container`).append(html)
     }
@@ -669,7 +681,7 @@ const editMistyPreferences_listener = () => {
 
     })
     // listen to the form submission
-    $('form').submit(function(e){
+    $('form').submit(function(e) {
       e.preventDefault()
       retrieveMistyPreferencesSubmitFormData()
     })
@@ -687,7 +699,7 @@ const editMistyPreferences_listener = () => {
       autoclose: false, // automatic close timepicker
       ampmclickable: true, // make AM PM clickable
       aftershow: function() {} //Function for after opening timepicker
-    });
+    })
   })
 }
 const retrieveMistyPreferencesSubmitFormData = () => {
@@ -766,8 +778,8 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache"
     },
-    "processData": false,
-    "data": JSON.stringify(data)
+    processData: false,
+    data: JSON.stringify(data)
   }
   $.ajax(settings).done(function(response) {
     Materialize.toast(response, 3000)
@@ -778,6 +790,52 @@ const sendMistyPreferencesSubmitForm = (data, user_id) => {
   })
 }
 // END of misty preferences Functions
+
+
+
+const directTalk_listener = () => {
+  $('.display_home').addClass('hide_this')
+  const html = `
+        <div class="card_container">
+          <div class="chatcont" >
+            <center><h5 class="title_box">Misty Direct Talk</h5></center>
+            <center>
+            <div class="chatMsgs">
+              <!-- additional assets coming from direct_talk.js -->
+              <div class="chatOut">
+              </div>
+            </div>
+            <div class="inputSubForm">
+              <textarea id="message" placeholder= "Message"></textarea>
+              <button class="btn waves-effect waves-light" id="sendMessBtn">Send</button>
+            </div>
+          </div>
+        </div>
+        `
+  if (homeState.current_page !== 'direct_talk') {
+    remove_all_divs()
+    $('.container').append(html)
+  }
+  message_listener()
+  homeState.current_page = 'direct_talk'
+}
+
+const message_listener = () => {
+  let email = homeState.user.email;
+  let robot_name = homeState.misty_preferences.robot_name
+
+  console.log('in here')
+  $('#sendMessBtn').click(() => {
+    console.log('clicked')
+    message = $('#message').val()
+    console.log('about to call newOutbound')
+      newOutbound(email, robot_name)
+
+    console.log(message, robot_name, 'in DTL')
+    console.log(message, 'in DTL #2')
+
+  })
+}
 
 const verifyUserPermissionsToken = () => {
 
@@ -796,6 +854,8 @@ const verifyUserPermissionsToken = () => {
 
   })
 }
+
+
 const logout_remove_token = () => {
         $('.logout').on('click', () => {
           const options = {
@@ -858,18 +918,22 @@ $.ajax(color_settings).done(function (response) {
 }
 const create_listeners = () => {
   // **** MAIN HOME PAGE LISTENERS ****
-
   // Token listeners
   verifyUserPermissionsToken()
   logout_remove_token()
+
+  // populateHomeStateObject()
   // Nav listeners
   goHome_listener()
   /*Edit/View Account*/
-  $(".go_to_my_account").on("click", () => {
+  $('.go_to_my_account').on('click', () => {
     myAccount_listener()
   })
   $(".go_to_misty_preferences").on("click", () => {
     mistyPreferences_listener()
+  })
+  $(".go_to_direct_talk").on("click", () => {
+    directTalk_listener()
   })
 
   /*Edit/View Preferences*/
@@ -879,18 +943,76 @@ const create_listeners = () => {
   /*
     addNumber lets you add multiple numbers to the form.
   */
-  $(".addNumber").click(() => {
+  $('.addNumber').click(() => {
     added_number_count++
     $('#add_phone_number_location').append(add_number(added_number_count))
-    $(`.removeNumber${added_number_count}`).on("click", () => {
-      console.log('clicked');
+    $(`.removeNumber${added_number_count}`).on('click', () => {
+      console.log('clicked')
       $(`.deleteNumberFields${added_number_count}`).remove()
       added_number_count--
-      console.log(added_number_count);
+      console.log(added_number_count)
     })
   })
   // end of addNumber
 }
+const newOutbound = (email,robot_name) => {
+  if (!robot_name){
+    robot_name = "rex";
+  }
+  console.log("user email: ", homeState.user.email)
+  console.log("user robot name: ", robot_name);
+
+    if (robot_name.length > 0) {
+      robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
+      console.log(robot_name, 1)
+      console.log('in here')
+
+      if (message.length > 0) {
+        console.log('in message length here')
+        let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
+        //  $(".chatName").prepend(outName)
+        // $(".chatSubj").prepend(outMessage)
+        $('.chatOut').append(`${outName}`)
+        // output
+        $('#message').val('')
+      }
+    }
+    else if (email) {
+      // use phone number as identifier name if no first or last is available
+      let newArr = []
+      if (message.length > 0) {
+        let outName = `<div class="chatName"><strong> ${email}</strong></div>`
+        let outMessage = `<p class="chatSubj">${message}</p>`
+        $('.chatOut').append(outName, outMessage)
+        // output
+        $('#message').val('')
+      }
+    }
+  return 'dang'
+}
+
+// const populateHomeStateObject= () => {
+//   var settings = {
+//     async: true,
+//     crossDomain: true,
+//     url: `http://localhost:3000/users/${homeState.user.id}/misty_preferences`,
+//     method: 'GET',
+//     headers: {
+//       'Cache-Control': 'no-cache'
+//     }
+//   }
+//
+//   $.ajax(settings).done(function(response_array) {
+//     let response=response_array[0]
+//     if (response === [] || !response || response === undefined){
+//       return homeState.user.setup_done = false
+//     }
+//     for(let i in response){
+//
+//       console.log(homeState.misty_preferences[response[i]])
+//     }
+//   })
+// }
 
 $(document).ready(() => {
   create_listeners();
@@ -901,11 +1023,11 @@ $(document).ready(() => {
   */
   $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
-    opacity: .5, // Opacity of modal background
+    opacity: 0.5, // Opacity of modal background
     inDuration: 300, // Transition in duration
     outDuration: 200, // Transition out duration
     startingTop: '4%', // Starting top style attribute
-    endingTop: '10%', // Ending top style attribute
+    endingTop: '10%' // Ending top style attribute
     // ready: function(modal, trigger) {
     // },
     // complete: function() {}
@@ -914,7 +1036,7 @@ $(document).ready(() => {
     menuWidth: 300, // Default is 300
     edge: 'left', // Choose the horizontal origin
     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    draggable: true,
+    draggable: true
     // onOpen: function(el) {}
     // onClose: function(el) {}
   })
