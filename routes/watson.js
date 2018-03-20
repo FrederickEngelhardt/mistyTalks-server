@@ -42,7 +42,7 @@ function writeFile(text, voice) {
   // Check to see if writeFile has new information
   // Updates params if the values are present
   if (text) params["text"] = text;
-  // if (voice) params["voice"] = voice;
+  if (voice) params["voice"] = voice;
 
   return new Promise((resolve) => {
     // Creation of file using watson's node_module and calling their function synthesize
@@ -82,7 +82,7 @@ function writeAudioMisty(byteStreamArray, filename) {
   // error handling
   if (!filename) filename = 'textResponse.wav'
   if (!byteStreamArray) console.log('ByteStreamArray not sent')
-
+  console.log(byteStreamArray, filename);
   return new Promise((resolve, reject) => {
     const unirest = require("unirest");
 
@@ -165,7 +165,7 @@ router.get("/watson/token", async function (req, res, next) {
 })
 
 router.post('/watson/receive', async function(req, res, next) {
-  console.log(req.body.text);
+  console.log(req.body.text, req.body.voice);
   /*
   NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
         2. After await completes send back a success response
@@ -178,11 +178,15 @@ router.post('/watson/receive', async function(req, res, next) {
   if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
   if (req.body.text) text = req.body.text
   if (req.body.voice) voice = req.body.voice
-  else if (!req.body.text) next({ status: 400, message: `No text sent.` })
+  if (!req.body.text) next({ status: 400, message: `No text sent.` })
+  console.log("THIS IS VOICE",voice);
 
   const write_file = await writeFile(req.body.text, voice)
+  console.log('passed writeFile');
   const read_file = await read()
+  console.log('passed_readfile');
   const write_audio_misty = await writeAudioMisty(read_file)
+  console.log('passed write_audio_misty');
   const play_audio = await playAudio()
   return res.status(200).json({
     status: "success",

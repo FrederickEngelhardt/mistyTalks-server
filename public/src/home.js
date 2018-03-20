@@ -190,7 +190,7 @@ const myAccount_listener = () => {
         <div class="card_container">
           <div class="profile_card">
             <h4 class="title_box">Account Information
-              <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
+              <a style="background-color: #6700ED" class="right btn-floating btn-small waves-effect waves-light">
                 <i class="my_account_edit material-icons">edit
                 </i>
               </a></h4>
@@ -399,7 +399,7 @@ const mistyPreferences_listener = () => {
           <div class="card_container">
             <div class="profile_card">
               <h4 class="title_box">Misty Preferences
-                <a style="background-color:  orange" class="right btn-floating btn-small waves-effect waves-light">
+                <a style="background-color: #6700ED" class="right btn-floating btn-small waves-effect waves-light">
                   <i class="edit_misty_preferences material-icons">edit
                   </i>
                 </a></h4>
