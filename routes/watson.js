@@ -86,7 +86,7 @@ function writeAudioMisty(byteStreamArray, filename) {
   return new Promise((resolve, reject) => {
     const unirest = require("unirest");
 
-    const req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
+    const req = unirest("POST", "http://10.0.1.3/Api/SaveAudioAssetToRobot");
 
     req.headers({
       "Cache-Control": "no-cache"
@@ -119,7 +119,7 @@ function playAudio(misty_filename) {
   return new Promise((resolve, reject) => {
     var unirest = require("unirest");
 
-    var req = unirest("POST", "http://192.168.1.129/Api/PlayAudioClip");
+    var req = unirest("POST", "http://10.0.1.3/Api/PlayAudioClip");
 
     req.headers({
       "Cache-Control": "no-cache"

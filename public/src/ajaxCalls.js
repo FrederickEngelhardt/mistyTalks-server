@@ -21,7 +21,7 @@ $.ajax(settings).done(function (data) {
   var settings2 = {
     "async": true,
     "crossDomain": true,
-    "url": "http://192.168.1.129/Api/SaveAudioAssetToRobot",
+    "url": "http://10.0.1.3/Api/SaveAudioAssetToRobot",
     "method": "POST",
     "headers": {
       "content-type": "text/plain"
@@ -39,7 +39,7 @@ $.ajax(settings).done(function (data) {
     var settings3 = {
       "async": true,
       "crossDomain": true,
-      "url": "http://192.168.1.129/Api/PlayAudioClip",
+      "url": "http://10.0.1.3/Api/PlayAudioClip",
       "method": "POST",
       "headers": {
       },

@@ -577,7 +577,7 @@ const editMistyPreferences_listener = () => {
             <h5>IP Address:</h5>
             <div class="row center">
               <div class="col s9 m9 l9">
-                <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
+                <input type="text" id="ip_address" name="ip_address" value="" placeholder="10.0.1.3" required>
               </div>
             </div>
             <!-- end of user email  -->
@@ -945,7 +945,7 @@ const randomizeMistyFaceAndLights = () => {
   const settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://192.168.1.129/Api/eyes/change",
+    "url": "http://10.0.1.3/Api/eyes/change",
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
@@ -964,7 +964,7 @@ const randomizeMistyFaceAndLights = () => {
   const color_settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://192.168.1.129/Api/led/change",
+    "url": "http://10.0.1.3/Api/led/change",
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
