@@ -254,7 +254,6 @@ const populate_account_preferences = (user_id) => {
     $(`.${target[i].location}`).text(data)
     // $(`${target[i].location}`).val(response[target[i].user_info])
   }
-  // })
 }
 
 const myAccountEdit_listener = () => {
@@ -577,7 +576,7 @@ const editMistyPreferences_listener = () => {
             <h5>IP Address:</h5>
             <div class="row center">
               <div class="col s9 m9 l9">
-                <input type="text" id="ip_address" name="ip_address" value="" placeholder="10.0.1.3" required>
+                <input type="text" id="ip_address" name="ip_address" value="" placeholder="192.168.1.129" required>
               </div>
             </div>
             <!-- end of user email  -->
@@ -925,7 +924,7 @@ const logout_remove_token = () => {
 }
 const misty_face_changer = () => {
   $('.surprise_me_toggle').on("click", () => {
-    const repeatRandomize = setInterval(randomizeMistyFaceAndLights, 1000)
+    const repeatRandomize = setInterval(randomizeMistyFaceAndLights, 10000)
     if (homeState.user.disco_misty === false) {
       $('.surprise_me_toggle').addClass('red')
       homeState.user.disco_misty = true
@@ -945,7 +944,7 @@ const randomizeMistyFaceAndLights = () => {
   const settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://10.0.1.3/Api/eyes/change",
+    "url": "http://192.168.1.129/Api/eyes/change",
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
@@ -964,7 +963,7 @@ const randomizeMistyFaceAndLights = () => {
   const color_settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://10.0.1.3/Api/led/change",
+    "url": "http://192.168.1.129/Api/led/change",
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({

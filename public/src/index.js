@@ -6,7 +6,6 @@ $('#login-btn').on('click', (event) => {
    const email = $('.email-login-input-text').val()
    const password = $('.password-login-input-text').val()
 
-
    const options = {
      contentType: 'application/json',
      data: JSON.stringify({ email, password }),
