@@ -193,7 +193,7 @@ nav {
 
 /*****index/login page*****/
 .modal {
-
+  border-radius: 20px;
   background: #F5F5F5; /*slightly darker white purple*/ */
   max-height: 85% !important;
 }
