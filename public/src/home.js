@@ -1090,12 +1090,12 @@ const open_user_information_socket = () => {
     })
     socket.on('GET/users/:id/response', (response) => {
       let {email, first_name, last_name} = response
+      homeState.user.email = email
+      homeState.user.first_name = first_name
+      homeState.user.last_name = last_name
       if (!email || email === '') {
         setTimeout(socket.emit('GET/users/:id', homeState.user.id), 500)
       }
-      homeState.user.email = email
-      homeState.user.email = first_name
-      homeState.user.email = last_name
     })
   })
 }
