@@ -1090,6 +1090,9 @@ const open_user_information_socket = () => {
     })
     socket.on('GET/users/:id/response', (response) => {
       let {email, first_name, last_name} = response
+      if (!email || email === '') {
+        socket.emit('GET/users/:id', homeState.user.id)
+      }
       homeState.user.email = email
       homeState.user.email = first_name
       homeState.user.email = last_name
