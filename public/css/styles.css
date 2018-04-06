@@ -63,7 +63,7 @@ main {
     height: 45px;
   }
 }
-@media screen and (min-width: 400px) and (max-width: 600px){
+@media screen and (min-width: 370px) and (max-width: 600px){
   .appName {
     margin-top: -1px;
     font-size: 15px;
@@ -75,10 +75,10 @@ main {
     height: 40px;
   }
 }
-@media screen and (min-width: 200px) and (max-width: 400px){
+@media screen and (min-width: 200px) and (max-width: 370px){
   .appName {
     margin-top: -1px;
-    font-size: 13px;
+    font-size: 12px;
   }
   .icon_size {
     /* margin: auto; */
