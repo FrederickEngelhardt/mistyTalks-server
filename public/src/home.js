@@ -201,11 +201,11 @@ const myAccount_listener = () => {
               </tr>
               <tr>
                 <td>First Name</td>
-                <td class="account_first_name_preferences">Frederick</td>
+                <td class="account_first_name_preferences"></td>
               </tr>
               <tr>
                 <td>Last Name</td>
-                <td class="account_last_name_preferences">Engelhardt</td>
+                <td class="account_last_name_preferences"></td>
               </tr>
             </table>
           </div>
@@ -394,6 +394,7 @@ const sendAccountSubmitForm = (data, user_id) => {
 
   $.ajax(settings)
     .done(function(response) {
+      open_user_information_socket()
       myAccount_listener()
       Materialize.toast(response, 3000)
     })

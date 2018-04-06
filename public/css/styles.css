@@ -63,10 +63,22 @@ main {
     height: 45px;
   }
 }
-@media screen and (max-width: 600px){
+@media screen and (min-width: 400px) and (max-width: 600px){
   .appName {
     margin-top: -1px;
     font-size: 15px;
+  }
+  .icon_size {
+    /* margin: auto; */
+    margin-top: 6px;
+    width: 40px;
+    height: 40px;
+  }
+}
+@media screen and (min-width: 200px) and (max-width: 400px){
+  .appName {
+    margin-top: -1px;
+    font-size: 13px;
   }
   .icon_size {
     /* margin: auto; */
@@ -289,6 +301,7 @@ label {
   max-width: 600px;
   background: white;
   padding: 25px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 td {
@@ -408,6 +421,7 @@ p.small-text {
 .collapsible-header{
   /* opacity: 0.75; */
  background-color: 	#6700ED;
+ border-radius: 10px;
 }
 
 .collapsible-body{
