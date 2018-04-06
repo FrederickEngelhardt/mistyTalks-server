@@ -223,7 +223,7 @@ router.post('/users/:id/misty_preferences', (req, res, next) => {
     .then(() => {
       res.status(200).json({
         status: "success",
-        message: `Preference: ${dataFields.preference_name} has been created!`
+        message: `Successfully created the preference: ${dataFields.preference_name}`
       })
     })
 })

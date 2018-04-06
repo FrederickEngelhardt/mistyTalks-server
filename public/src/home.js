@@ -1,3 +1,4 @@
+'use strict'
 /*
   NOTE: State class will store all State values used in dynamic html/dom manipulations. State also stores user preferences and any database related calls. State is not saved in local storage.
 */
@@ -406,7 +407,10 @@ const ws_update_account = (callback) => {
   let socket = io('')
   socket.emit('GET/users/:id', homeState.user.id)
   socket.on('GET/users/:id/response', (response) => {
-    homeState.user = response
+    let {email, first_name, last_name} = response
+    homeState.user.email = email
+    homeState.user.first_name = first_name
+    homeState.user.last_name = last_name
     return callback()
   })
 }
@@ -474,7 +478,6 @@ const mistyPreferences_listener = () => {
     Must call this listner b/c classes inside listner do not exist outside of this scope
   */
   editMistyPreferences_listener()
-  console.log('called. JUST B4');
   populate_misty_preferences(homeState.user.id)
 }
 const populate_misty_preferences = user_id => {
@@ -490,11 +493,9 @@ const populate_misty_preferences = user_id => {
 
   $.ajax(settings).done(function(response_array) {
       let response = response_array[0]
-      console.log("THIS IS RESPONSE", response);
       if (response === [] || !response || response === undefined) {
         return homeState.user.setup_done = false
       }
-      console.log();
       homeState.user.preference_id = response.id
       homeState.misty_user_preferences.robot_name = response.robot_name
       const target_view = [{
@@ -814,9 +815,7 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       "time_restriction_end": misty_quiet_end
     }
     if (phone_number1.length < 11) {
-      console.log(phone_number1);
-      console.log(phone_number1.length);
-      phone_number1 = country_code+phone_number1
+      data.auth_numbers_string = country_code + phone_number1
     }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
@@ -849,34 +848,54 @@ const retrieveMistyPreferencesSubmitFormData = () => {
   sendMistyPreferencesSubmitForm(data, homeState.user.id)
 }
 const sendMistyPreferencesSubmitForm = (data, user_id) => {
-  let method = {
-    type: "PATCH",
-    url: `/users/${user_id}/misty_preferences/${homeState.misty_user_preferences.misty_user_preference_id}`
+  if (homeState.user.setup_done === true) {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `/users/${user_id}/misty_preferences/${homeState.misty_user_preferences.id}`,
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
+      },
+      processData: false,
+      data: JSON.stringify(data)
+    }
+    $.ajax(settings).done(function(response) {
+      Materialize.toast(response.message, 3000)
+      return mistyPreferences_listener()
+    }).fail((fail_message) => {
+      Materialize.toast(fail_message.responseText, 3000)
+    })
   }
   if (homeState.user.setup_done === false) {
-    method = {
-      type: "POST",
-      url: `/users/${user_id}/misty_preferences`
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `/users/${user_id}/misty_preferences`,
+      "method": `POST`,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
+      },
+      processData: false,
+      data: JSON.stringify(data)
     }
+    $.ajax(settings).done(function(response) {
+      Materialize.toast(response.message, 3000)
+      return ws_update_misty_preferences(mistyPreferences_listener)
+    }).fail((fail_message) => {
+      Materialize.toast(fail_message.responseText, 3000)
+    })
   }
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": method.url,
-    "method": `${method.type}`,
-    "headers": {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache"
-    },
-    processData: false,
-    data: JSON.stringify(data)
-  }
-  $.ajax(settings).done(function(response) {
-    Materialize.toast(response, 3000)
-    return mistyPreferences_listener()
+}
 
-  }).fail((fail_message) => {
-    Materialize.toast(fail_message.responseText, 3000)
+const ws_update_misty_preferences = (callback) => {
+  let socket = io('')
+  socket.emit('GET/users/:id/misty_preferences', homeState.user.id)
+  socket.on('GET/users/:id/misty_user_preferences/response', (response) => {
+    homeState.misty_user_preferences = response[0]
+    return callback()
   })
 }
 // END of misty preferences Functions
@@ -916,20 +935,14 @@ const message_listener = () => {
   $('#sendMessBtn').click(() => {
     let email = homeState.user.email;
     let robot_name = homeState.misty_user_preferences.robot_name
-    console.log('clicked')
     message = $('#message').val()
     sendTextToWatson(message)
-    console.log('about to call newOutbound')
     newOutbound(email, robot_name)
-
-    console.log(message, robot_name, 'in DTL')
-    console.log(message, 'in DTL #2')
 
   })
 }
 const sendTextToWatson = (text, voice) => {
   if (!voice) voice = "en-GB_KateVoice"
-  console.log(text);
   var settings = {
     "async": true,
     "crossDomain": true,
@@ -946,23 +959,17 @@ const sendTextToWatson = (text, voice) => {
   }
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
   });
 }
 const newOutbound = (email, robot_name) => {
   if (!robot_name) {
     robot_name = "Robot";
   }
-  console.log("user email: ", homeState.user.email)
-  console.log("user robot name: ", robot_name);
 
   if (robot_name.length > 0) {
     robot_name = robot_name.charAt(0).toUpperCase() + robot_name.slice(1)
-    console.log(robot_name, 1)
-    console.log('in here')
 
     if (message.length > 0) {
-      console.log('in message length here')
       let outName = `<div class="chatName"><strong> ${robot_name}</strong></div><p class="chatSubj">${message}</p>`
       //  $(".chatName").prepend(outName)
       // $(".chatSubj").prepend(outMessage)
@@ -996,8 +1003,7 @@ const verifyUserPermissionsToken = () => {
     Materialize.toast(msg.responseText, 3000);
     setTimeout(function() {
       return window.location.href = '/index.html'
-    }, 200)
-
+    }, 500)
   })
 }
 
@@ -1054,7 +1060,6 @@ const randomizeMistyFaceAndLights = () => {
     b = Math.floor(Math.random() * 255)
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
   });
   const color_settings = {
     "async": true,
@@ -1069,7 +1074,6 @@ const randomizeMistyFaceAndLights = () => {
     })
   }
   $.ajax(color_settings).done(function(response) {
-    console.log(response);
   });
 }
 
@@ -1085,7 +1089,10 @@ const open_user_information_socket = () => {
       homeState.misty_user_preferences = response[0]
     })
     socket.on('GET/users/:id/response', (response) => {
-      homeState.user = response
+      let {email, first_name, last_name} = response
+      homeState.user.email = email
+      homeState.user.email = first_name
+      homeState.user.email = last_name
     })
   })
 }

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.foreign('misty_user_preference_id').references('users.id')
     table.string('preference_name').notNullable()
     table.string('robot_name').defaultsTo(null)
-    table.string('auth_numbers_string').notNullable()
+    table.string('auth_numbers_string').defaultsTo(null)
     table.string('ip_address').notNullable()
     table.integer('port_number').defaultTo(null)
     table.string('misty_voice_name').defaultsTo(null);
