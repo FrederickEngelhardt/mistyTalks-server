@@ -221,22 +221,12 @@ const myAccount_listener = () => {
       NOTE: Need to call this listener here b/c class does not exist outside this scope.
     */
   myAccountEdit_listener()
-  populate_account_preferences(homeState.user.id)
+  populate_account_preferences()
 }
-const populate_account_preferences = (user_id) => {
-  // var settings = {
-  //   async: true,
-  //   crossDomain: true,
-  //   url: `/users/${user_id}`,
-  //   method: 'GET',
-  //   headers: {
-  //     'Cache-Control': 'no-cache'
-  //   }
-  // }
-  //
-  // $.ajax(settings).done(function(response) {
+const populate_account_preferences = () => {
+  console.log('called');
   let response = homeState.user
-  const target = [{
+  const target_view = [{
       location: 'account_email_preferences',
       user_info: 'email'
     },
@@ -249,10 +239,31 @@ const populate_account_preferences = (user_id) => {
       user_info: 'last_name'
     }
   ]
-  for (var i = 0; i < target.length; i++) {
-    const data = response[target[i]['user_info']]
-    $(`.${target[i].location}`).text(data)
-    // $(`${target[i].location}`).val(response[target[i].user_info])
+  const target_edit = [{
+      location: 'email',
+      user_info: 'email'
+    },
+    {
+      location: 'first_name',
+      user_info: 'first_name'
+    },
+    {
+      location: 'last_name',
+      user_info: 'last_name'
+    }
+  ]
+
+  if (homeState.current_page === "my_account_edit"){
+    for (var i = 0; i < target_edit.length; i++) {
+      const data = response[target_edit[i]['user_info']]
+      $(`#${target_edit[i].location}`).val(data)
+    }
+  }
+  else {
+    for (var i = 0; i < target_view.length; i++) {
+      const data = response[target_view[i]['user_info']]
+      $(`.${target_view[i].location}`).text(data)
+    }
   }
 }
 
@@ -317,6 +328,7 @@ const myAccountEdit_listener = () => {
       $('.container').append(html)
     }
     homeState.current_page = "my_account_edit"
+    populate_account_preferences()
     $('#cancelButton').on("click", (event) => {
       event.preventDefault()
       return myAccount_listener()
@@ -476,7 +488,7 @@ const populate_misty_preferences = user_id => {
       console.log();
       homeState.user.preference_id = response.id
       homeState.misty_user_preferences.robot_name = response.robot_name
-      const target = [{
+      const target_view = [{
           location: "misty_preference_name",
           user_info: "preference_name"
         },
@@ -517,26 +529,94 @@ const populate_misty_preferences = user_id => {
           user_info: ['time_restriction_start', 'time_restriction_end']
         }
       ]
-      for (var i = 0; i < target.length; i++) {
-        if (target[i].location === "misty_port_number" && response[target[i].user_info] === null) {
-          const data = `Disabled`
-          $(`.${target[i].location}`).text(data)
-        } else if (target[i].location === "misty_quiet_hours") {
-          if (response[target[i].user_info[0]] === null && response[target[i].user_info[1]] === null) {
-            const data = `Disabled`
-            $(`.${target[i].location}`).text(data)
-          } else {
-            const data = `Between ${response[target[i].user_info[0]]} and ${response[target[i].user_info[1]]}`
-            $(`.${target[i].location}`).text(data)
-          }
-        } else if (target[i].location === "misty_robot_face") {
-          const data = `Valence: ${response[target[i].user_info[0]]} <br> Arousal: ${response[target[i].user_info[1]]} <br>Dominance: ${response[target[i].user_info[2]]}`
-          $(`.${target[i].location}`).html(data)
-        } else {
-          const data = response[target[i]['user_info']]
-          $(`.${target[i].location}`).text(data)
+      const target_edit = [{
+          location: "preference_name",
+          user_info: "preference_name"
+        },
+        {
+          location: 'robot_name',
+          user_info: 'robot_name'
+        },
+        {
+          location: 'phone_number1',
+          user_info: 'auth_numbers_string'
+        },
+        {
+          location: 'ip_address',
+          user_info: 'ip_address'
+        },
+        {
+          location: 'port_number',
+          user_info: 'port_number'
+        },
+        {
+          location: "misty_voice_name",
+          user_info: "misty_voice_name"
+        },
+        {
+          location: "misty_face_name",
+          user_info: "misty_face_name"
+        },
+        {
+          location: 'misty_robot_face',
+          user_info: [
+            'set_emotion_valence',
+            'set_emotion_arousal',
+            'set_emotion_dominance'
+          ]
+        },
+        {
+          location: 'misty_quiet_hours',
+          user_info: ['time_restriction_start', 'time_restriction_end']
         }
-        // $(`${target[i].location}`).val(response[target[i].user_info])
+      ]
+      // NOTE: we are appending data in the edit window
+      if (homeState.current_page === "misty_preferences_edit"){
+        for (var i = 0; i < target_edit.length; i++) {
+          if (target_edit[i].location === "misty_port_number" && response[target_edit[i].user_info] === null) {
+            const data = `Disabled`
+            $(`#${target_edit[i].location}`).val(data)
+          } else if (target_edit[i].location === "misty_quiet_hours") {
+            if (response[target_edit[i].user_info[0]] === null && response[target_edit[i].user_info[1]] === null) {
+              const data = `Disabled`
+              $(`#${target_edit[i].location}`).val(data)
+            } else {
+              const data = `Between ${response[target_edit[i].user_info[0]]} and ${response[target_edit[i].user_info[1]]}`
+              $(`#${target_edit[i].location}`).val(data)
+            }
+          } else if (target_edit[i].location === "misty_robot_face") {
+            const data = `Valence: ${response[target_edit[i].user_info[0]]} <br> Arousal: ${response[target_edit[i].user_info[1]]} <br>Dominance: ${response[target_edit[i].user_info[2]]}`
+            $(`#${target_edit[i].location}`).html(data)
+          } else {
+            const data = response[target_edit[i]['user_info']]
+            $(`#${target_edit[i].location}`).val(data)
+          }
+          // $(`${target[i].location}`).val(response[target[i].user_info])
+        }
+      }
+      // NOTE: We are appending data in the view window
+      else {
+        for (var i = 0; i < target_view.length; i++) {
+          if (target_view[i].location === "misty_port_number" && response[target_view[i].user_info] === null) {
+            const data = `Disabled`
+            $(`.${target_view[i].location}`).text(data)
+          } else if (target_view[i].location === "misty_quiet_hours") {
+            if (response[target_view[i].user_info[0]] === null && response[target_view[i].user_info[1]] === null) {
+              const data = `Disabled`
+              $(`.${target_view[i].location}`).text(data)
+            } else {
+              const data = `Between ${response[target_view[i].user_info[0]]} and ${response[target_view[i].user_info[1]]}`
+              $(`.${target_view[i].location}`).text(data)
+            }
+          } else if (target_view[i].location === "misty_robot_face") {
+            const data = `Valence: ${response[target_view[i].user_info[0]]} <br> Arousal: ${response[target_view[i].user_info[1]]} <br>Dominance: ${response[target_view[i].user_info[2]]}`
+            $(`.${target_view[i].location}`).html(data)
+          } else {
+            const data = response[target_view[i]['user_info']]
+            $(`.${target_view[i].location}`).text(data)
+          }
+          // $(`${target[i].location}`).val(response[target[i].user_info])
+        }
       }
     })
     .fail((error_response) => {
@@ -668,6 +748,7 @@ const editMistyPreferences_listener = () => {
       $(`.container`).append(html)
     }
     homeState.current_page = "misty_preferences_edit"
+    populate_misty_preferences(homeState.user.id)
     $('#cancelButton').on("click", (event) => {
       event.preventDefault()
       return mistyPreferences_listener()
@@ -700,7 +781,8 @@ const retrieveMistyPreferencesSubmitFormData = () => {
     robot_name = $("#robot_name").val(),
     ip_address = $("#ip_address").val(),
     port_number = $("#port_number").val(),
-    phone_number1 = $("#phone_number1").val() + $("#phone_country_code1").val(),
+    country_code = $("#phone_country_code1").val(),
+    phone_number1 = $("#phone_number1").val(),
     misty_voice_choice = $("#choose_voices :selected").text(),
     misty_face_choice = $("#choose_face_emote :selected").text(),
     misty_face_valence = $("#expression_valence").val(),
@@ -721,6 +803,11 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       "set_emotion_dominance": misty_face_dominance,
       "time_restriction_start": misty_quiet_start,
       "time_restriction_end": misty_quiet_end
+    }
+    if (phone_number1.length < 11) {
+      console.log(phone_number1);
+      console.log(phone_number1.length);
+      phone_number1 = country_code+phone_number1
     }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
