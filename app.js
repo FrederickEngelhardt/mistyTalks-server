@@ -25,7 +25,7 @@ let io = socket.listen(server);
 io.sockets.on('connection', function(socket) {
 
     // Replaces GET route for misty_user_preferences
-    socket.on('/users/:id/misty_preferences', function(id) {
+    socket.on('GET/users/:id/misty_preferences', function(id) {
       if (Number.isNaN(id)) {
         return console.log({
           status: 404,
@@ -42,13 +42,13 @@ io.sockets.on('connection', function(socket) {
               message: `Not Found`
             })
           }
-          socket.emit('/users/:id/misty_user_preferences/response', data)
+          socket.emit('GET/users/:id/misty_user_preferences/response', data)
         })
         .catch(err => {
           console.log(error);
         })
       })
-      socket.on('/users/:id', (id) => {
+      socket.on('GET/users/:id', (id) => {
         if (Number.isNaN(id)) {
           return console.log({
             status: 404,
@@ -68,7 +68,7 @@ io.sockets.on('connection', function(socket) {
               })
             }
             delete data.password
-            socket.emit('/users/:id/response', data)
+            socket.emit('GET/users/:id/response', data)
           })
           .catch(err => {
             console.log(err)

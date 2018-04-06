@@ -394,13 +394,21 @@ const sendAccountSubmitForm = (data, user_id) => {
 
   $.ajax(settings)
     .done(function(response) {
-      open_user_information_socket()
-      myAccount_listener()
+      ws_update_account(myAccount_listener)
+      // setTimeout(myAccount_listener, 1000)
       Materialize.toast(response, 3000)
     })
     .fail(fail_message => {
       Materialize.toast(fail_message.responseText, 3000)
     })
+}
+const ws_update_account = (callback) => {
+  let socket = io('')
+  socket.emit('GET/users/:id', homeState.user.id)
+  socket.on('GET/users/:id/response', (response) => {
+    homeState.user = response
+    return callback()
+  })
 }
 // END of account functions
 
@@ -988,7 +996,7 @@ const verifyUserPermissionsToken = () => {
     Materialize.toast(msg.responseText, 3000);
     setTimeout(function() {
       return window.location.href = '/index.html'
-    }, 1000)
+    }, 200)
 
   })
 }
@@ -1071,20 +1079,15 @@ const open_user_information_socket = () => {
   let mistyChannel = homeState.user.email
   socket.on('connect', () => {
     console.log('new connection', mistyChannel)
-    socket.emit('/users/:id/misty_preferences', homeState.user.id)
-    socket.emit('/users/:id', homeState.user.id)
-    socket.on('/users/:id/misty_user_preferences/response', (response) => {
+    socket.emit('GET/users/:id/misty_preferences', homeState.user.id)
+    socket.emit('GET/users/:id', homeState.user.id)
+    socket.on('GET/users/:id/misty_user_preferences/response', (response) => {
       homeState.misty_user_preferences = response[0]
-      console.log(response[0]);
     })
-    socket.on('/users/:id/response', (response) => {
+    socket.on('GET/users/:id/response', (response) => {
       homeState.user = response
-      console.log(response);
     })
   })
-  // socket.on('message', function(data) {
-  //   console.log('Incoming message:', data)
-  // })
 }
 
 const create_listeners = () => {
@@ -1095,7 +1098,7 @@ const create_listeners = () => {
 
   // populateHomeStateObject()
   // Nav listeners
-  setTimeout(open_user_information_socket, 2000)
+  setTimeout(open_user_information_socket, 300)
   goHome_listener()
   /*Edit/View Account*/
   $('.go_to_my_account').on('click', () => {
