@@ -12,6 +12,7 @@ class State {
       this.misty_user_preferences = {}
   }
 }
+
 let homeState = new State('home')
 let added_number_count = 1
 const add_number = (count) => {
@@ -336,15 +337,15 @@ const myAccountEdit_listener = () => {
     })
     $('form').submit(function(e) {
       e.preventDefault()
-      retrieveAccountSubmitFormData()
+      return retrieveAccountSubmitFormData()
     })
   })
 }
 
 const retrieveAccountSubmitFormData = () => {
   let password_confirm = $("#confirm_password").val(),
-    password = $("#password").val(),
-    previous_password = $("#previous_password").val()
+      password = $("#password").val(),
+      previous_password = $("#previous_password").val()
 
   if (password !== password_confirm) {
     return Materialize.toast('Passwords do not match.', 3000)
@@ -395,7 +396,6 @@ const sendAccountSubmitForm = (data, user_id) => {
   $.ajax(settings)
     .done(function(response) {
       ws_update_account(myAccount_listener)
-      // setTimeout(myAccount_listener, 1000)
       Materialize.toast(response, 3000)
     })
     .fail(fail_message => {
@@ -703,7 +703,7 @@ const editMistyPreferences_listener = () => {
             <div class="row">
               <div class="input-field col browser-default s9 m9 l9">
                 <select id="choose_voices">
-                    <option value="" disabled selected>Choose your misty Voice</option>
+                    <option value="" disabled selected>Choose Your Misty Voice</option>
                   </select>
               </div>
             </div>
@@ -813,17 +813,22 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       "time_restriction_start": misty_quiet_start,
       "time_restriction_end": misty_quiet_end
     }
+    // Phone number checks (for twilio)
+    country_code = country_code.replace(/^+/i,"")
     if (phone_number1.length < 11) {
       data.auth_numbers_string = country_code + phone_number1
     }
+    if (data.auth_numbers_string.length < 11) {
+      delete data.auth_numbers_string
+    }
+    if (data.auth_numbers_string.length === 11) {
+      data.auth_numbers_string = "+" + data.auth_numbers_string
+    }
   /*Iterate through form information. The store inside a JSON object*/
   for (let i in data) {
-    if (data[i] === '' || data[i] === "Choose your misty Voice" || data[i] === "Select Misty Preset Face") {
+    if (data[i] === '' || data[i] === "Choose Your Misty Voice" || data[i] === "Select Misty Preset Face") {
       delete data[i]
     }
-  }
-  if (data.auth_numbers_string.length < 11) {
-    delete data.auth_numbers_string
   }
   if (data.misty_face_choice && data.misty_face_valence || data.misty_face_choice && data.misty_face_arousal || data.misty_face_choice && data.misty_face_dominance) {
     return Materialize.toast("Please select either a preset Misty Face or make your own custom face.")
