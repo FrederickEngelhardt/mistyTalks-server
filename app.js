@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // server side socket variable, this will not cross over into the front end
-let server = app.listen(port, function() {
+const server = app.listen(port, function() {
   console.log(`listening to requests on port ${port}`);
 });
 // Socket SETUP on the server awaiting to be called...
-let io = socket.listen(server);
+const io = socket.listen(server);
 
 
 // Listens for user connection and reads their id.

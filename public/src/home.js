@@ -225,7 +225,6 @@ const myAccount_listener = () => {
   populate_account_preferences()
 }
 const populate_account_preferences = () => {
-  console.log('called');
   let response = homeState.user
   const target_view = [{
       location: 'account_email_preferences',
@@ -993,7 +992,7 @@ const newOutbound = (email, robot_name) => {
 const verifyUserPermissionsToken = () => {
 
   // grab user token, see whos logged in
-  //put into state class for user
+  // put into state class for user
 
   $.get('/users/token').done((result) => {
     // if (!result) window.location.href = '/index.html'
