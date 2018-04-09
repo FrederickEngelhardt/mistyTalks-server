@@ -73,20 +73,20 @@ function read() {
   })
 }
 
-function writeAudioMisty(byteStreamArray, filename) {
+function writeAudioMisty(byteStreamArray, ip_address) {
   /*
     byteStreamArray to be sent to misty and written as a file on the misty robot.
     TODO: let user rename the file so they can make custom calls.
     NOTE: textResponse.wav is the file name that misty creates on her localStorage
   */
   // error handling
-  if (!filename) filename = 'textResponse.wav'
+  let filename = 'textResponse.wav'
   if (!byteStreamArray) console.log('ByteStreamArray not sent')
   console.log(byteStreamArray, filename);
   return new Promise((resolve, reject) => {
     const unirest = require("unirest");
 
-    const req = unirest("POST", "http://192.168.1.129/Api/SaveAudioAssetToRobot");
+    const req = unirest("POST", `http://${ip_address}/Api/SaveAudioAssetToRobot`);
 
     req.headers({
       "Cache-Control": "no-cache"
@@ -108,18 +108,18 @@ function writeAudioMisty(byteStreamArray, filename) {
   })
 }
 
-function playAudio(misty_filename) {
+function playAudio(ip_address) {
   /*
   NOTE: This function calls the specified filename and plays it through misty robot
         *if the robot does not play the file, it may not exist
         **OR playAudio cut off the previous call.
         TODO: Add chaining playing audio files for misty robot...
 */
-  if (!misty_filename) misty_filename = "textResponse.wav"
+  let misty_filename = "textResponse.wav"
   return new Promise((resolve, reject) => {
     var unirest = require("unirest");
 
-    var req = unirest("POST", "http://192.168.1.129/Api/PlayAudioClip");
+    var req = unirest("POST", `http://${ip_address}/Api/PlayAudioClip`);
 
     req.headers({
       "Cache-Control": "no-cache"
@@ -165,29 +165,26 @@ router.get("/watson/token", async function (req, res, next) {
 })
 
 router.post('/watson/receive', async function(req, res, next) {
-  console.log(req.body.text, req.body.voice);
+  console.log(req.body.text, req.body.voice,req.body.ip_address);
   /*
-  NOTE: 1. ASYNC function to await for writeFile, read, writeAudioToMisty, playAudio functions
-        2. After await completes send back a success response
-  TODO: Add error handling for each function that does NOT break server with throw.
+  NOTE: ip_address is supposed to be the ip_address from misty user preferences.
+  If the ip address is not working, manually change the ip_address to misty_robot given ip address.
 */
   let voice = 'en-US_AllisonVoice',
-      text = ''
+      text = '',
+      ip_address = '192.168.1.129'
 
   const {twilio, twilio_number} = req.body
   if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
   if (req.body.text) text = req.body.text
-  if (req.body.voice) voice = req.body.voice
   if (!req.body.text) next({ status: 400, message: `No text sent.` })
-  console.log("THIS IS VOICE",voice);
+  if (req.body.voice) voice = req.body.voice
+  if (req.body.ip_address) ip_address = req.body.ip_address
 
   const write_file = await writeFile(req.body.text, voice)
-  console.log('passed writeFile');
   const read_file = await read()
-  console.log('passed_readfile');
-  const write_audio_misty = await writeAudioMisty(read_file)
-  console.log('passed write_audio_misty');
-  const play_audio = await playAudio()
+  const write_audio_misty = await writeAudioMisty(read_file, ip_address)
+  const play_audio = await playAudio(ip_address)
   return res.status(200).json({
     status: "success",
     message: `${req.body.text}`

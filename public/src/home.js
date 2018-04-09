@@ -448,6 +448,10 @@ const mistyPreferences_listener = () => {
                   <td class="misty_authorized_numbers"></td>
                 </tr>
                 <tr>
+                  <td>Misty Twilio Number</td>
+                  <td class="misty_twilio_number"></td>
+                </tr>
+                <tr>
                   <td>Misty Voice:</td>
                   <td class="misty_voice"></td>
                 </tr>
@@ -510,6 +514,10 @@ const populate_misty_preferences = user_id => {
           user_info: 'auth_numbers_string'
         },
         {
+          location: 'misty_twilio_number',
+          user_info: 'misty_twilio_number'
+        },
+        {
           location: 'misty_ip_address',
           user_info: 'ip_address'
         },
@@ -549,6 +557,10 @@ const populate_misty_preferences = user_id => {
         {
           location: 'phone_number1',
           user_info: 'auth_numbers_string'
+        },
+        {
+          location: 'misty_twilio_number',
+          user_info: 'misty_twilio_number'
         },
         {
           location: 'ip_address',
@@ -698,6 +710,17 @@ const editMistyPreferences_listener = () => {
             </div>
             <!-- End authorization numbers -->
 
+            <!--Misty Twilio number input here -->
+            <div id="add_misty_twilio_number_location">
+              <h5>Misty Twilio Number:</h5>
+              <div class="row center">
+                <div class="col s9 m9 l9">
+                  <input type="tel" id="misty_twilio_number" name="phone" value="" placeholder="+1-XXX-XXX-XXXX">
+                </div>
+              </div>
+            </div>
+            <!-- End Misty Twilio number -->
+
             <!--misty voice settings -->
             <h5>Misty Voice</h5>
             <div class="row">
@@ -792,6 +815,7 @@ const retrieveMistyPreferencesSubmitFormData = () => {
     port_number = $("#port_number").val(),
     country_code = $("#phone_country_code1").val(),
     phone_number1 = $("#phone_number1").val(),
+    misty_twilio_number = $("#misty_twilio_number").val(),
     misty_voice_choice = $("#choose_voices :selected").text(),
     misty_face_choice = $("#choose_face_emote :selected").text(),
     misty_face_valence = $("#expression_valence").val(),
@@ -805,6 +829,7 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       "robot_name": robot_name,
       "ip_address": ip_address,
       "auth_numbers_string": phone_number1,
+      "misty_twilio_number": misty_twilio_number,
       "misty_voice_name": misty_voice_choice,
       "misty_face_name": misty_face_choice,
       "set_emotion_valence": misty_face_valence,
@@ -1050,7 +1075,7 @@ const randomizeMistyFaceAndLights = () => {
   const settings = {
     "async": true,
     "crossDomain": true,
-    "url": `${homeState.misty_user_preferences.ip_address}/Api/eyes/change`,
+    "url": `https://${homeState.misty_user_preferences.ip_address}/Api/eyes/change`,
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
@@ -1068,7 +1093,7 @@ const randomizeMistyFaceAndLights = () => {
   const color_settings = {
     "async": true,
     "crossDomain": true,
-    "url": `${homeState.misty_user_preferences.ip_address}/Api/led/change`,
+    "url": `https://${homeState.misty_user_preferences.ip_address}/Api/led/change`,
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({

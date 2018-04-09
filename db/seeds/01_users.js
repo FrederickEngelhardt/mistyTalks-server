@@ -6,9 +6,9 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert([
         {
           id: 1,
-          first_name: 'Bob',
-          last_name: 'Ross',
-          email: 'me@me.com',
+          first_name: 'Admin',
+          last_name: 'MistyTalks',
+          email: 'admin@mistytalks.com',
           password: '$2a$10$uB1nC5RLNVkgQKRwTKxx8eqT4qN4tctGUb9/sF19tbyLjNWL9Ssli'
         },
         {
@@ -23,7 +23,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Ron',
           last_name: 'Burgandy',
           email: 'my@my.com',
-          password: 'fghj'
+          password: '$2a$10$uB1nC5RLNVkgQKRwTKxx8eqT4qN4tctGUb9/sF19tbyLjNWL9Ssli'
         }
         ]);
       })

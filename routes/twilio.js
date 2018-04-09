@@ -2,32 +2,39 @@ const express = require('express')
 const knex = require('../knex')
 const router = express.Router()
 
-router.post('/twilio/receive', (req, res) => {
-  console.log(req.body)
+const authorized_phone_ip_address = (phone_number) => {
+  return knex("misty_preferences")
+      .where({auth_numbers_string: phone_number})
+      .then( (data) => {
+        if (!data[0]) {
+          return {status: 403, message: "No IP Address authorized for that phone number."}
+        }
+        return {
+          status: 200,
+          message: "Success",
+          voice: data[0].misty_voice_name,
+          ip_address: data[0].ip_address
+        }
+      })
+}
 
+router.post('/twilio/receive', async function (req, res, next) {
   /*
     User Authorization
   */
-  const authorization_numbers = [
-    process.env.FREDERICK_NUMBER,
-    process.env.SCOTT_NUMBER
-  ]
+  // const authorization_numbers = [
+  //   process.env.FREDERICK_NUMBER,
+  //   process.env.SCOTT_NUMBER
+  // ]
+
   const received_number = req.body.From
-  let authorized = false
-  for (let i in authorization_numbers) {
-    if (authorization_numbers[i] === received_number) {
-      console.log('User is authorized.')
-      authorized = true
-    }
-  }
-  if (authorized === false) {
-    console.log('User was rejected. Authorization is null.')
-    return res
-      .status(403)
-      .send(
-        `Your number ${received_number} is not authorized on this misty server.`
-      )
-  }
+  /*
+    Checks to see if the authorized number is database and
+    returns ip address of related authorized number.
+  */
+  const authorized_prefs = await authorized_phone_ip_address(received_number)
+  console.log(authorized_prefs,received_number);
+  if (authorized_prefs.status === 403) return next(authorized_prefs.message)
   /*
     End of user Authorization
   */
@@ -71,7 +78,10 @@ router.post('/twilio/receive', (req, res) => {
     message = "You have unlocked a hidden feature: Disco!" + message
   }
   // API call to watson routes
-  let response = {text: `${message}`}
+  let response = {
+    text: `${message}`,
+    voice: `${authorized_prefs.voice}`,
+    ip_address: `${authorized_prefs.ip_address}`}
   if (voice) response.voice = voice
     let unirest = require('unirest')
 
