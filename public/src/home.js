@@ -1050,7 +1050,7 @@ const randomizeMistyFaceAndLights = () => {
   const settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://192.168.1.129/Api/eyes/change",
+    "url": `${homeState.misty_user_preferences.ip_address}/Api/eyes/change`,
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
@@ -1068,7 +1068,7 @@ const randomizeMistyFaceAndLights = () => {
   const color_settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://192.168.1.129/Api/led/change",
+    "url": `${homeState.misty_user_preferences.ip_address}/Api/led/change`,
     "method": "POST",
     "headers": {},
     "data": JSON.stringify({
