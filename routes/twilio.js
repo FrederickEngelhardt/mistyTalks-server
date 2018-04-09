@@ -19,14 +19,6 @@ const authorized_phone_ip_address = (phone_number) => {
 }
 
 router.post('/twilio/receive', async function (req, res, next) {
-  /*
-    User Authorization
-  */
-  // const authorization_numbers = [
-  //   process.env.FREDERICK_NUMBER,
-  //   process.env.SCOTT_NUMBER
-  // ]
-
   const received_number = req.body.From
   /*
     Checks to see if the authorized number is database and
@@ -41,7 +33,7 @@ router.post('/twilio/receive', async function (req, res, next) {
 
   // NOTE: variable used to enable message mode on twilio
   let message_mode = 'standard'
-
+  
   /*
     Alexa message url removal
   */

@@ -52,7 +52,11 @@ function writeFile(text, voice) {
     }).pipe(writable)
 
     // Waits till writable completes
-    writable.on('error', (err) => {(err)}).on('finish', function() {resolve("success")})
+    writable.on('error', (err) => {
+      (err)
+    }).on('finish', function() {
+      resolve("success")
+    })
   })
 }
 
@@ -82,7 +86,6 @@ function writeAudioMisty(byteStreamArray, ip_address) {
   // error handling
   let filename = 'textResponse.wav'
   if (!byteStreamArray) console.log('ByteStreamArray not sent')
-  console.log(byteStreamArray, filename);
   return new Promise((resolve, reject) => {
     const unirest = require("unirest");
 
@@ -140,46 +143,69 @@ function playAudio(ip_address) {
 // playAudio("Im-Mr-Meeseeks-look-at-me.wav")
 
 
-function getWatsonToken () {
+function getWatsonToken() {
   /*NOTE: Use this function to get a user token for watson WebSocket calls*/
   return new Promise((resolve) => {
     var request = require("request");
 
-    var options = { method: 'GET',
-    url: 'https://stream.watsonplatform.net/authorization/api/v1/token',
-    qs: { url: 'https://stream.watsonplatform.net/text-to-speech/api' },
-    headers:
-    { 'Cache-Control': 'no-cache',
-    Authorization: process.env.WATSON_BASIC_TOKEN_AUTH } };
+    var options = {
+      method: 'GET',
+      url: 'https://stream.watsonplatform.net/authorization/api/v1/token',
+      qs: {
+        url: 'https://stream.watsonplatform.net/text-to-speech/api'
+      },
+      headers: {
+        'Cache-Control': 'no-cache',
+        Authorization: process.env.WATSON_BASIC_TOKEN_AUTH
+      }
+    };
 
-    request(options, function (error, response, body) {
+    request(options, function(error, response, body) {
       if (error) console.log(error);
       console.log(body);
       return resolve(body)
     });
   })
 }
-router.get("/watson/token", async function (req, res, next) {
+
+function mistyGetInfo(ip_address) {
+  return new Promise((resolve) => {
+    var request = require("request");
+    var options = {
+      method: 'GET',
+      url: `http:${ip_address}/api/info/devices`
+    };
+
+    request(options, {timeout: 1500}, function(error, response, body) {
+      if (error) return 'error'
+      console.log(body);
+    });
+  })
+}
+router.get("/watson/token", async function(req, res, next) {
   const get_token = await getWatsonToken()
   res.status(200).send(get_token)
 })
 
 router.post('/watson/receive', async function(req, res, next) {
-  console.log(req.body.text, req.body.voice,req.body.ip_address);
+  console.log(req.body.text, req.body.voice, req.body.ip_address);
   /*
   NOTE: ip_address is supposed to be the ip_address from misty user preferences.
   If the ip address is not working, manually change the ip_address to misty_robot given ip address.
 */
   let voice = 'en-US_AllisonVoice',
-      text = '',
-      ip_address = '192.168.1.129'
-
-  const {twilio, twilio_number} = req.body
-  if (twilio && twilio_number) /*CHECK USER PREFERENCES*/
+    text = '',
+    ip_address = '192.168.1.129'
   if (req.body.text) text = req.body.text
-  if (!req.body.text) next({ status: 400, message: `No text sent.` })
+  if (!req.body.text) next({
+    status: 400,
+    message: `No text sent.`
+  })
   if (req.body.voice) voice = req.body.voice
   if (req.body.ip_address) ip_address = req.body.ip_address
+
+  // NOTE: Test function to check if misty is working before you waste Watson API for a failed post.
+  const verify_misty_functions = await mistyGetInfo(ip_address)
 
   const write_file = await writeFile(req.body.text, voice)
   const read_file = await read()
