@@ -171,14 +171,17 @@ function getWatsonToken() {
 function mistyGetInfo(ip_address) {
   return new Promise((resolve) => {
     var request = require("request");
-    var options = {
-      method: 'GET',
-      url: `http:${ip_address}/api/info/devices`
-    };
-
-    request(options, {timeout: 1500}, function(error, response, body) {
-      if (error) return 'error'
-      console.log(body);
+    request.get(`http://${ip_address}/api/info/devices`, {timeout: 1500}, function(error, response, body) {
+      console.log(error);
+      if (error) {
+        let message = {
+          status: 404,
+          message: "Your misty is not connected properly."
+        }
+        return message
+      }
+      console.log(body, response, "Made it");
+      return resolve({status: 200, message: "success", data: body})
     });
   })
 }
