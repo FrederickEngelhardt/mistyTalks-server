@@ -839,7 +839,7 @@ const retrieveMistyPreferencesSubmitFormData = () => {
       "time_restriction_end": misty_quiet_end
     }
     // Phone number checks (for twilio)
-    country_code = country_code.replace(/^+/i,"")
+    country_code = country_code.replace(/([\+])\+/g,"")
     if (phone_number1.length < 11) {
       data.auth_numbers_string = country_code + phone_number1
     }

@@ -180,7 +180,6 @@ function mistyGetInfo(ip_address) {
         }
         return message
       }
-      console.log(body, response, "Made it");
       return resolve({status: 200, message: "success", data: body})
     });
   })
@@ -210,9 +209,9 @@ router.post('/watson/receive', async function(req, res, next) {
   // NOTE: Test function to check if misty is working before you waste Watson API for a failed post.
   const verify_misty_functions = await mistyGetInfo(ip_address)
 
-  const write_file = await writeFile(req.body.text, voice)
-  const read_file = await read()
-  const write_audio_misty = await writeAudioMisty(read_file, ip_address)
+  // const write_file = await writeFile(req.body.text, voice)
+  // const read_file = await read()
+  // const write_audio_misty = await writeAudioMisty(read_file, ip_address)
   const play_audio = await playAudio(ip_address)
   return res.status(200).json({
     status: "success",

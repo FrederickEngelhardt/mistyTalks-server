@@ -25,7 +25,6 @@ router.post('/twilio/receive', async function (req, res, next) {
     returns ip address of related authorized number.
   */
   const authorized_prefs = await authorized_phone_ip_address(received_number)
-  console.log(authorized_prefs,received_number);
   if (authorized_prefs.status === 403) return next(authorized_prefs.message)
   /*
     End of user Authorization
@@ -33,7 +32,7 @@ router.post('/twilio/receive', async function (req, res, next) {
 
   // NOTE: variable used to enable message mode on twilio
   let message_mode = 'standard'
-  
+
   /*
     Alexa message url removal
   */
@@ -89,8 +88,6 @@ router.post('/twilio/receive', async function (req, res, next) {
 
   request.end(function(response) {
     if (response.error) console.log(res.error)
-
-    console.log(response.body)
     res.status(200).send('success')
   })
 })
